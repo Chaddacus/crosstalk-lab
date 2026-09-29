@@ -2,9 +2,10 @@ import { motion } from "motion/react";
 import { NONE } from "../../core/data/catalog.ts";
 import type { Interval } from "../../core/eval/metrics.ts";
 import { useAnalysis } from "../analysis.ts";
-import { setRiskWeight, useStore, viewVersion } from "../store.ts";
+import { retryFailed, setRiskWeight, useStore, viewVersion } from "../store.ts";
+import { codeLabel, summarizeFailures } from "../lib/errors.ts";
 import { Ticker } from "../ui/Ticker.tsx";
-import { int, pct, secs, usd } from "../lib/format.ts";
+import { int, pct, plural, secs, usd } from "../lib/format.ts";
 
 export function DiffRail() {
   const { run, acc, beforeAcc, diff, risk, before, totalLeak } = useAnalysis();
@@ -15,6 +16,7 @@ export function DiffRail() {
   const n = run?.results.length ?? 0;
   const delta = acc && beforeAcc ? acc.all.p - beforeAcc.all.p : NaN;
   const finished = !running && run && run.runHash ? run : null;
+  const failures = !running && run && run.errors > 0 ? summarizeFailures(run.results) : null;
   return (
     <div className="flex h-full min-h-0 flex-col" data-testid="diff-rail">
       <div className="px-4 pb-2 pt-3.5">
@@ -34,14 +36,38 @@ export function DiffRail() {
       <div className="grid grid-cols-3 gap-2 px-3">
         <Counter label="Fixed" value={diff ? diff.fixed : NaN} color="var(--fixed)" sign="+" testId="count-fixed" />
         <Counter label="Broke" value={diff ? diff.broke : NaN} color="var(--broke)" sign="−" testId="count-broke" />
-        <Counter label="Same" value={diff ? diff.unchanged : n} color="var(--muted)" testId="count-unchanged" />
+        <Counter label="Same" value={diff ? diff.unchanged : NaN} color="var(--muted)" testId="count-unchanged" />
       </div>
-      {diff && diff.errors > 0 && <div className="mono px-4 pt-1.5 text-[10.5px] text-err">{diff.errors} items errored (not counted)</div>}
+      <div className="mono px-4 pt-1.5 text-[10.5px] leading-[1.45]" data-testid="run-scope">
+        {failures ? (
+          <div className="rounded-lg border border-err/40 bg-err/[0.07] px-2.5 py-2 text-muted" data-testid="failed-note">
+            <span className="text-err">
+              {failures.failed} of {n} failed · {codeLabel(failures.codes[0]!.code)}
+            </span>
+            <span className="text-faint"> · not counted as right, wrong or same</span>
+            <p className="mt-1 font-sans text-[11.5px] leading-[1.45] text-muted">{failures.sentence}</p>
+            {!active && (
+              <button className="btn mt-2 h-8 w-full text-[11.5px]" onClick={() => void retryFailed()} data-testid="retry-failed">
+                Retry {failures.failed} failed {plural(failures.failed, "item")}
+              </button>
+            )}
+          </div>
+        ) : !diff && run ? (
+          <span className="text-faint">{running ? "running…" : `baseline: nothing to compare yet · ${n} scored`}</span>
+        ) : null}
+      </div>
 
       <div className="scroll-thin mt-3 min-h-0 flex-1 space-y-3 overflow-y-auto px-3 pb-3">
         <section className="card p-3" data-testid="accuracy-card">
           <div className="flex items-baseline justify-between">
-            <span className="eyebrow !text-[9.5px]">Dev top-1 accuracy</span>
+            <span className="flex items-center gap-2">
+              <span className="eyebrow !text-[9.5px]">Dev top-1 accuracy</span>
+              {acc && acc.errors > 0 && (
+                <span className="mono rounded border border-err/50 bg-err/10 px-1 text-[9px] font-semibold tracking-wider text-err" data-testid="partial-badge">
+                  PARTIAL · {acc.all.n} of {acc.n} scored
+                </span>
+              )}
+            </span>
             {Number.isFinite(delta) && (
               <motion.span
                 key={delta.toFixed(4)}
@@ -59,10 +85,10 @@ export function DiffRail() {
             <Ticker value={acc ? acc.all.p * 100 : NaN} format={(x) => x.toFixed(1)} className="text-[30px] font-medium leading-none tracking-tight text-text" testId="acc-value" />
             <span className="num text-[14px] text-muted">%</span>
             <span className="num ml-auto text-[11px] text-muted" data-testid="acc-interval">
-              {acc ? `[${pct(acc.all.lo)} – ${pct(acc.all.hi)}]` : ""}
+              {acc && acc.all.n > 0 ? `[${pct(acc.all.lo)} – ${pct(acc.all.hi)}]` : ""}
             </span>
           </div>
-          {acc && <IntervalBar iv={acc.all} before={beforeAcc?.all} />}
+          {acc && acc.all.n > 0 && <IntervalBar iv={acc.all} before={beforeAcc?.all} />}
           <div className="mt-2.5 space-y-1 text-[11.5px]">
             <Row label="match" iv={acc?.match} />
             <Row label="no match" iv={acc?.noMatch} />
@@ -87,7 +113,7 @@ export function DiffRail() {
             </label>
           </div>
           <div className="mt-1 flex items-baseline gap-2">
-            <Ticker value={risk ? risk.per100 : NaN} format={(x) => x.toFixed(1)} className="text-[22px] font-medium leading-none text-text" />
+            <Ticker value={risk ? risk.per100 : NaN} format={(x) => x.toFixed(1)} className="text-[22px] font-medium leading-none text-text" testId="risk-value" />
             <span className="text-[11px] text-muted">per 100 items</span>
           </div>
           <div className="mono mt-1.5 text-[10.5px] text-faint">

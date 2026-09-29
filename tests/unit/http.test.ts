@@ -94,11 +94,26 @@ describe("http backend", () => {
     expect(parseRetryAfter(h, 1_000_000)).toBe(3000);
   });
 
-  it("caps the server wait: a Retry-After over 60 s falls back to backoff", async () => {
+  it("caps the server wait: a Retry-After over 60 s waits exactly 60 s (never sooner)", async () => {
     const { b, sleeps } = backend([{ status: 429, headers: { "retry-after": "120" } }, { status: 200, body: okBody }]);
     await b.decide(req);
-    expect(sleeps).toEqual([437.5]);
-    expect(Math.max(...sleeps)).toBeLessThanOrEqual(60_000);
+    expect(sleeps).toEqual([60_000]);
+  });
+
+  it("with a total deadline, gives up instead of scheduling a retry past it", async () => {
+    const { b, calls, sleeps } = backend([{ status: 429, headers: { "retry-after": "30" } }, { status: 200, body: okBody }], { deadlineMs: 10_000 });
+    await expect(b.decide(req)).rejects.toMatchObject({ code: "rate_limit" });
+    expect(calls).toHaveLength(1);
+    expect(sleeps).toEqual([]);
+  });
+
+  it("a 200 whose body does not parse is marked billed, with the reported cost", async () => {
+    const bad = { model: "jev-1.13.0", answers: { operation: { type: "choice", choice: "billing", probabilities: { billing: 1 } } }, usage: { input_tokens: 1000 } };
+    const { b } = backend([{ status: 200, body: bad }]);
+    const e = (await b.decide(req).catch((x) => x)) as { code: string; billed?: boolean; billedUsd?: number };
+    expect(e.code).toBe("schema");
+    expect(e.billed).toBe(true);
+    expect(e.billedUsd).toBeCloseTo(1000 * 0.042e-6, 12);
   });
 
   it("does not retry 401", async () => {

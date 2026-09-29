@@ -52,7 +52,15 @@ if (backendName === "mock") {
   backend = createMockBackend();
   model = "mock-lexsim-1";
 } else if (backendName === "replay") {
-  backend = createReplayBackend(loadReplayStore());
+  // Real cached responses are read only for the upstream the environment selects (default: typesafe).
+  loadDotEnv();
+  let preset: ReturnType<typeof resolvePreset> | undefined;
+  try {
+    preset = resolvePreset();
+  } catch {
+    preset = undefined;
+  }
+  backend = createReplayBackend(loadReplayStore(preset));
   model = opt("model", "mock-lexsim-1")!;
 } else if (backendName === "live") {
   loadDotEnv();

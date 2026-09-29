@@ -3,7 +3,7 @@ import type { PairState } from "../../core/eval/leakage.ts";
 /** Chord state shown with line style as well as color (never color alone). */
 export function StateGlyph({ state, withLabel = false }: { state: PairState; withLabel?: boolean }) {
   const color = state === "error" ? "var(--err)" : state === "near" ? "var(--near)" : "var(--bgchord)";
-  const label = state === "error" ? "ERROR" : state === "near" ? "NEAR-MISS" : "LEAK";
+  const label = state === "error" ? "ERROR" : state === "near" ? "NEAR-MISS" : "BACKGROUND";
   return (
     <span className="inline-flex items-center gap-1.5" title={label.toLowerCase()}>
       <svg width="16" height="8" aria-hidden className="shrink-0">

@@ -4,7 +4,7 @@ import { gate, reliability, selective, type Scored } from "../../core/eval/metri
 import { exportPolicy } from "../../core/eval/export.ts";
 import { NONE } from "../../core/data/catalog.ts";
 import { deleteOps } from "../data.ts";
-import { useAnalysis } from "../analysis.ts";
+import { runIsFinal, useAnalysis } from "../analysis.ts";
 import { setTau, useStore, viewVersion } from "../store.ts";
 import { download } from "../lib/download.ts";
 import { pct } from "../lib/format.ts";
@@ -12,6 +12,9 @@ import { Ticker } from "../ui/Ticker.tsx";
 
 export function GateView() {
   const { scored, run } = useAnalysis();
+  const active = useStore((s) => s.active);
+  const final = runIsFinal(run, active);
+  const errors = scored.filter((s) => s.error).length;
   const tau = useStore((s) => s.tau);
   const w = useStore((s) => s.riskWeight);
   const backend = useStore((s) => s.backend);
@@ -21,10 +24,11 @@ export function GateView() {
   const rel = useMemo(() => reliability(scored), [scored]);
   const src = scored.find((s) => !s.error)?.confidenceSource ?? "derived";
   const exportIt = () => {
-    if (!run || !v) return;
+    if (!final || !v) return;
     download(
       exportPolicy({
         tau,
+        runHash: run.runHash,
         model: run.model,
         backend: run.backend,
         criteriaHash: v.hash,
@@ -54,14 +58,26 @@ export function GateView() {
               Items at or above τ go to the AUTO lane. Items below go to a HUMAN. Drag τ and watch coverage, AUTO accuracy and confident errors move.
             </p>
           </div>
-          <button className="btn btn-primary" onClick={exportIt} disabled={!run} data-testid="export-policy">
-            Export policy.json
+          <button
+            className="btn btn-primary"
+            onClick={exportIt}
+            disabled={!final}
+            title={final ? "Threshold, model, criteria and run sha256, and the dev metrics at τ" : "Wait for the run to finish: a half-finished rerun mixes old and new results"}
+            data-testid="export-policy"
+          >
+            {active ? "Running…" : "Export policy.json"}
           </button>
         </div>
         {backend !== "live" && (
           <div className="mt-4 flex items-start gap-3 rounded-xl border border-post/35 bg-post/[0.07] px-4 py-3 text-[12.5px] leading-[1.5] text-post" data-testid="mock-gate-banner">
             <span className="mono mt-px rounded border border-post/50 px-1.5 text-[10px] font-semibold tracking-wider">MOCK</span>
             <span>Lexical stand-in probabilities are not calibrated. This tab shows the method, not Jev's calibration.</span>
+          </div>
+        )}
+        {errors > 0 && (
+          <div className="mono mt-3 rounded-lg border border-err/40 bg-err/[0.07] px-3 py-2 text-[11.5px] leading-[1.5] text-muted" data-testid="gate-errors">
+            <span className="text-err">{errors} of {scored.length} items failed</span> and always go to HUMAN. Coverage counts them; AURC and the reliability
+            diagram use the {scored.length - errors} answered items.
           </div>
         )}
         <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -98,6 +114,9 @@ export function GateView() {
                 </span>
               </div>
               <CoverageCurve curve={sel.curve} coverage={g.coverage} autoAcc={g.auto.p} />
+              <div className="mono mt-1 text-[10px] text-faint">
+                coverage over all {sel.total} items{sel.answered < sel.total ? ` · ${sel.total - sel.answered} failed items are never covered` : ""} · AURC over {sel.answered} answered
+              </div>
             </div>
             <div className="card p-3.5">
               <div className="flex items-center justify-between">

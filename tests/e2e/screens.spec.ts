@@ -1,31 +1,19 @@
 /**
- * Visual snapshots (reduced motion, animations disabled). Also writes the README screenshots to docs/screenshots/.
+ * Visual snapshots (reduced motion, animations disabled), compared against the baselines in
+ * screens.spec.ts-snapshots/. A normal `npm run test:e2e` writes its PNGs to test-results/screens/ and never
+ * touches tracked files. `npm run shots` (npm sets npm_lifecycle_event=shots) writes the README images to
+ * docs/screenshots/ on purpose; SHOTS_DIR overrides both.
  * Update the baselines with: npx playwright test tests/e2e/screens.spec.ts --update-snapshots
  */
-import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
-import { chordPoint, openApp, waitForRun } from "./helpers.ts";
+import { chordPoint, demoEdit, demoKey, openApp } from "./helpers.ts";
 
-const demo = JSON.parse(readFileSync("tests/e2e/demo.json", "utf8")) as { pair: [string, string]; edits: Record<string, { what?: string; not_for?: string }> };
-const demoKey = [...demo.pair].sort().join("|");
-const OUT = process.env.SHOTS_DIR ?? "docs/screenshots";
+const OUT = process.env.SHOTS_DIR ?? (process.env.npm_lifecycle_event === "shots" ? "docs/screenshots" : "test-results/screens");
 
 async function snap(page: Page, name: string) {
   await page.waitForTimeout(400);
   await page.screenshot({ path: `${OUT}/${name}.png` });
   await expect(page).toHaveScreenshot(`${name}.png`, { maxDiffPixelRatio: 0.01, animations: "disabled" });
-}
-
-async function demoEdit(page: Page) {
-  const pt = await chordPoint(page, demoKey);
-  await page.mouse.click(pt.x, pt.y);
-  for (const [op, t] of Object.entries(demo.edits)) {
-    if (t.what !== undefined) await page.getByTestId(`what-${op}`).fill(t.what);
-    if (t.not_for !== undefined) await page.getByTestId(`notfor-${op}`).fill(t.not_for);
-  }
-  await page.getByTestId("save-rerun").click();
-  await expect(page.getByTestId("history-node")).toHaveCount(2);
-  await waitForRun(page);
 }
 
 test.describe("desktop 1440×900", () => {
@@ -34,11 +22,13 @@ test.describe("desktop 1440×900", () => {
     await openApp(page);
     await snap(page, "hero-1440");
   });
-  test("hover card", async ({ page }) => {
+  test("hover card on the demo pair (DELETE only)", async ({ page }) => {
     await openApp(page);
+    await page.getByTestId("delete-only").check();
     const pt = await chordPoint(page, demoKey);
     await page.mouse.move(pt.x, pt.y);
     await expect(page.getByTestId("hover-card")).toBeVisible();
+    await expect(page.getByTestId("delete-badge")).toBeVisible();
     await snap(page, "hover-1440");
   });
   test("after the demo edit", async ({ page }) => {
@@ -46,6 +36,11 @@ test.describe("desktop 1440×900", () => {
     await demoEdit(page);
     await page.mouse.move(5, 895);
     await snap(page, "after-edit-1440");
+  });
+  test("NO MATCH lens", async ({ page }) => {
+    await openApp(page);
+    await page.getByTestId("lens-hub").first().click();
+    await snap(page, "nomatch-1440");
   });
   test("gate", async ({ page }) => {
     await openApp(page);
@@ -55,7 +50,7 @@ test.describe("desktop 1440×900", () => {
   test("item inspector", async ({ page }) => {
     await openApp(page);
     await page.getByTestId("tab-items").click();
-    await page.getByTestId("item-row").nth(2).click();
+    await page.getByTestId("item-open").nth(2).click();
     await expect(page.getByTestId("inspector")).toBeVisible();
     await snap(page, "inspector-1440");
   });
@@ -77,6 +72,16 @@ test.describe("video 1920×1080", () => {
   });
 });
 
+test.describe("drawer layout 1024×768", () => {
+  test.use({ viewport: { width: 1024, height: 768 } });
+  test("hero with the Diff drawer open", async ({ page }) => {
+    await openApp(page);
+    await page.getByTestId("drawer-toggle").click();
+    await expect(page.getByTestId("diff-rail")).toBeVisible();
+    await snap(page, "hero-1024");
+  });
+});
+
 test.describe("phone 390×844", () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   test("hero", async ({ page }) => {
@@ -88,5 +93,12 @@ test.describe("phone 390×844", () => {
     await page.getByTestId("pairs-item").first().click();
     await expect(page.getByTestId("bottom-sheet")).toBeVisible();
     await snap(page, "sheet-390");
+  });
+  test("item inspector sheet", async ({ page }) => {
+    await openApp(page);
+    await page.getByTestId("tab-items").click();
+    await page.getByTestId("item-open").nth(2).click();
+    await expect(page.getByTestId("inspector-close")).toBeVisible();
+    await snap(page, "inspector-390");
   });
 });

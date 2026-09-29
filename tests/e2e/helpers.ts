@@ -1,6 +1,14 @@
+import { readFileSync } from "node:fs";
 import { expect, type Page } from "@playwright/test";
 
 export const N_DEV = 183;
+
+export const demo = JSON.parse(readFileSync("tests/e2e/demo.json", "utf8")) as {
+  pair: [string, string];
+  edits: Record<string, { what?: string; not_for?: string }>;
+  expected: { fixed: number; broke: number; unchanged: number };
+};
+export const demoKey = [...demo.pair].sort().join("|");
 
 /** Wait until the dev run has finished and every result is revealed. */
 export async function waitForRun(page: Page, n = N_DEV) {
@@ -41,4 +49,33 @@ export async function chordPoint(page: Page, pairKey: string) {
 export async function counts(page: Page) {
   const v = async (id: string) => Number(await page.getByTestId(id).getAttribute("data-value"));
   return { fixed: await v("count-fixed"), broke: await v("count-broke"), unchanged: await v("count-unchanged") };
+}
+
+/** Fill the scripted demo edit into the editor (the pair must be open). */
+export async function fillDemo(page: Page) {
+  for (const [op, t] of Object.entries(demo.edits)) {
+    if (t.what !== undefined) await page.getByTestId(`what-${op}`).fill(t.what);
+    if (t.not_for !== undefined) await page.getByTestId(`notfor-${op}`).fill(t.not_for);
+  }
+}
+
+/**
+ * The scripted demo, as in the video: show only chords that touch a DELETE, click the demo chord, fill the
+ * edit, save, and wait for the rerun.
+ */
+export async function demoEdit(page: Page) {
+  await page.getByTestId("delete-only").check();
+  const pt = await chordPoint(page, demoKey);
+  await page.mouse.click(pt.x, pt.y);
+  await expect(page.getByTestId("pair-title")).toContainText(demo.pair[0]);
+  await fillDemo(page);
+  await page.getByTestId("save-rerun").click();
+  await expect(page.getByTestId("history-node")).toHaveCount(2);
+  await waitForRun(page);
+}
+
+/** No sideways page scroll at the current viewport. */
+export async function expectNoHorizontalScroll(page: Page) {
+  const { sw, iw } = await page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
+  expect(sw, `scrollWidth ${sw} > innerWidth ${iw}`).toBeLessThanOrEqual(iw);
 }

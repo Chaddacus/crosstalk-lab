@@ -3,6 +3,8 @@
  * Also tracks input tokens per rolling second (TypeSafe documents 250k input tokens/s; we stay far below).
  * Clock and sleep are injectable for tests.
  */
+import { AbortedError } from "../jev/errors.ts";
+
 export interface LimiterConfig {
   requestsPerMinute: number;
   /** Bucket size. Default 1 (strict spacing). */
@@ -13,8 +15,11 @@ export interface LimiterConfig {
 }
 
 export interface Limiter {
-  /** Resolves when a request may start. Call the returned function when it finishes. */
-  acquire(): Promise<() => void>;
+  /**
+   * Resolves when a request may start. Call the returned function when it finishes.
+   * With a signal, a wait that is aborted gives up its place and rejects with AbortedError.
+   */
+  acquire(signal?: AbortSignal): Promise<() => void>;
   recordTokens(n: number): void;
   tokensLastSecond(): number;
   readonly inFlight: number;
@@ -49,12 +54,25 @@ export function createLimiter(cfg: LimiterConfig): Limiter {
     }
   }
 
-  async function takeSlot() {
+  async function takeSlot(signal?: AbortSignal) {
+    if (signal?.aborted) throw new AbortedError();
     if (inFlight < cfg.concurrency) {
       inFlight++;
       return;
     }
-    await new Promise<void>((r) => slotWaiters.push(r));
+    await new Promise<void>((resolve, reject) => {
+      const waiter = () => {
+        signal?.removeEventListener("abort", onAbort);
+        resolve();
+      };
+      const onAbort = () => {
+        const i = slotWaiters.indexOf(waiter);
+        if (i >= 0) slotWaiters.splice(i, 1);
+        reject(new AbortedError());
+      };
+      signal?.addEventListener("abort", onAbort, { once: true });
+      slotWaiters.push(waiter);
+    });
     inFlight++;
   }
 
@@ -68,12 +86,16 @@ export function createLimiter(cfg: LimiterConfig): Limiter {
     get inFlight() {
       return inFlight;
     },
-    async acquire() {
-      await takeSlot();
+    async acquire(signal?: AbortSignal) {
+      await takeSlot(signal);
       // Serialize token taking so waiters start in order.
       const mine = chain.then(takeToken);
       chain = mine.catch(() => undefined);
       await mine;
+      if (signal?.aborted) {
+        releaseSlot();
+        throw new AbortedError();
+      }
       let released = false;
       return () => {
         if (!released) {

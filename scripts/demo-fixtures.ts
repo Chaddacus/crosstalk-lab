@@ -40,6 +40,7 @@ for (const [version, criteria] of [
     split: "dev",
     questionId: QUESTION_ID,
     options: Object.keys(criteria),
+    provenance: { confidence: "derived", inputTokens: "estimated" },
     responses: {},
   };
   for (const item of dev) {

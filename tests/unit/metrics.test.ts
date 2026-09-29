@@ -177,3 +177,78 @@ describe("diff, risk, selective, reliability, gate", () => {
     expect([a.all.k, a.all.n, a.match.k, a.noMatch.k, a.noMatch.n]).toEqual([1, 2, 1, 0, 1]);
   });
 });
+
+describe("leaked mass: every contribution counts", () => {
+  const options = ["A", "B", "C", "none_of_these"];
+  const items = [item("d-0001", "A"), item("d-0002", "B"), item("d-0003", "C")];
+  // p(C) for gold A is 0.0004 (under eps 1e-3): it still counts toward M(A, C) and the total
+  const r = run(options, [
+    ["d-0001", "A", [0.9, 0.0996, 0.0004, 0]],
+    ["d-0002", "B", [0.3, 0.6, 0.0002, 0.0998]],
+    ["d-0003", "C", [0.0008, 0.0003, 0.9989, 0]],
+  ]);
+  const leak = computeLeakage(items, r);
+
+  it("listed pair masses plus the omitted mass add up to the total leak", () => {
+    const listed = leak.pairs.reduce((a, p) => a + p.mass, 0);
+    // independent total: Σ (1 − p(gold))
+    const total = 1 - 0.9 + (1 - 0.6) + (1 - 0.9989);
+    expect(leak.total).toBeCloseTo(total, 12);
+    expect(listed + leak.omitted.mass).toBeCloseTo(total, 12);
+  });
+
+  it("includes a sub-eps contribution in the pair's mass but not in its item count", () => {
+    const ac = leak.pairs.find((p) => p.key === "A|C")!;
+    expect(ac.mass).toBeCloseTo(0.0004 + 0.0008, 12);
+    expect(ac.n).toBe(0);
+    // B|C = 0.0002 + 0.0003 < eps, no error: not listed, kept in `omitted`
+    expect(leak.pairs.find((p) => p.key === "B|C")).toBeUndefined();
+    expect(leak.omitted.pairs).toBe(1);
+    expect(leak.omitted.mass).toBeCloseTo(0.0005, 12);
+  });
+});
+
+describe("errored items are never right, wrong or covered", () => {
+  const options = ["A", "B", "none_of_these"];
+  const items = [item("d-0001", "A"), item("d-0002", "B"), item("d-0003", "A"), item("d-0004", "B")];
+  const ok = run(options, [
+    ["d-0001", "A", [0.8, 0.1, 0.1]],
+    ["d-0002", "A", [0.6, 0.3, 0.1]],
+    ["d-0003", "A", [0.9, 0.05, 0.05]],
+    ["d-0004", "B", [0.1, 0.8, 0.1]],
+  ]);
+  const withErrors: RunRecord = {
+    ...ok,
+    errors: 2,
+    results: ok.results.map((x) => (x.id === "d-0003" || x.id === "d-0004" ? { ...x, chosen: null, probs: null, confidence: null, confidenceSource: "none" as const, error: { code: "budget", message: "cap" } } : x)),
+  };
+  const sOk = scoreRun(items, ok);
+  const sErr = scoreRun(items, withErrors);
+
+  it("accuracy counts only answered items, and reports the errors", () => {
+    const a = accuracy(sErr);
+    expect([a.all.k, a.all.n, a.errors, a.n]).toEqual([1, 2, 2, 4]);
+  });
+
+  it("the diff marks them error, never fixed, broke or unchanged", () => {
+    const d = diffRuns(sOk, sErr);
+    expect([d.fixed, d.broke, d.unchanged, d.errors]).toEqual([0, 0, 2, 2]);
+    expect(d.flipped).toEqual([]);
+  });
+
+  it("risk ignores them; the gate sends them to HUMAN; leakage skips them", () => {
+    const risk = riskWeighted(sErr, new Set(["A"]), 10);
+    expect(risk.mean).toBeCloseTo(10 / 2, 12); // one wrong DELETE-like pick (A) out of two answered
+    const g = gate(sErr, 0, new Set(), 10);
+    expect([g.nAuto, g.nHuman]).toEqual([2, 2]);
+    expect(g.coverage).toBeCloseTo(0.5, 12);
+    expect(computeLeakage(items, withErrors).total).toBeCloseTo(0.2 + 0.7, 12);
+  });
+
+  it("the coverage curve uses the gate's population (errors are never covered)", () => {
+    const sel = selective(sErr);
+    expect(sel.total).toBe(4);
+    expect(sel.answered).toBe(2);
+    expect(sel.curve[sel.curve.length - 1]!.coverage).toBeCloseTo(gate(sErr, 0, new Set(), 10).coverage, 12);
+  });
+});

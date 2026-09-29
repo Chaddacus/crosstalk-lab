@@ -68,7 +68,9 @@ export function HoverCard({ pair, run, x, y, w, h }: Props) {
         <div className="mt-2.5">
           <div className="flex items-center justify-between">
             <span className="eyebrow !text-[9.5px]">worst item · {item.id}</span>
-            <span className="mono text-[10px] text-faint">{pair.n} leaking items</span>
+            <span className="mono text-[10px] text-faint">
+              {pair.n} leaking {pair.n === 1 ? "item" : "items"}
+            </span>
           </div>
           <p className="mt-1 text-[12.5px] leading-[1.45] text-text">“{item.query}”</p>
           <div className="mono mt-1.5 text-[10.5px] text-muted">

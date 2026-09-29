@@ -25,3 +25,15 @@ export function useLayoutMode(): "wide" | "medium" | "narrow" {
   }, []);
   return mode;
 }
+
+/** Viewport width, for finer top-bar decisions inside the medium layout. */
+export function useViewportWidth(): number {
+  const get = () => (typeof window === "undefined" ? 1440 : window.innerWidth);
+  const [w, setW] = useState(get);
+  useLayoutEffect(() => {
+    const on = () => setW(get());
+    window.addEventListener("resize", on);
+    return () => window.removeEventListener("resize", on);
+  }, []);
+  return w;
+}

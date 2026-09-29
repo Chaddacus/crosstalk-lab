@@ -20,6 +20,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "shots": "playwright test tests/e2e/screens.spec.ts --project=desktop",
     "eval": "tsx scripts/eval.ts",
     "freeze": "tsx scripts/freeze.ts",
     "fetch-spec": "tsx scripts/fetch-spec.ts",

@@ -5,6 +5,7 @@ import type { Catalog } from "../src/core/data/catalog.ts";
 import { type Item, type Manifest, parseJsonl } from "../src/core/data/splits.ts";
 import type { Criterion } from "../src/core/jev/types.ts";
 import { fixtureStore, type ReplayFixture, type ReplayStore } from "../src/core/jev/replay.ts";
+import { type Preset, cacheNamespace, normalizeBaseUrl } from "../server/presets.ts";
 
 export const DATA = "data/twilio-v2010";
 
@@ -21,15 +22,25 @@ export function loadCriteria(file = `${DATA}/criteria.v0.json`): Record<string, 
   return JSON.parse(readFileSync(file, "utf8"));
 }
 
-/** Replay sources: public mock fixtures, plus the local .cache of real responses (never committed). */
-export function loadReplayStore(): ReplayStore {
+/**
+ * Replay sources: public mock fixtures, plus (when a preset is given) the local cache of real responses that the
+ * live server wrote for that upstream (never committed). Entries written for another upstream are never read.
+ */
+export function loadReplayStore(preset?: Pick<Preset, "name" | "baseUrl">, cacheRoot = ".cache/responses"): ReplayStore {
   const fixtures: ReplayFixture[] = [];
   if (existsSync("fixtures/replay"))
     for (const f of readdirSync("fixtures/replay"))
       if (f.endsWith(".json")) fixtures.push(JSON.parse(readFileSync(join("fixtures/replay", f), "utf8")));
   const cached = new Map<string, unknown>();
-  const dir = ".cache/responses";
-  if (existsSync(dir))
-    for (const f of readdirSync(dir)) if (/^[0-9a-f]{64}\.json$/.test(f)) cached.set(f.slice(0, 64), JSON.parse(readFileSync(join(dir, f), "utf8")));
+  if (preset) {
+    const dir = join(cacheRoot, cacheNamespace(preset));
+    const baseUrl = normalizeBaseUrl(preset.baseUrl);
+    if (existsSync(dir))
+      for (const f of readdirSync(dir)) {
+        if (!/^[0-9a-f]{64}\.json$/.test(f)) continue;
+        const e = JSON.parse(readFileSync(join(dir, f), "utf8")) as { kind?: string; origin?: { preset?: string; baseUrl?: string }; response?: unknown };
+        if (e.kind === "crosstalk-live-cache" && e.origin?.preset === preset.name && e.origin.baseUrl === baseUrl) cached.set(f.slice(0, 64), e.response);
+      }
+  }
   return fixtureStore(fixtures, cached);
 }

@@ -29,7 +29,13 @@ export interface RunRecord {
   criteriaVersion?: string;
   backend: BackendKind;
   backendLabel: string;
+  /** The model that was requested (the run's identity). */
   model: string;
+  /**
+   * Distinct model strings the server reported in its answers, when any differ from `model` (for example the
+   * versioned ID an alias resolved to). Absent when every answer reported the requested model.
+   */
+  reportedModels?: string[];
   split: "dev" | "test";
   options: string[];
   results: ItemResult[];
@@ -97,7 +103,7 @@ export async function runItems(o: RunOptions): Promise<RunRecord> {
   let tLast = t0;
   let next = 0;
   let done = 0;
-  let model = o.model;
+  const reported = new Set<string>();
 
   async function worker() {
     while (next < order.length) {
@@ -109,7 +115,7 @@ export async function runItems(o: RunOptions): Promise<RunRecord> {
         const res = await o.backend.decide(buildRequest(o.criteria, item.query, o.model), { signal: o.signal });
         const d = res.decisions[QUESTION_ID];
         if (!d || d.kind !== "choice") throw new CrosstalkError("schema", "missing choice decision");
-        model = res.model;
+        if (res.model) reported.add(res.model);
         r = {
           id,
           chosen: d.chosen,
@@ -151,7 +157,8 @@ export async function runItems(o: RunOptions): Promise<RunRecord> {
     criteriaVersion: o.criteriaVersion,
     backend: o.backend.kind,
     backendLabel: o.backend.label,
-    model,
+    model: o.model,
+    ...(reported.size && [...reported].some((m) => m !== o.model) ? { reportedModels: [...reported].sort() } : {}),
     split: o.split,
     options,
     results: ordered,

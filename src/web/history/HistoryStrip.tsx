@@ -2,13 +2,16 @@ import { motion } from "motion/react";
 import { useMemo } from "react";
 import { accuracy, scoreRun, totalLeak } from "../../core/eval/metrics.ts";
 import { devItems } from "../data.ts";
-import { modelFor, restoreVersion, runKey, useStore, viewVersionById } from "../store.ts";
+import { keyFor, restoreVersion, useStore, viewVersionById } from "../store.ts";
 import { pct } from "../lib/format.ts";
 
 interface Point {
   id: string;
   acc: number;
   leak: number;
+  /** Failed items in this version's run (a partial run). */
+  failed: number;
+  scored: number;
   changed: string[];
   restoredFrom?: string;
 }
@@ -24,10 +27,12 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
   const points: Point[] = useMemo(
     () =>
       versions.map((v) => {
-        const r = runs[runKey(v.hash, backend, "dev", backend === "live" ? modelFor("live", useStore.getState()) : "")];
-        if (!r) return { id: v.id, acc: NaN, leak: NaN, changed: v.changed, restoredFrom: v.restoredFrom };
+        const r = runs[keyFor(v.hash, backend, "dev", useStore.getState())];
+        if (!r) return { id: v.id, acc: NaN, leak: NaN, failed: 0, scored: 0, changed: v.changed, restoredFrom: v.restoredFrom };
         const s = scoreRun(devItems, r);
-        return { id: v.id, acc: accuracy(s).all.p, leak: totalLeak(s), changed: v.changed, restoredFrom: v.restoredFrom };
+        const a = accuracy(s);
+        // a partial run is not comparable: its accuracy is shown, marked, and left out of the sparklines
+        return { id: v.id, acc: a.all.p, leak: r.errors ? NaN : totalLeak(s), failed: r.errors, scored: a.all.n, changed: v.changed, restoredFrom: v.restoredFrom };
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [versions, runs, backend, health],
@@ -40,7 +45,7 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
         <div className="scroll-thin flex min-w-0 items-center overflow-x-auto py-2" data-testid="history-nodes">
           {points.map((p, i) => {
             const prev = i > 0 ? points[i - 1]! : null;
-            const d = prev && Number.isFinite(p.acc) && Number.isFinite(prev.acc) ? p.acc - prev.acc : NaN;
+            const d = prev && !p.failed && !prev.failed && Number.isFinite(p.acc) && Number.isFinite(prev.acc) ? p.acc - prev.acc : NaN;
             const isCur = p.id === currentId;
             const isView = p.id === viewId;
             const running = active?.versionId === p.id && active.split === "dev";
@@ -55,7 +60,8 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
                   className={`group flex items-center gap-2 rounded-lg border px-2 py-1.5 transition-colors ${
                     isView ? "border-signal/50 bg-signal/10" : "border-transparent hover:border-line hover:bg-panel-2"
                   }`}
-                  title={p.changed.length ? `Changed: ${p.changed.join(", ")}` : p.restoredFrom ? `Restored from ${p.restoredFrom}` : "Derived from the spec only"}
+                  title={`${p.changed.length ? `Changed: ${p.changed.join(", ")}` : p.restoredFrom ? `Restored from ${p.restoredFrom}` : "Derived from the spec only"}${p.failed ? ` · partial: ${p.scored} of ${p.scored + p.failed} scored` : ""}`}
+                  aria-disabled={!!active}
                   data-testid="history-node"
                   data-version={p.id}
                 >
@@ -73,7 +79,14 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
                     </span>
                     <span className="num block text-[10px] leading-4 text-muted">
                       {Number.isFinite(p.acc) ? pct(p.acc) : running ? "…" : "—"}
-                      {Number.isFinite(d) && d !== 0 && <span className={d > 0 ? "text-fixed" : "text-broke"}> {d > 0 ? "▲" : "▼"}</span>}
+                      {p.failed > 0 ? (
+                        <span className="text-err" data-testid="history-partial">
+                          {" "}
+                          partial
+                        </span>
+                      ) : (
+                        Number.isFinite(d) && d !== 0 && <span className={d > 0 ? "text-fixed" : "text-broke"}> {d > 0 ? "▲" : "▼"}</span>
+                      )}
                     </span>
                   </span>
                 </motion.button>
@@ -99,7 +112,7 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
         )}
       </div>
       <div className={`flex shrink-0 items-center gap-5 ${compact ? "justify-between" : ""}`}>
-        <Spark label="dev accuracy" values={points.map((p) => p.acc)} format={(x) => pct(x)} color="var(--signal)" />
+        <Spark label="dev accuracy" values={points.map((p) => (p.failed ? NaN : p.acc))} format={(x) => pct(x)} color="var(--signal)" />
         <Spark label="total leak" values={points.map((p) => p.leak)} format={(x) => x.toFixed(1)} color="var(--err)" />
       </div>
     </div>

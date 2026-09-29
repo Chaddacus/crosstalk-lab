@@ -105,6 +105,8 @@ export function arcPath(r: number, a0: number, a1: number): string {
 export interface PlacedLabel {
   key: string;
   text: string;
+  /** Display lines (long operation names wrap at a CamelCase boundary). */
+  lines: string[];
   sub?: string;
   angle: number;
   side: "left" | "right";
@@ -114,40 +116,82 @@ export interface PlacedLabel {
   anchorY: number;
 }
 
+export interface LabelInput {
+  key: string;
+  text: string;
+  lines?: string[];
+  sub?: string;
+  angle: number;
+  /** 0 = always keep (family labels). Higher numbers are dropped first when a side gets crowded. */
+  priority: number;
+}
+
+const LINE_H = 12;
+
+/** Split a long CamelCase name into two lines at the boundary that best balances them. */
+export function wrapCamel(text: string, maxChars: number): string[] {
+  if (text.length <= maxChars) return [text];
+  const words = text.split(/(?=[A-Z])/);
+  if (words.length < 2) return [text];
+  let best: string[] = [text];
+  let bestLen = Infinity;
+  for (let i = 1; i < words.length; i++) {
+    const a = words.slice(0, i).join("");
+    const b = words.slice(i).join("");
+    const m = Math.max(a.length, b.length);
+    if (m < bestLen) {
+      bestLen = m;
+      best = [a, b];
+    }
+  }
+  return best;
+}
+
+function placeSide(items: (LabelInput & { side: "left" | "right" })[], rAnchor: number, rLabel: number, minGap: number, halfHeight: number, side: "left" | "right") {
+  const xs = items
+    .map((it) => {
+      const [ax, ay] = polar(0, 0, rAnchor, it.angle);
+      const [lx, ly] = polar(0, 0, rLabel, it.angle);
+      return { ...it, lines: it.lines ?? [it.text], x: lx, y: ly, ideal: ly, anchorX: ax, anchorY: ay };
+    })
+    .sort((p, q) => p.y - q.y);
+  const gap = (a: { lines: string[] }, b: { lines: string[] }) => Math.max(minGap, ((a.lines.length + b.lines.length) / 2) * LINE_H + 1);
+  // forward pass pushes down, backward pass pushes up, then clamp
+  for (let i = 1; i < xs.length; i++) if (xs[i]!.y - xs[i - 1]!.y < gap(xs[i - 1]!, xs[i]!)) xs[i]!.y = xs[i - 1]!.y + gap(xs[i - 1]!, xs[i]!);
+  const limit = halfHeight - 6;
+  if (xs.length && xs[xs.length - 1]!.y > limit) {
+    xs[xs.length - 1]!.y = limit;
+    for (let i = xs.length - 2; i >= 0; i--) if (xs[i + 1]!.y - xs[i]!.y < gap(xs[i]!, xs[i + 1]!)) xs[i]!.y = xs[i + 1]!.y - gap(xs[i]!, xs[i + 1]!);
+  }
+  return xs.map((p) => {
+    // keep label x on the ring's circle for its final y, so leader lines stay short
+    const yy = Math.max(-rLabel, Math.min(rLabel, p.y));
+    const xx = Math.sqrt(Math.max(0, rLabel * rLabel - yy * yy));
+    const x = side === "right" ? Math.max(p.x, xx * 0.92) : Math.min(p.x, -xx * 0.92);
+    return { ...p, x, side };
+  });
+}
+
 /**
- * Pie-style labels: split by side, sort by y, push apart to a minimum spacing, keep inside [top, bottom].
+ * Pie-style labels: split by side, sort by y, push apart (taller gaps for two-line labels), keep inside
+ * [top, bottom]. When a side is so crowded that a label lands more than `maxShift` px from its tick, the
+ * lowest-priority droppable label on that side is removed and the side is placed again.
  * Coordinates are relative to the ring center.
  */
-export function placeLabels(
-  items: { key: string; text: string; sub?: string; angle: number }[],
-  rAnchor: number,
-  rLabel: number,
-  minGap: number,
-  halfHeight: number,
-): PlacedLabel[] {
+export function placeLabels(items: LabelInput[], rAnchor: number, rLabel: number, minGap: number, halfHeight: number, maxShift = 64): PlacedLabel[] {
   const out: PlacedLabel[] = [];
   for (const side of ["right", "left"] as const) {
-    const xs = items
-      .filter((it) => (side === "right" ? Math.sin(it.angle) >= 0 : Math.sin(it.angle) < 0))
-      .map((it) => {
-        const [ax, ay] = polar(0, 0, rAnchor, it.angle);
-        const [lx, ly] = polar(0, 0, rLabel, it.angle);
-        return { ...it, side, x: lx, y: ly, anchorX: ax, anchorY: ay };
-      })
-      .sort((p, q) => p.y - q.y);
-    // forward pass pushes down, backward pass pushes up, then clamp
-    for (let i = 1; i < xs.length; i++) if (xs[i]!.y - xs[i - 1]!.y < minGap) xs[i]!.y = xs[i - 1]!.y + minGap;
-    const limit = halfHeight - 6;
-    if (xs.length && xs[xs.length - 1]!.y > limit) {
-      xs[xs.length - 1]!.y = limit;
-      for (let i = xs.length - 2; i >= 0; i--) if (xs[i + 1]!.y - xs[i]!.y < minGap) xs[i]!.y = xs[i + 1]!.y - minGap;
-    }
-    for (const p of xs) {
-      // keep label x on the ring's circle for its final y, so leader lines stay short
-      const yy = Math.max(-rLabel, Math.min(rLabel, p.y));
-      const xx = Math.sqrt(Math.max(0, rLabel * rLabel - yy * yy));
-      p.x = side === "right" ? Math.max(p.x, xx * 0.92) : Math.min(p.x, -xx * 0.92);
-      out.push(p);
+    let mine = items.filter((it) => (side === "right" ? Math.sin(it.angle) >= 0 : Math.sin(it.angle) < 0)).map((it) => ({ ...it, side }));
+    for (let guard = 0; guard < 40; guard++) {
+      const placed = placeSide(mine, rAnchor, rLabel, minGap, halfHeight, side);
+      const worst = Math.max(0, ...placed.map((p) => Math.abs(p.y - p.ideal)));
+      const droppable = mine.filter((m) => m.priority > 0);
+      if (worst <= maxShift || !droppable.length) {
+        for (const p of placed) out.push({ key: p.key, text: p.text, lines: p.lines, sub: p.sub, angle: p.angle, side, x: p.x, y: p.y, anchorX: p.anchorX, anchorY: p.anchorY });
+        break;
+      }
+      const drop = droppable.reduce((a, b) => (b.priority > a.priority ? b : a));
+      mine = mine.filter((m) => m !== drop);
     }
   }
   return out;

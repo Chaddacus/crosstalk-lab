@@ -137,22 +137,34 @@ function byConfidenceDesc(scored: Scored[]): Scored[] {
 
 export interface SelectiveReport {
   curve: { coverage: number; accuracy: number; confidence: number }[];
-  /** Area under the risk–coverage curve: mean of the error rate of the top-i items, i = 1..n. Lower is better. */
+  /**
+   * Area under the risk–coverage curve over the items that returned an answer: mean of the error rate of the
+   * top-i answered items, i = 1..n_answered. Lower is better. Errored items are not part of AURC.
+   */
   aurc: number;
+  /** Items that returned an answer (the curve's points). */
+  answered: number;
+  /** All items, errors included: the coverage denominator, the same one `gate()` uses. */
+  total: number;
 }
 
+/**
+ * Selective accuracy vs coverage. Coverage uses the same population as `gate()`: all items, with errored items
+ * never covered (they always go to HUMAN). With errors, the curve therefore ends below coverage 1.
+ */
 export function selective(scored: Scored[]): SelectiveReport {
   const s = byConfidenceDesc(scored);
   let correct = 0;
   let riskSum = 0;
   const curve: SelectiveReport["curve"] = [];
+  const total = scored.length;
   s.forEach((x, i) => {
     if (x.correct) correct++;
     const acc = correct / (i + 1);
     riskSum += 1 - acc;
-    curve.push({ coverage: (i + 1) / s.length, accuracy: acc, confidence: x.confidence });
+    curve.push({ coverage: (i + 1) / total, accuracy: acc, confidence: x.confidence });
   });
-  return { curve, aurc: s.length ? riskSum / s.length : NaN };
+  return { curve, aurc: s.length ? riskSum / s.length : NaN, answered: s.length, total };
 }
 
 export interface ReliabilityReport {

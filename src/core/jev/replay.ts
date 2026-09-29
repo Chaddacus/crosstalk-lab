@@ -25,9 +25,31 @@ export function createReplayBackend(store: ReplayStore, label = "REPLAY · cache
       const hash = await requestHash(req);
       const json = await store.get(hash);
       if (json === undefined) throw new ReplayMiss(hash);
-      return fromWire(json, req, { backend: "replay", requestHash: hash, wallMs: performance.now() - t0, cached: true, retries: 0 });
+      const res = fromWire(json, req, { backend: "replay", requestHash: hash, wallMs: performance.now() - t0, cached: true, retries: 0 });
+      return applyProvenance(res, (json as { [PROVENANCE_KEY]?: ReplayProvenance })[PROVENANCE_KEY]);
     },
   };
+}
+
+/**
+ * Where a replayed value came from. Mock fixtures store the mock's derived confidence and its characters ÷ 4
+ * token estimate in ordinary wire fields; this keeps their labels honest ("derived", "estimated") on replay.
+ */
+export interface ReplayProvenance {
+  confidence?: "derived";
+  inputTokens?: "estimated";
+}
+
+/** Private key on a replayed wire JSON (ignored by the wire schema, read by the replay backend). */
+export const PROVENANCE_KEY = "x_crosstalk_provenance";
+
+function applyProvenance(res: DecideResult, p: ReplayProvenance | undefined): DecideResult {
+  if (!p) return res;
+  const decisions = { ...res.decisions };
+  if (p.confidence === "derived")
+    for (const [id, d] of Object.entries(decisions)) if (d.kind === "choice" && d.confidence !== null) decisions[id] = { ...d, confidenceSource: "derived" };
+  const usage = p.inputTokens === "estimated" && res.usage.costSource !== "reported" ? { ...res.usage, costSource: "estimated" as const } : res.usage;
+  return { ...res, decisions, usage };
 }
 
 /**
@@ -44,6 +66,8 @@ export interface ReplayFixture {
   split: string;
   questionId: string;
   options: string[];
+  /** Absent in fixtures made from real responses (their fields are as reported). */
+  provenance?: ReplayProvenance;
   responses: Record<string, { choice: string; p: number[]; confidence: number; input_tokens: number }>;
 }
 
@@ -56,6 +80,7 @@ export function fixtureResponseToWire(f: ReplayFixture, hash: string): unknown |
     model: f.model,
     answers: { [f.questionId]: { type: "choice", choice: r.choice, probabilities, confidence: r.confidence } },
     usage: { input_tokens: r.input_tokens, output_tokens: 0 },
+    ...(f.provenance ? { [PROVENANCE_KEY]: f.provenance } : {}),
   };
 }
 

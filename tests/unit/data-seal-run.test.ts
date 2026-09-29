@@ -203,6 +203,65 @@ describe("exports", () => {
       ],
     });
     expect(f.content.match(/\n {2}it\(/g)).toHaveLength(2);
-    expect(f.content).toContain('toBe("DeleteCall")');
+    expect(f.content).toContain('check("b", "DeleteCall")');
+    expect(f.content).toContain("createMockBackend()");
+  });
+});
+
+describe("runner: model identity", () => {
+  const v0 = JSON.parse(readFileSync(`${DIR}/criteria.v0.json`, "utf8"));
+  const items = dev.slice(0, 5);
+  it("keys the run by the requested model and records a different reported model separately", async () => {
+    const mock = createMockBackend();
+    const aliasing: DecisionBackend = {
+      kind: "http",
+      label: "alias",
+      async decide(req) {
+        const res = await mock.decide(req);
+        return { ...res, model: "jev-1.13.0-20260917" };
+      },
+    };
+    const r = await runItems({ backend: aliasing, items, criteria: v0, criteriaHash: "h", model: "jev-latest", split: "dev" });
+    expect(r.model).toBe("jev-latest");
+    expect(r.reportedModels).toEqual(["jev-1.13.0-20260917"]);
+    const same = await runItems({ backend: mock, items, criteria: v0, criteriaHash: "h", model: "mock-lexsim-1", split: "dev" });
+    expect(same.reportedModels).toBeUndefined();
+  });
+});
+
+describe("replay keeps the mock's provenance labels", () => {
+  it("derived confidence and estimated tokens stay labeled on replay", async () => {
+    const { readdirSync } = await import("node:fs");
+    const { fixtureStore, createReplayBackend } = await import("../../src/core/jev/replay.ts");
+    const { buildRequest } = await import("../../src/core/run/request.ts");
+    const f = readdirSync("fixtures/replay").find((x) => x.includes(".v0."))!;
+    const fx = JSON.parse(readFileSync(`fixtures/replay/${f}`, "utf8"));
+    expect(fx.provenance).toEqual({ confidence: "derived", inputTokens: "estimated" });
+    const v0 = JSON.parse(readFileSync(`${DIR}/criteria.v0.json`, "utf8"));
+    const res = await createReplayBackend(fixtureStore([fx])).decide(buildRequest(v0, dev[0]!.query, fx.model));
+    const d = res.decisions.operation!;
+    expect(d.kind === "choice" && d.confidenceSource).toBe("derived");
+    expect(res.usage.costSource).toBe("estimated");
+  });
+});
+
+describe("budget: responses with missing or bad usage", () => {
+  it("a sent request with no usage is settled at the reservation, never $0", async () => {
+    const { withGuards } = await import("../../src/core/run/guarded.ts");
+    const v0 = JSON.parse(readFileSync(`${DIR}/criteria.v0.json`, "utf8"));
+    const noUsage: DecisionBackend = {
+      kind: "http",
+      label: "no usage",
+      async decide(req) {
+        const res = await createMockBackend().decide(req);
+        return { ...res, usage: { inputTokens: 10, outputTokens: null, costUsd: 0, costSource: "estimated" } };
+      },
+    };
+    const budget = new Budget(1);
+    const lim = createLimiter({ requestsPerMinute: 1e9, burst: 100, concurrency: 4 });
+    const { buildRequest } = await import("../../src/core/run/request.ts");
+    await withGuards(noUsage, lim, budget).decide(buildRequest(v0, "hang up call CAxxxx0042", "m"));
+    expect(budget.spentUsd).toBeGreaterThan(0);
+    expect(budget.reservedUsd).toBe(0);
   });
 });

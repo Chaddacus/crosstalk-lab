@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { NONE } from "../../core/data/catalog.ts";
 import { criterionFields } from "../../core/jev/mock-lexsim.ts";
 import { tokenize } from "../../core/jev/text.ts";
@@ -7,11 +8,15 @@ import { catalog, opsById } from "../data.ts";
 import { useAnalysis } from "../analysis.ts";
 import { useStore, viewVersion } from "../store.ts";
 import { MethodBadge } from "../ui/MethodBadge.tsx";
+import { useDialog } from "../ui/dialog.ts";
+import { useLayoutMode } from "../lib/hooks.ts";
+import { codeLabel } from "../lib/errors.ts";
 
-type StateFilter = "all" | "correct" | "wrong" | "fixed" | "broke";
+type StateFilter = "all" | "correct" | "wrong" | "fixed" | "broke" | "error";
 
 export function ItemsView() {
   const { scored, diff, run, before } = useAnalysis();
+  const narrow = useLayoutMode() === "narrow";
   const itemId = useStore((s) => s.itemId);
   const [family, setFamily] = useState("all");
   const [state, setState] = useState<StateFilter>("all");
@@ -25,6 +30,7 @@ export function ItemsView() {
         if (method !== "all" && opsById.get(s.gold)?.method !== method) return false;
         if (state === "correct" && !s.correct) return false;
         if (state === "wrong" && (s.correct || s.error)) return false;
+        if (state === "error" && !s.error) return false;
         if ((state === "fixed" || state === "broke") && statusById.get(s.id) !== state) return false;
         if (q && !s.query.toLowerCase().includes(q.toLowerCase()) && !s.gold.toLowerCase().includes(q.toLowerCase())) return false;
         return true;
@@ -38,13 +44,13 @@ export function ItemsView() {
           <span className="eyebrow mr-2">Dev items</span>
           <input className="field !w-56 !py-1.5" placeholder="Search query or gold…" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search items" />
           <Select label="Family" value={family} onChange={setFamily} options={["all", ...catalog.families.map((f) => f.name), "none"]} />
-          <Select label="State" value={state} onChange={(v) => setState(v as StateFilter)} options={["all", "correct", "wrong", "fixed", "broke"]} />
+          <Select label="State" value={state} onChange={(v) => setState(v as StateFilter)} options={["all", "correct", "wrong", "fixed", "broke", "error"]} />
           <Select label="Method" value={method} onChange={setMethod} options={["all", "GET", "POST", "DELETE"]} />
           <span className="mono ml-auto text-[11px] text-faint">
             {rows.length} of {scored.length}
           </span>
         </div>
-        <div className="scroll-thin min-h-0 flex-1 overflow-auto">
+        <div className="scroll-thin min-h-0 flex-1 overflow-auto" tabIndex={0} role="region" aria-label="Dev items table" data-testid="items-scroll">
           <table className="w-full min-w-[820px] border-separate border-spacing-0 text-[12px]">
             <thead className="sticky top-0 z-10 bg-panel">
               <tr className="text-left">
@@ -65,7 +71,19 @@ export function ItemsView() {
                     onClick={() => useStore.setState({ itemId: s.id })}
                     data-testid="item-row"
                   >
-                    <td className="mono whitespace-nowrap border-b border-line px-3 py-2 text-faint">{s.id}</td>
+                    <td className="mono whitespace-nowrap border-b border-line px-1.5 py-1 text-faint">
+                      <button
+                        className="min-h-8 rounded px-1.5 text-left hover:text-text"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          useStore.setState({ itemId: s.id });
+                        }}
+                        aria-label={`Inspect item ${s.id}`}
+                        data-testid="item-open"
+                      >
+                        {s.id}
+                      </button>
+                    </td>
                     <td className="max-w-[300px] truncate border-b border-line px-3 py-2 text-text" title={s.query}>{s.query}</td>
                     <td className="mono max-w-[170px] truncate border-b border-line px-3 py-2 text-muted">{s.gold === NONE ? "NO MATCH" : s.gold}</td>
                     <td className={`mono max-w-[170px] truncate border-b border-line px-3 py-2 ${s.error ? "text-err" : s.correct ? "text-fixed" : "text-err"}`}>
@@ -95,7 +113,11 @@ export function ItemsView() {
           </table>
         </div>
       </div>
-      <AnimatePresence>{itemId && run && <Inspector key={itemId} id={itemId} before={before} />}</AnimatePresence>
+      {narrow ? (
+        <AnimatePresence>{itemId && run && <InspectorSheet key={itemId} id={itemId} before={before} />}</AnimatePresence>
+      ) : (
+        <AnimatePresence>{itemId && run && <Inspector key={itemId} id={itemId} before={before} />}</AnimatePresence>
+      )}
     </div>
   );
 }
@@ -115,7 +137,47 @@ function Select({ label, value, onChange, options }: { label: string; value: str
   );
 }
 
+/** Phone: the inspector as a full-screen dialog above the (inert) app, with its own visible Close button. */
+function InspectorSheet({ id, before }: { id: string; before: ReturnType<typeof useAnalysis>["before"] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useDialog(true, ref, () => useStore.setState({ itemId: null }));
+  return createPortal(
+    <motion.div
+      ref={ref}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Item ${id}`}
+      tabIndex={-1}
+      className="scroll-thin fixed inset-0 z-50 overflow-y-auto bg-panel outline-none"
+      initial={{ y: 24, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 24, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 340, damping: 32 }}
+      data-testid="inspector"
+    >
+      <InspectorBody id={id} before={before} sheet />
+    </motion.div>,
+    document.body,
+  );
+}
+
 function Inspector({ id, before }: { id: string; before: ReturnType<typeof useAnalysis>["before"] }) {
+  return (
+    <motion.aside
+      initial={{ x: 40, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: 40, opacity: 0 }}
+      transition={{ type: "spring", stiffness: 340, damping: 32 }}
+      className="scroll-thin absolute inset-y-0 right-0 z-20 w-full max-w-[400px] overflow-y-auto border-l border-line-2 bg-panel shadow-[-30px_0_80px_-20px_rgb(0_0_0/0.8)] md:relative md:shrink-0"
+      aria-label={`Item ${id}`}
+      data-testid="inspector"
+    >
+      <InspectorBody id={id} before={before} />
+    </motion.aside>
+  );
+}
+
+function InspectorBody({ id, before, sheet = false }: { id: string; before: ReturnType<typeof useAnalysis>["before"]; sheet?: boolean }) {
   const { run, scored } = useAnalysis();
   const backend = useStore((s) => s.backend);
   const v = useStore((s) => viewVersion(s));
@@ -123,6 +185,35 @@ function Inspector({ id, before }: { id: string; before: ReturnType<typeof useAn
   const r = run?.results.find((x) => x.id === id);
   const prev = before?.results.find((x) => x.id === id);
   if (!s || !r || !run) return null;
+  const close = () => useStore.setState({ itemId: null });
+  const header = (
+    <div className={`flex items-center justify-between border-b border-line px-4 py-3 ${sheet ? "sticky top-0 z-10 bg-panel" : ""}`}>
+      <span className="eyebrow">Item · {s.id}</span>
+      <button className="btn btn-ghost h-9 px-2.5" onClick={close} aria-label="Close inspector" data-autofocus data-testid="inspector-close">
+        {sheet ? <span className="text-[12px]">Close</span> : <kbd className="kbd">Esc</kbd>}
+      </button>
+    </div>
+  );
+  if (r.error) {
+    return (
+      <>
+        {header}
+        <div className="p-4" data-testid="inspector-error">
+          <p className="text-[14px] leading-[1.5] text-text">“{s.query}”</p>
+          <div className="mono mt-2 text-[11px] text-muted">
+            gold <span className="text-fixed">{s.gold === NONE ? "NO MATCH" : s.gold}</span>
+          </div>
+          <div className="mt-4 rounded-xl border border-err/40 bg-err/[0.07] p-3">
+            <div className="mono text-[10px] font-semibold tracking-wider text-err">NOT SCORED · {codeLabel(r.error.code).toUpperCase()}</div>
+            <p className="mt-1.5 text-[12px] leading-[1.5] text-muted">This item failed, so it is not counted as right, wrong or unchanged. The backend said:</p>
+            <p className="mono mt-1.5 break-words text-[11px] text-text">
+              {r.error.code}: {r.error.message}
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
   const top = (r.probs ?? [])
     .map((p, i) => ({ o: run.options[i]!, p, prev: prev?.probs?.[i] ?? NaN }))
     .sort((a, b) => b.p - a.p)
@@ -133,20 +224,8 @@ function Inspector({ id, before }: { id: string; before: ReturnType<typeof useAn
   }
   const qTokens = new Set(tokenize(s.query));
   return (
-    <motion.aside
-      initial={{ x: 40, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: 40, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 340, damping: 32 }}
-      className="scroll-thin absolute inset-y-0 right-0 z-20 w-full max-w-[400px] overflow-y-auto border-l border-line-2 bg-panel shadow-[-30px_0_80px_-20px_rgb(0_0_0/0.8)] md:relative md:shrink-0"
-      data-testid="inspector"
-    >
-      <div className="flex items-center justify-between border-b border-line px-4 py-3">
-        <span className="eyebrow">Item · {s.id}</span>
-        <button className="btn btn-ghost h-7 px-2" onClick={() => useStore.setState({ itemId: null })} aria-label="Close inspector">
-          <kbd className="kbd">Esc</kbd>
-        </button>
-      </div>
+    <>
+      {header}
       <div className="p-4">
         <p className="text-[14px] leading-[1.5] text-text">“{s.query}”</p>
         <div className="mono mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-muted">
@@ -208,7 +287,7 @@ function Inspector({ id, before }: { id: string; before: ReturnType<typeof useAn
           </div>
         )}
       </div>
-    </motion.aside>
+    </>
   );
 }
 

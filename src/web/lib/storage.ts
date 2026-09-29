@@ -7,6 +7,18 @@ import type { LedgerRow } from "../../core/eval/seal.ts";
 const PREFIX = "crosstalk:";
 const LEDGER_KEY = PREFIX + "ledger:v1";
 
+/** True when localStorage can be written (false in some private windows, previews and blocked-site-data modes). */
+export function storageWorks(): boolean {
+  try {
+    const k = PREFIX + "probe";
+    localStorage.setItem(k, "1");
+    localStorage.removeItem(k);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export function loadPref<T>(key: string, fallback: T, valid: (v: unknown) => boolean): T {
   try {
     const raw = localStorage.getItem(PREFIX + key);

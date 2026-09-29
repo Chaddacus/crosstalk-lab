@@ -5,3 +5,5 @@ export const usd = (x: number) => (!Number.isFinite(x) ? "—" : x === 0 ? "$0.0
 export const secs = (ms: number) => (!Number.isFinite(ms) ? "—" : ms < 1000 ? `${Math.max(0, ms).toFixed(0)} ms` : `${(ms / 1000).toFixed(2)} s`);
 export const int = (x: number) => (Number.isFinite(x) ? Math.round(x).toLocaleString("en-US") : "—");
 export const short = (h: string, n = 8) => h.slice(0, n);
+/** "1 item", "2 items". */
+export const plural = (n: number, word: string, many = `${word}s`) => (n === 1 ? word : many);

@@ -10,7 +10,8 @@
  *  [G]    guessed: tie-breaking, 422 body shape. Code does not depend on them.
  */
 import { z } from "zod";
-import { RequestError, SchemaError } from "./errors.ts";
+import { CrosstalkError, RequestError, SchemaError } from "./errors.ts";
+import { requestCanonical } from "./request-hash.ts";
 import {
   type Decision,
   type DecideRequest,
@@ -120,10 +121,11 @@ const NoulAnswer = z.looseObject({ type: z.literal("noul"), noul: z.number() });
 export const WireResponseSchema = z.looseObject({
   model: z.string(),
   answers: z.record(z.string(), z.looseObject({ type: z.string() })),
+  // Billing fields must be finite and nonnegative: a negative or missing value must never lower the spend count.
   usage: z.looseObject({
-    input_tokens: z.number().optional(),
-    output_tokens: z.number().optional(),
-    cost: z.number().optional(),
+    input_tokens: z.number().finite().nonnegative().optional(),
+    output_tokens: z.number().finite().nonnegative().optional(),
+    cost: z.number().finite().nonnegative().optional(),
   }),
   id: z.string().optional(),
   provider: z.string().optional(),
@@ -206,8 +208,11 @@ export function fromWire(json: unknown, req: DecideRequest, meta: FromWireMeta):
       decisions[id] = { kind: "noul", p: a.data.noul };
     }
   }
-  const inputTokens = res.usage.input_tokens ?? 0;
-  if (res.usage.input_tokens === undefined) warnings.push("usage.input_tokens missing");
+  // Missing usage.input_tokens: estimate from the request size (characters ÷ 4) and label it "estimated",
+  // so the spend cap never records a sent request as free.
+  const reportedTokens = res.usage.input_tokens;
+  const inputTokens = reportedTokens ?? Math.ceil(requestCanonical(req).length / 4);
+  if (reportedTokens === undefined) warnings.push("usage.input_tokens missing: tokens estimated as characters / 4");
   const reported = res.usage.cost;
   return {
     decisions,
@@ -216,10 +221,36 @@ export function fromWire(json: unknown, req: DecideRequest, meta: FromWireMeta):
       inputTokens,
       outputTokens: res.usage.output_tokens ?? null,
       costUsd: reported ?? inputTokens * JEV_USD_PER_INPUT_TOKEN,
-      costSource: reported !== undefined ? "reported" : "list-price",
+      costSource: reported !== undefined ? "reported" : reportedTokens !== undefined ? "list-price" : "estimated",
     },
     meta: { ...meta, provider: res.provider, id: res.id, warnings },
   };
+}
+
+/**
+ * Best-effort cost of a response that arrived (HTTP 2xx) but did not parse. The upstream still billed it.
+ * Returns the reported usage.cost, else usage.input_tokens at list price, else null (unknown).
+ */
+export function billedUsdFromRaw(json: unknown): number | null {
+  const u = (json as { usage?: { cost?: unknown; input_tokens?: unknown } } | null)?.usage;
+  if (!u || typeof u !== "object") return null;
+  const ok = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x) && x >= 0;
+  if (ok(u.cost)) return u.cost;
+  if (ok(u.input_tokens)) return u.input_tokens * JEV_USD_PER_INPUT_TOKEN;
+  return null;
+}
+
+/** fromWire for a response that was billed: on a parse failure, the error carries `billed` and the best known cost. */
+export function fromWireBilled(json: unknown, req: DecideRequest, meta: FromWireMeta): DecideResult {
+  try {
+    return fromWire(json, req, meta);
+  } catch (e) {
+    if (e instanceof CrosstalkError) {
+      e.billed = true;
+      e.billedUsd = billedUsdFromRaw(json);
+    }
+    throw e;
+  }
 }
 
 function checkDistribution(probs: number[], label: string, warnings: string[]) {

@@ -8,6 +8,7 @@
  * | openrouter | https://openrouter.ai/api  | OPENROUTER_API_KEY  | typesafe/jev-1.13    |
  * | compat     | CROSSTALK_COMPAT_URL       | CROSSTALK_COMPAT_KEY (optional) | CROSSTALK_MODEL (required) |
  */
+import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 
 export type PresetName = "typesafe" | "openrouter" | "compat";
@@ -54,4 +55,22 @@ export function resolvePreset(env: NodeJS.ProcessEnv = process.env): Preset {
 /** True when the preset can make calls (compat may run without a key). */
 export function presetReady(p: Preset): boolean {
   return p.name === "compat" || !!p.apiKey;
+}
+
+/** Base URL without trailing slashes, lowercased scheme and host: the upstream's identity for the cache. */
+export function normalizeBaseUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    return `${u.protocol}//${u.host}${u.pathname.replace(/\/+$/, "")}`.toLowerCase();
+  } catch {
+    return url.replace(/\/+$/, "").toLowerCase();
+  }
+}
+
+/**
+ * Cache namespace for one upstream: preset name plus a short hash of the normalized base URL.
+ * Answers from a fake or compat server can never be served as, or mixed with, answers from TypeSafe.
+ */
+export function cacheNamespace(p: Pick<Preset, "name" | "baseUrl">): string {
+  return `${p.name}-${createHash("sha256").update(normalizeBaseUrl(p.baseUrl)).digest("hex").slice(0, 12)}`;
 }

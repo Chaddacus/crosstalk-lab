@@ -1,16 +1,16 @@
 {
-  "pair": ["UpdateCall", "UpdateMember"],
+  "pair": ["UpdateConferenceRecording", "DeleteConferenceRecording"],
   "edits": {
-    "UpdateCall": {
-      "what": "Initiates a call redirect or terminates a call: send a live call to new TwiML, or hang up an in-progress call."
+    "UpdateConferenceRecording": {
+      "what": "Changes the status of a conference recording: pause, resume or stop an in-progress recording. The recording is kept."
     },
-    "UpdateMember": {
-      "not_for": "Redirecting or hanging up a call that is not waiting in a queue."
+    "DeleteConferenceRecording": {
+      "not_for": "Stopping, pausing or resuming a recording that is still in progress."
     }
   },
   "expected": {
     "fixed": 2,
-    "broke": 1,
-    "unchanged": 180
+    "broke": 0,
+    "unchanged": 181
   }
 }

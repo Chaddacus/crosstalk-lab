@@ -5,7 +5,15 @@ import { computeLeakage, type LeakageReport } from "../core/eval/leakage.ts";
 import { diffRuns, type RunDiff } from "../core/eval/diff.ts";
 import type { RunRecord } from "../core/run/runner.ts";
 import { deleteOps, devItems } from "./data.ts";
-import { mergedRun, useStore } from "./store.ts";
+import { mergedRun, useStore, type ActiveRun } from "./store.ts";
+
+/**
+ * A run can be exported (criteria, regressions, run JSON, policy.json) only when it is finished: it has a run
+ * hash and nothing is streaming. A half-finished rerun mixes new and old results under the new criteria hash.
+ */
+export function runIsFinal(run: RunRecord | null, active: ActiveRun | null): run is RunRecord {
+  return !!run && !!run.runHash && !active;
+}
 
 export interface Analysis {
   run: RunRecord | null;

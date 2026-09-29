@@ -3,6 +3,10 @@
  */
 export class CrosstalkError extends Error {
   readonly code: string;
+  /** Set when the request reached the upstream and was billed even though it then failed (for example a bad body). */
+  billed?: boolean;
+  /** The best known cost of a billed failure; null or undefined when unknown (the budget then keeps the reservation). */
+  billedUsd?: number | null;
   constructor(code: string, message: string) {
     super(message);
     this.code = code;

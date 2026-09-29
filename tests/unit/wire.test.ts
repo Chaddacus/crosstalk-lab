@@ -198,3 +198,22 @@ describe("fromWire: robustness", () => {
     expect(() => fromWire({ model: "m", answers: { department: answer() } }, choiceReq, meta)).toThrow(SchemaError);
   });
 });
+
+describe("fromWire: usage", () => {
+  const body = (usage: Record<string, unknown>) => ({
+    model: "jev-1.13.0",
+    answers: { department: { type: "choice", choice: "billing", probabilities: { billing: 0.88, technical: 0.12, sales: 0 }, confidence: 0.81 } },
+    usage,
+  });
+  it("rejects negative or non-numeric token counts and costs", () => {
+    expect(() => fromWire(body({ input_tokens: -1 }), choiceReq, meta)).toThrow(SchemaError);
+    expect(() => fromWire(body({ input_tokens: 10, cost: -0.5 }), choiceReq, meta)).toThrow(SchemaError);
+    expect(() => fromWire(body({ input_tokens: "10" }), choiceReq, meta)).toThrow(SchemaError);
+  });
+  it("estimates tokens from the request size when usage.input_tokens is missing, and says so", () => {
+    const r = fromWire(body({}), choiceReq, meta);
+    expect(r.usage.inputTokens).toBeGreaterThan(0);
+    expect(r.usage.costSource).toBe("estimated");
+    expect(r.meta.warnings.join(" ")).toMatch(/input_tokens missing/);
+  });
+});

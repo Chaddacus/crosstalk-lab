@@ -10,7 +10,8 @@ export default defineConfig({
     host: "127.0.0.1",
     port: 5173,
     proxy: {
-      "/api": { target: `http://127.0.0.1:${livePort}`, changeOrigin: false },
+      // changeOrigin: the proxied Host becomes 127.0.0.1:<port>, which the live server's Host check expects.
+      "/api": { target: `http://127.0.0.1:${livePort}`, changeOrigin: true },
     },
   },
   // The static preview has no local server: /api is not proxied, so LIVE stays disabled.

@@ -4,8 +4,11 @@
  *
  * Retry policy copies the TypeSafe JS SDK defaults [C: RetryPolicy docs]:
  *   maxRetries 2; backoff 500 ms doubling to 5,000 ms; jitter 0.25 (fraction subtracted);
- *   retry statuses 408, 429, 500-599 (covers 529); honor Retry-After and retry-after-ms up to 60,000 ms
- *   (longer server delays fall back to backoff); retry connection errors and timeouts. Never retry 401 or 422.
+ *   retry statuses 408, 429, 500-599 (covers 529); honor Retry-After and retry-after-ms, capped at 60,000 ms
+ *   (a longer server delay waits the cap, it never retries sooner); retry connection errors and timeouts.
+ *   Never retry 401 or 422.
+ * Optional total deadline (`deadlineMs`): no attempt starts, and no retry is scheduled, past it. The local proxy
+ * uses it so it gives up before the browser does, and never keeps retrying (and spending) for a caller that left.
  * Clock, sleep and random source are injectable so tests are fast and repeatable.
  * The key is only ever placed in the Authorization header. It is never logged or put in an error.
  */
@@ -22,7 +25,7 @@ import {
   redact,
 } from "./errors.ts";
 import type { DecideOptions, DecideRequest, DecideResult, DecisionBackend } from "./types.ts";
-import { fromWire, toWire, type WireRequest } from "./wire.ts";
+import { fromWireBilled, toWire, type WireRequest } from "./wire.ts";
 import { hashJson } from "./canonical.ts";
 
 export interface RetryPolicy {
@@ -68,6 +71,8 @@ export interface HttpBackendConfig {
   now?: () => number;
   logger?: Logger;
   extraHeaders?: Record<string, string>;
+  /** Total time budget for one call, retries included. Default: none. */
+  deadlineMs?: number;
 }
 
 /** Parse `retry-after-ms` (milliseconds) or `Retry-After` (seconds or an HTTP date). Returns ms or null. */
@@ -113,13 +118,13 @@ export function createHttpBackend(cfg: HttpBackendConfig): DecisionBackend & {
   const secrets = [cfg.apiKey];
   const log: Logger = (level, message) => cfg.logger?.(level, redact(message, secrets));
 
-  async function attempt(body: string, signal?: AbortSignal): Promise<{ res: Response; text: string }> {
+  async function attempt(body: string, signal: AbortSignal | undefined, limitMs: number): Promise<{ res: Response; text: string }> {
     const ctrl = new AbortController();
     let timedOut = false;
     const timer = setTimeout(() => {
       timedOut = true;
       ctrl.abort();
-    }, timeoutMs);
+    }, limitMs);
     const onAbort = () => ctrl.abort();
     signal?.addEventListener("abort", onAbort, { once: true });
     try {
@@ -130,7 +135,7 @@ export function createHttpBackend(cfg: HttpBackendConfig): DecisionBackend & {
       return { res, text };
     } catch (e) {
       if (signal?.aborted) throw new AbortedError();
-      if (timedOut) throw new TimeoutError(timeoutMs);
+      if (timedOut) throw new TimeoutError(limitMs);
       throw new ConnectionError(`connection failed: ${redact((e as Error).message ?? String(e), secrets)}`);
     } finally {
       clearTimeout(timer);
@@ -142,14 +147,17 @@ export function createHttpBackend(cfg: HttpBackendConfig): DecisionBackend & {
     const body = JSON.stringify(wire);
     const t0 = now();
     let retries = 0;
+    const deadline = cfg.deadlineMs;
+    const left = () => (deadline === undefined ? Infinity : deadline - (now() - t0));
     for (;;) {
       if (opts.signal?.aborted) throw new AbortedError();
+      if (left() <= 0) throw new TimeoutError(deadline!);
       let err!: CrosstalkError;
       let retryable = false;
       let wait: number | null = null;
       let got: { res: Response; text: string } | null = null;
       try {
-        got = await attempt(body, opts.signal);
+        got = await attempt(body, opts.signal, Math.max(1, Math.min(timeoutMs, left())));
       } catch (e) {
         if (!(e instanceof CrosstalkError) || e instanceof AbortedError) throw e;
         err = e;
@@ -172,11 +180,12 @@ export function createHttpBackend(cfg: HttpBackendConfig): DecisionBackend & {
         retryable = policy.httpStatuses.has(res.status);
         if (retryable && policy.respectRetryAfter) {
           const ra = parseRetryAfter(res.headers, now());
-          if (ra !== null && ra <= policy.maxRetryAfterMs) wait = ra;
+          if (ra !== null) wait = Math.min(ra, policy.maxRetryAfterMs);
         }
       }
       if (!retryable || retries >= policy.maxRetries) throw err;
       const delay = wait ?? backoffDelay(retries, policy, random);
+      if (delay >= left()) throw err;
       log("warn", `${err.message}; retry ${retries + 1}/${policy.maxRetries} in ${Math.round(delay)} ms`);
       retries++;
       await sleep(delay);
@@ -191,7 +200,7 @@ export function createHttpBackend(cfg: HttpBackendConfig): DecisionBackend & {
       const wire = toWire(req);
       const requestHash = await hashJson({ model: wire.model, state: wire.state, questions: wire.questions });
       const r = await sendWire(wire, opts);
-      return fromWire(r.json, req, { backend: "http", requestHash, wallMs: r.wallMs, cached: false, retries: r.retries });
+      return fromWireBilled(r.json, req, { backend: "http", requestHash, wallMs: r.wallMs, cached: false, retries: r.retries });
     },
   };
 }
