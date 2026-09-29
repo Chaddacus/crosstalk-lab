@@ -16,6 +16,14 @@
       "match": 128,
       "noMatch": 55,
       "frozenAt": "2026-09-29T08:26:39.132Z"
+    },
+    "dev": {
+      "file": "dev.jsonl",
+      "sha256": "22b020f16e75c1ace6af87b4885ce375ffca6bd870dc45dae97cc2e5741df29b",
+      "count": 183,
+      "match": 128,
+      "noMatch": 55,
+      "frozenAt": "2026-09-29T08:27:43.175Z"
     }
   }
 }

@@ -1,0 +1,183 @@
+{"id":"d-0001","query":"Which credential lists can phones use to register on SIP domain SDxxxx0002?","gold":"ListSipAuthRegistrationsCredentialListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0002","query":"List all voicemail transcriptions on the account.","gold":"ListTranscription","kind":"match","persona":"billing_analyst","family":"Transcriptions"}
+{"id":"d-0003","query":"Remove the participant CAxxxx8283 from conference CFxxxx5007.","gold":"DeleteParticipant","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0004","query":"Create a Twilio Function environment variable.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0005","query":"Collect a card payment from the caller on CAxxxx7373.","gold":"CreatePayments","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0006","query":"Terminate call CAxxxx8181 immediately.","gold":"UpdateCall","kind":"match","persona":"support_agent","family":"Calls"}
+{"id":"d-0007","query":"Show me details of conference CFxxxx5005.","gold":"FetchConference","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0008","query":"Turn on real-time speech-to-text for call CAxxxx7474.","gold":"CreateRealtimeTranscription","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0009","query":"Change my console email notification preferences.","gold":"none_of_these","kind":"no_match","persona":"security_admin","family":"none"}
+{"id":"d-0010","query":"Create a new Flex plugin.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0011","query":"Set up a Voice SDK access token in our backend.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0012","query":"What voice URL is configured on number PNxxxx7171?","gold":"FetchIncomingPhoneNumber","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0013","query":"Pull up call CAxxxx1717. Who called whom and when?","gold":"FetchCall","kind":"match","persona":"support_agent","family":"Calls"}
+{"id":"d-0014","query":"Which credential lists authenticate calls on SIP domain SDxxxx0002?","gold":"ListSipAuthCallsCredentialListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0015","query":"Show me the full details of address ADxxxx0052.","gold":"FetchAddress","kind":"match","persona":"telecom_admin","family":"Addresses"}
+{"id":"d-0016","query":"Resume recording on call CAxxxx6264 now that the card number has been captured.","gold":"UpdateCallRecording","kind":"match","persona":"support_agent","family":"Calls"}
+{"id":"d-0017","query":"What is the SLA for Twilio support tickets?","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0018","query":"Give me a day-by-day breakdown of call minutes for this quarter.","gold":"ListUsageRecordDaily","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0019","query":"Show the status of SMS SMxxxx2828.","gold":"FetchMessage","kind":"match","persona":"support_agent","family":"Messages"}
+{"id":"d-0020","query":"What is our current account balance?","gold":"FetchBalance","kind":"match","persona":"billing_analyst","family":"Balance"}
+{"id":"d-0021","query":"What is the maximum length of an SMS before it gets split?","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0022","query":"Show monthly usage for the past year.","gold":"ListUsageRecordMonthly","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0023","query":"Move agent 42 to the Spanish queue in Flex.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0024","query":"Create a WhatsApp sender profile for our brand.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0025","query":"Rotate the TLS certificate on our load balancer.","gold":"none_of_these","kind":"no_match","persona":"security_admin","family":"none"}
+{"id":"d-0026","query":"Is voicemail transcription accurate for accents?","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0027","query":"Show all our numbers with their friendly names.","gold":"ListIncomingPhoneNumber","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0028","query":"Check if 555-0114 is a mobile or landline number.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0029","query":"Remove call CAxxxx4040 from the account logs entirely.","gold":"DeleteCall","kind":"match","persona":"security_admin","family":"Calls"}
+{"id":"d-0030","query":"Set up call forwarding on my personal cell phone.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0031","query":"How do conference recordings get billed?","gold":"none_of_these","kind":"no_match","persona":"billing_analyst","family":"none"}
+{"id":"d-0032","query":"List all messages sent to 555-0193 this month.","gold":"ListMessage","kind":"match","persona":"billing_analyst","family":"Messages"}
+{"id":"d-0033","query":"Start forking the audio of call CAxxxx7676 to our transcription websocket.","gold":"CreateStream","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0034","query":"Add a new SIP user to credential list CLxxxx0006.","gold":"CreateSipCredential","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0035","query":"Book a flight to Denver for the offsite.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0036","query":"Import our contacts from a CSV into the CRM.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0037","query":"Recommend a good headset for agents.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0038","query":"Which number types can we get in Canada (country code CA)?","gold":"FetchAvailablePhoneNumberCountry","kind":"match","persona":"telecom_admin","family":"AvailablePhoneNumbers"}
+{"id":"d-0039","query":"Which numbers are tied to address ADxxxx0052?","gold":"ListDependentPhoneNumber","kind":"match","persona":"telecom_admin","family":"Addresses"}
+{"id":"d-0040","query":"Show all recordings on the account from last week.","gold":"ListRecording","kind":"match","persona":"billing_analyst","family":"Recordings"}
+{"id":"d-0041","query":"Show all the images attached to message MMxxxx3131.","gold":"ListMedia","kind":"match","persona":"support_agent","family":"Messages"}
+{"id":"d-0042","query":"Stop the websocket stream named \"bot-audio\" on call CAxxxx7676.","gold":"UpdateStream","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0043","query":"Add a new emergency address for the Austin office: 100 Example Ave.","gold":"CreateAddress","kind":"match","persona":"telecom_admin","family":"Addresses"}
+{"id":"d-0044","query":"List the account's recent error notifications.","gold":"ListNotification","kind":"match","persona":"developer","family":"Notifications"}
+{"id":"d-0045","query":"Show me the settings for TwiML app APxxxx0333.","gold":"FetchApplication","kind":"match","persona":"developer","family":"Applications"}
+{"id":"d-0046","query":"Find recording RExxxx0909 and give me its duration.","gold":"FetchRecording","kind":"match","persona":"support_agent","family":"Recordings"}
+{"id":"d-0047","query":"List every application in the account.","gold":"ListApplication","kind":"match","persona":"developer","family":"Applications"}
+{"id":"d-0048","query":"Show transcription TRxxxx0041.","gold":"FetchTranscription","kind":"match","persona":"support_agent","family":"Transcriptions"}
+{"id":"d-0049","query":"Delete recording RExxxx0910.","gold":"DeleteRecording","kind":"match","persona":"security_admin","family":"Recordings"}
+{"id":"d-0050","query":"Update our A2P campaign use case.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0051","query":"What permissions does the authorized Connect app CNxxxx1001 have?","gold":"FetchAuthorizedConnectApp","kind":"match","persona":"security_admin","family":"AuthorizedConnectApps"}
+{"id":"d-0052","query":"Cancel the scheduled message SMxxxx2829 before it goes out.","gold":"UpdateMessage","kind":"match","persona":"support_agent","family":"Messages"}
+{"id":"d-0053","query":"Configure an Elastic SIP Trunk termination URI.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0054","query":"What is the best time of day to send marketing texts?","gold":"none_of_these","kind":"no_match","persona":"billing_analyst","family":"none"}
+{"id":"d-0055","query":"Enable Voice Insights for all calls.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0056","query":"Publish the new version of our Studio IVR flow.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0057","query":"Show transcription TRxxxx0031 of recording RExxxx0909.","gold":"FetchRecordingTranscription","kind":"match","persona":"support_agent","family":"Recordings"}
+{"id":"d-0058","query":"Turn the office lights off.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0059","query":"Remove IP access control list mapping ALxxxx0009 from SIP domain SDxxxx0002.","gold":"DeleteSipIpAccessControlListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0060","query":"Create a TaskRouter worker for the new hire.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0061","query":"Create a Zendesk macro for refund requests.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0062","query":"Download last year's tax invoice.","gold":"none_of_these","kind":"no_match","persona":"billing_analyst","family":"none"}
+{"id":"d-0063","query":"Start receiving user-defined messages from call CAxxxx7777 at https://example.com/udm.","gold":"CreateUserDefinedMessageSubscription","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0064","query":"Show all the queues and their sizes.","gold":"ListQueue","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0065","query":"Month-to-date spend on phone numbers?","gold":"ListUsageRecordThisMonth","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0066","query":"Create a SIP domain for the Chicago office PBX.","gold":"CreateSipDomain","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0067","query":"Show extension XFxxxx0001 of assigned add-on XExxxx0404 on PNxxxx7171.","gold":"FetchIncomingPhoneNumberAssignedAddOnExtension","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0068","query":"Show every SIP domain we have.","gold":"ListSipDomain","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0069","query":"List the countries where phone numbers are available for purchase.","gold":"ListAvailablePhoneNumberCountry","kind":"match","persona":"telecom_admin","family":"AvailablePhoneNumbers"}
+{"id":"d-0070","query":"Show me the recordings for call CAxxxx6263.","gold":"ListCallRecording","kind":"match","persona":"cc_supervisor","family":"Calls"}
+{"id":"d-0071","query":"Create a Sync map for live dashboard data.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0072","query":"Estimate how much 10,000 SMS to Canada would cost.","gold":"none_of_these","kind":"no_match","persona":"billing_analyst","family":"none"}
+{"id":"d-0073","query":"Push a JSON payload to the mobile app on call CAxxxx7777 mid-call.","gold":"CreateUserDefinedMessage","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0074","query":"Allow 203.0.113.5 in access control list ALxxxx0009.","gold":"CreateSipIpAddress","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0075","query":"Audit which external apps have been granted access to our account.","gold":"ListAuthorizedConnectApp","kind":"match","persona":"security_admin","family":"AuthorizedConnectApps"}
+{"id":"d-0076","query":"When was API key SKxxxx5151 created?","gold":"FetchKey","kind":"match","persona":"security_admin","family":"Keys"}
+{"id":"d-0077","query":"Set up SSO with Okta for the console.","gold":"none_of_these","kind":"no_match","persona":"security_admin","family":"none"}
+{"id":"d-0078","query":"Purchase the local number +1 212 555 0156.","gold":"CreateIncomingPhoneNumberLocal","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0079","query":"Stop authenticating calls on domain SDxxxx0002 with credential list mapping CLxxxx0006.","gold":"DeleteSipAuthCallsCredentialListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0080","query":"List the callers waiting in queue QUxxxx0606.","gold":"ListMember","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0081","query":"Draft a friendly reply to this angry customer.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0082","query":"Show signing key SKxxxx6161.","gold":"FetchSigningKey","kind":"match","persona":"security_admin","family":"SigningKeys"}
+{"id":"d-0083","query":"Create a GitHub pull request for the fix.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0084","query":"Which Connect apps do we own?","gold":"ListConnectApp","kind":"match","persona":"developer","family":"ConnectApps"}
+{"id":"d-0085","query":"Release PNxxxx7172 to stop the monthly charge.","gold":"DeleteIncomingPhoneNumber","kind":"match","persona":"billing_analyst","family":"IncomingPhoneNumbers"}
+{"id":"d-0086","query":"Look up account ACxxxx3344 and tell me when it was created.","gold":"FetchAccount","kind":"match","persona":"security_admin","family":"Accounts"}
+{"id":"d-0087","query":"List all credentials in list CLxxxx0006.","gold":"ListSipCredential","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0088","query":"Remove the attachment MExxxx0004 on message MMxxxx3131.","gold":"DeleteMedia","kind":"match","persona":"security_admin","family":"Messages"}
+{"id":"d-0089","query":"Generate a new signing key.","gold":"CreateNewSigningKey","kind":"match","persona":"security_admin","family":"SigningKeys"}
+{"id":"d-0090","query":"You have been really helpful, thank you.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0091","query":"Buy a short code through the short code application form.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0092","query":"Hang up on CAxxxx2929, the customer already disconnected but the leg is stuck.","gold":"UpdateCall","kind":"match","persona":"cc_supervisor","family":"Calls"}
+{"id":"d-0093","query":"Get recording RExxxx0404 from call CAxxxx6263.","gold":"FetchCallRecording","kind":"match","persona":"cc_supervisor","family":"Calls"}
+{"id":"d-0094","query":"Page the on-call engineer in PagerDuty.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0095","query":"Delete message SMxxxx2830 from our logs.","gold":"DeleteMessage","kind":"match","persona":"security_admin","family":"Messages"}
+{"id":"d-0096","query":"List the credential list mappings on SIP domain SDxxxx0002.","gold":"ListSipCredentialListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0097","query":"Notify us when daily SMS usage exceeds 10,000 messages.","gold":"CreateUsageTrigger","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0098","query":"Dequeue caller CAxxxx9393 from QUxxxx0606 and send them to the agent TwiML.","gold":"UpdateMember","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0099","query":"List the add-ons assigned to number PNxxxx7173.","gold":"ListIncomingPhoneNumberAssignedAddOn","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0100","query":"Show short code SCxxxx0013.","gold":"FetchShortCode","kind":"match","persona":"telecom_admin","family":"SMS"}
+{"id":"d-0101","query":"How many callers are in queue QUxxxx0606?","gold":"FetchQueue","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0102","query":"Assign add-on installation XExxxx0406 to number PNxxxx7173.","gold":"CreateIncomingPhoneNumberAssignedAddOn","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0103","query":"Stop allowing credential list CLxxxx0006 for registrations on domain SDxxxx0002.","gold":"DeleteSipAuthRegistrationsCredentialListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0104","query":"Send a copy of call CAxxxx7575 to our session recording server via SIPREC.","gold":"CreateSiprec","kind":"match","persona":"telecom_admin","family":"Calls"}
+{"id":"d-0105","query":"Buy any available number in area code 415.","gold":"CreateIncomingPhoneNumber","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0106","query":"Give me all the subaccounts along with their status.","gold":"ListAccount","kind":"match","persona":"billing_analyst","family":"Accounts"}
+{"id":"d-0107","query":"List our verified outgoing caller IDs.","gold":"ListOutgoingCallerId","kind":"match","persona":"telecom_admin","family":"OutgoingCallerIds"}
+{"id":"d-0108","query":"Buy the mobile number 555-0102 we found in the search.","gold":"CreateIncomingPhoneNumberMobile","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0109","query":"List our IP access control lists.","gold":"ListSipIpAccessControlList","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0110","query":"Show IP access control list ALxxxx0009.","gold":"FetchSipIpAccessControlList","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0111","query":"Create an API key for the new microservice.","gold":"CreateNewKey","kind":"match","persona":"developer","family":"Keys"}
+{"id":"d-0112","query":"Create a Video composition of yesterday's room.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0113","query":"Add a participant to the Conversations chat with the customer.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0114","query":"Show credential list CLxxxx0006.","gold":"FetchSipCredentialList","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0115","query":"Create a queue for weekend callers.","gold":"CreateQueue","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0116","query":"Check the status page for any ongoing Twilio incidents.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0117","query":"Are there shared-cost numbers available in Belgium?","gold":"ListAvailablePhoneNumberSharedCost","kind":"match","persona":"telecom_admin","family":"AvailablePhoneNumbers"}
+{"id":"d-0118","query":"Change entry IPxxxx0011 in ALxxxx0009 to 198.51.100.20.","gold":"UpdateSipIpAddress","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0119","query":"Delete queue QUxxxx0607, nobody uses it anymore.","gold":"DeleteQueue","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0120","query":"Show the configuration of SIP domain SDxxxx0002.","gold":"FetchSipDomain","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0121","query":"Send an SMS to 555-0193 confirming tomorrow's appointment.","gold":"CreateMessage","kind":"match","persona":"support_agent","family":"Messages"}
+{"id":"d-0122","query":"Authenticate calls on SIP domain SDxxxx0002 by IP using list ALxxxx0009.","gold":"CreateSipAuthCallsIpAccessControlListMapping","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0123","query":"Add the number 555-0120 to our Messaging Service sender pool.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0124","query":"Explain the difference between Enqueue and Conference in TwiML.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0125","query":"Submit a Trust Hub customer profile for review.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0126","query":"Show position and wait time of member CAxxxx9393 in queue QUxxxx0606.","gold":"FetchMember","kind":"match","persona":"cc_supervisor","family":"Queues"}
+{"id":"d-0127","query":"Explain our call center's escalation policy.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0128","query":"What recordings exist for conference CFxxxx5006?","gold":"ListConferenceRecording","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0129","query":"List the IP ACL mappings on SIP domain SDxxxx0002.","gold":"ListSipIpAccessControlListMapping","kind":"match","persona":"telecom_admin","family":"SIP"}
+{"id":"d-0130","query":"Call the customer at 555-0118 and connect them to the survey.","gold":"CreateCall","kind":"match","persona":"cc_supervisor","family":"Calls"}
+{"id":"d-0131","query":"Find all calls from 555-0125 in the past week.","gold":"ListCall","kind":"match","persona":"support_agent","family":"Calls"}
+{"id":"d-0132","query":"List the participants in conference CFxxxx5007.","gold":"ListParticipant","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0133","query":"Stop the recording in conference CFxxxx5006.","gold":"UpdateConferenceRecording","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0134","query":"Get add-on result XRxxxx0011 for recording RExxxx0909.","gold":"FetchRecordingAddOnResult","kind":"match","persona":"developer","family":"Recordings"}
+{"id":"d-0135","query":"Fetch the Voice Insights call summary for CAxxxx9999.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0136","query":"How do I validate that a webhook request really came from Twilio?","gold":"none_of_these","kind":"no_match","persona":"security_admin","family":"none"}
+{"id":"d-0137","query":"Show every API key on the account.","gold":"ListKey","kind":"match","persona":"security_admin","family":"Keys"}
+{"id":"d-0138","query":"List only the local numbers we own.","gold":"ListIncomingPhoneNumberLocal","kind":"match","persona":"billing_analyst","family":"IncomingPhoneNumbers"}
+{"id":"d-0139","query":"What is the capital of Australia?","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0140","query":"Delete IP access control list ALxxxx0010.","gold":"DeleteSipIpAccessControlList","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0141","query":"Search national numbers available in France.","gold":"ListAvailablePhoneNumberNational","kind":"match","persona":"telecom_admin","family":"AvailablePhoneNumbers"}
+{"id":"d-0142","query":"Reboot the office Wi-Fi router.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0143","query":"List our toll-free numbers.","gold":"ListIncomingPhoneNumberTollFree","kind":"match","persona":"billing_analyst","family":"IncomingPhoneNumbers"}
+{"id":"d-0144","query":"Change the SMS webhook on number PNxxxx7171.","gold":"UpdateIncomingPhoneNumber","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0145","query":"List the debugger notifications on call CAxxxx5151.","gold":"ListCallNotification","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0146","query":"Delete the address ADxxxx0060 we registered by mistake.","gold":"DeleteAddress","kind":"match","persona":"telecom_admin","family":"Addresses"}
+{"id":"d-0147","query":"How many SMS have we sent today?","gold":"ListUsageRecordToday","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0148","query":"Send a transactional email from noreply@example.com.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0149","query":"Show me the API reference for sending MMS.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0150","query":"How do I read the TwiML Dial timeout attribute?","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0151","query":"Rename credential list CLxxxx0006 to \"softphones\".","gold":"UpdateSipCredentialList","kind":"match","persona":"security_admin","family":"SIP"}
+{"id":"d-0152","query":"Download the data behind payload XHxxxx0022 of result XRxxxx0011 on recording RExxxx0909.","gold":"FetchRecordingAddOnResultPayloadData","kind":"match","persona":"developer","family":"Recordings"}
+{"id":"d-0153","query":"Show notification NOxxxx0303 for our account.","gold":"FetchNotification","kind":"match","persona":"developer","family":"Notifications"}
+{"id":"d-0154","query":"Hi there!","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0155","query":"Translate the IVR prompts into Spanish.","gold":"none_of_these","kind":"no_match","persona":"cc_supervisor","family":"none"}
+{"id":"d-0156","query":"Get a network traversal token with STUN and TURN servers for the browser softphone.","gold":"CreateToken","kind":"match","persona":"developer","family":"Tokens"}
+{"id":"d-0157","query":"Change the friendly name of caller ID PNxxxx8181 to \"Front desk\".","gold":"UpdateOutgoingCallerId","kind":"match","persona":"telecom_admin","family":"OutgoingCallerIds"}
+{"id":"d-0158","query":"Unmute CAxxxx8282 in conference CFxxxx5007.","gold":"UpdateParticipant","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0159","query":"Show the webhook events for call CAxxxx5050.","gold":"ListCallEvent","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0160","query":"Send call CAxxxx3030 to the voicemail TwiML instead.","gold":"UpdateCall","kind":"match","persona":"cc_supervisor","family":"Calls"}
+{"id":"d-0161","query":"Delete the recording RExxxx0405 attached to call CAxxxx6263.","gold":"DeleteCallRecording","kind":"match","persona":"security_admin","family":"Calls"}
+{"id":"d-0162","query":"What is 15% of $2,400?","gold":"none_of_these","kind":"no_match","persona":"billing_analyst","family":"none"}
+{"id":"d-0163","query":"Close conference CFxxxx5005 and disconnect everyone.","gold":"UpdateConference","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0164","query":"Restart our on-prem PBX server.","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0165","query":"Which Twilio region has the lowest latency from Tokyo?","gold":"none_of_these","kind":"no_match","persona":"telecom_admin","family":"none"}
+{"id":"d-0166","query":"Write unit tests for our SMS sender class.","gold":"none_of_these","kind":"no_match","persona":"developer","family":"none"}
+{"id":"d-0167","query":"Show Connect app CNxxxx0901.","gold":"FetchConnectApp","kind":"match","persona":"developer","family":"ConnectApps"}
+{"id":"d-0168","query":"Buy toll-free number +1 888 555 0177.","gold":"CreateIncomingPhoneNumberTollFree","kind":"match","persona":"telecom_admin","family":"IncomingPhoneNumbers"}
+{"id":"d-0169","query":"End the real-time transcription named \"qa-live\" on call CAxxxx7474.","gold":"UpdateRealtimeTranscription","kind":"match","persona":"developer","family":"Calls"}
+{"id":"d-0170","query":"Start caller ID verification for 555-0138.","gold":"CreateValidationRequest","kind":"match","persona":"telecom_admin","family":"OutgoingCallerIds"}
+{"id":"d-0171","query":"Send a 2FA code with Verify to 555-0107.","gold":"none_of_these","kind":"no_match","persona":"security_admin","family":"none"}
+{"id":"d-0172","query":"Record the rest of call CAxxxx6262 for quality review.","gold":"CreateCallRecording","kind":"match","persona":"support_agent","family":"Calls"}
+{"id":"d-0173","query":"Add the on-call engineer at 555-0161 to conference CFxxxx5007.","gold":"CreateParticipant","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0174","query":"List all usage triggers.","gold":"ListUsageTrigger","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0175","query":"What transcriptions exist for recording RExxxx0911?","gold":"ListRecordingTranscription","kind":"match","persona":"support_agent","family":"Recordings"}
+{"id":"d-0176","query":"Get recording RExxxx0606 of conference CFxxxx5006.","gold":"FetchConferenceRecording","kind":"match","persona":"cc_supervisor","family":"Conferences"}
+{"id":"d-0177","query":"Rename signing key SKxxxx6161 to \"webhooks-2026\".","gold":"UpdateSigningKey","kind":"match","persona":"security_admin","family":"SigningKeys"}
+{"id":"d-0178","query":"Download media MExxxx0003 from message MMxxxx3131.","gold":"FetchMedia","kind":"match","persona":"support_agent","family":"Messages"}
+{"id":"d-0179","query":"List the payloads in add-on result XRxxxx0011 of recording RExxxx0909.","gold":"ListRecordingAddOnResultPayload","kind":"match","persona":"developer","family":"Recordings"}
+{"id":"d-0180","query":"Show usage trigger UTxxxx0051.","gold":"FetchUsageTrigger","kind":"match","persona":"billing_analyst","family":"Usage"}
+{"id":"d-0181","query":"Generate a QR code for our support number.","gold":"none_of_these","kind":"no_match","persona":"support_agent","family":"none"}
+{"id":"d-0182","query":"Find machine-to-machine numbers we can buy in Sweden for our IoT devices.","gold":"ListAvailablePhoneNumberMachineToMachine","kind":"match","persona":"telecom_admin","family":"AvailablePhoneNumbers"}
+{"id":"d-0183","query":"Close subaccount ACxxxx9001, the project was cancelled.","gold":"UpdateAccount","kind":"match","persona":"billing_analyst","family":"Accounts"}
