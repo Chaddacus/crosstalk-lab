@@ -1,4 +1,12 @@
-// Scaffold entry. The app shell is added after the data freeze (see git history).
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "./styles.css";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { App } from "./app/App.tsx";
 
-createRoot(document.getElementById("root")!).render(<p>Crosstalk</p>);
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);

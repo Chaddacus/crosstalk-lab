@@ -17,7 +17,7 @@ import { loadSealedSplit, parseLedger, recordPeek, type LedgerStore } from "../s
 import { createLimiter } from "../src/core/run/limiter.ts";
 import { Budget } from "../src/core/run/budget.ts";
 import { withGuards } from "../src/core/run/guarded.ts";
-import { DATA, loadCatalog, loadCriteria, loadDev, loadManifest, loadReplayResponses } from "./_load.ts";
+import { DATA, loadCatalog, loadCriteria, loadDev, loadManifest, loadReplayStore } from "./_load.ts";
 import { loadDotEnv, presetReady, resolvePreset } from "../server/presets.ts";
 
 const args = process.argv.slice(2);
@@ -52,8 +52,7 @@ if (backendName === "mock") {
   backend = createMockBackend();
   model = "mock-lexsim-1";
 } else if (backendName === "replay") {
-  const m = loadReplayResponses();
-  backend = createReplayBackend({ get: (h) => m.get(h) });
+  backend = createReplayBackend(loadReplayStore());
   model = opt("model", "mock-lexsim-1")!;
 } else if (backendName === "live") {
   loadDotEnv();

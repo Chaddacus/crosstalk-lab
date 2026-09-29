@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+/* Crosstalk: dark "patch-panel console". Dark only in the MVP. */
+:root {
+  --bg: #07090c;
+  --panel: #0c1116;
+  --panel-2: #121920;
+  --panel-3: #18212a;
+  --line: #1f2833;
+  --line-2: #2a3542;
+  --text: #e6edf3;
+  --muted: #8b98a5;
+  --faint: #5b6b7d;
+  --signal: #3dd6d0;
+  --get: #2dd4bf;
+  --post: #f5b544;
+  --delete: #ff7a1a;
+  --err: #ff3b6b;
+  --near: #f5b544;
+  --bgchord: #5b6b7d;
+  --fixed: #3fd37a;
+  --broke: #ff4d6d;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-panel-3: var(--panel-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-signal: var(--signal);
+  --color-get: var(--get);
+  --color-post: var(--post);
+  --color-delete: var(--delete);
+  --color-err: var(--err);
+  --color-near: var(--near);
+  --color-fixed: var(--fixed);
+  --color-broke: var(--broke);
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--signal) 35%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  textarea,
+  input {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "zero" 0, "calt" 0;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums slashed-zero;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .panel {
+    background: var(--panel);
+  }
+  .hairline {
+    border-color: var(--line);
+  }
+  .card {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .field {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 9px;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--text);
+    resize: vertical;
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+  }
+  .field::placeholder {
+    color: var(--faint);
+  }
+  .field:hover {
+    border-color: var(--line-2);
+  }
+  .field:focus {
+    outline: none;
+    border-color: color-mix(in srgb, var(--signal) 70%, var(--line));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 14%, transparent);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 11px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    border: 1px solid var(--line-2);
+    background: var(--panel-2);
+    color: var(--text);
+    transition: background 120ms ease, border-color 120ms ease, color 120ms ease, opacity 120ms ease;
+    white-space: nowrap;
+  }
+  .btn:hover:not(:disabled) {
+    background: var(--panel-3);
+    border-color: #36424f;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+  }
+  .btn-primary {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #031312;
+    font-weight: 600;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #5fe3de;
+    border-color: #5fe3de;
+  }
+  .btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--muted);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--panel-2);
+    color: var(--text);
+    border-color: var(--line);
+  }
+  .kbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1;
+    padding: 3px 5px;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+    border-bottom-width: 2px;
+    color: var(--muted);
+    background: var(--panel);
+  }
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-2) transparent;
+  }
+  .grid-bg {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(to right, rgb(230 237 243 / 0.028) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(230 237 243 / 0.028) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 18px;
+    background: transparent;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 3px;
+    background: var(--line-2);
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-top: -5.5px;
+    border-radius: 50%;
+    background: var(--text);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--line-2);
+  }
+  .range::-moz-range-track {
+    height: 3px;
+    border-radius: 3px;
+    background: var(--line-2);
+  }
+  .range::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text);
+    border: 3px solid var(--bg);
+  }
+}
+
+@keyframes ct-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.94);
+  }
+}
+.pulse {
+  animation: ct-pulse 1.4s ease-in-out infinite;
+}
+@keyframes ct-ring {
+  0% {
+    r: 5;
+    opacity: 0.9;
+  }
+  100% {
+    r: 11;
+    opacity: 0;
+  }
+}
+.ring-pulse {
+  animation: ct-ring 1.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .ring-pulse {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

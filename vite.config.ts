@@ -13,7 +13,8 @@ export default defineConfig({
       "/api": { target: `http://127.0.0.1:${livePort}`, changeOrigin: false },
     },
   },
-  preview: { host: "127.0.0.1", port: 4173 },
+  // The static preview has no local server: /api is not proxied, so LIVE stays disabled.
+  preview: { host: "127.0.0.1", port: 4173, proxy: {} },
   worker: { format: "es" },
   build: { target: "es2023", sourcemap: true, chunkSizeWarningLimit: 900 },
 });

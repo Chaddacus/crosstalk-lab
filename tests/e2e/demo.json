@@ -1,0 +1,16 @@
+{
+  "pair": ["UpdateCall", "UpdateMember"],
+  "edits": {
+    "UpdateCall": {
+      "what": "Initiates a call redirect or terminates a call: send a live call to new TwiML, or hang up an in-progress call."
+    },
+    "UpdateMember": {
+      "not_for": "Redirecting or hanging up a call that is not waiting in a queue."
+    }
+  },
+  "expected": {
+    "fixed": 2,
+    "broke": 1,
+    "unchanged": 180
+  }
+}
