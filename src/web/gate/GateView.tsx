@@ -64,7 +64,18 @@ export function GateView() {
             <span>Lexical stand-in probabilities are not calibrated. This tab shows the method, not Jev's calibration.</span>
           </div>
         )}
-        <div className="mt-5 grid gap-5 lg:grid-cols-[3fr_2fr]">
+        <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <Kpi label="Coverage" sub={`${g.nAuto} of ${scored.length} in AUTO`} value={g.coverage * 100} fmt={(x) => `${x.toFixed(1)}%`} testId="kpi-coverage" />
+          <Kpi
+            label="AUTO accuracy"
+            sub={g.nAuto ? `[${pct(g.auto.lo)} – ${pct(g.auto.hi)}] Wilson 95%` : "no items in AUTO"}
+            value={g.nAuto ? g.auto.p * 100 : NaN}
+            fmt={(x) => `${x.toFixed(1)}%`}
+          />
+          <Kpi label="Confident errors" sub="wrong picks that would run unreviewed" value={g.confidentErrors} fmt={(x) => String(Math.round(x))} tone={g.confidentErrors ? "bad" : undefined} testId="kpi-confident" />
+          <Kpi label="Risk-weighted" sub={`confident errors, DELETE picks ×${w}`} value={g.riskConfidentErrors} fmt={(x) => String(Math.round(x))} tone={g.riskConfidentErrors ? "bad" : undefined} />
+        </div>
+        <div className="mt-4 grid items-start gap-4 lg:grid-cols-[3fr_2fr]">
           <section className="card p-4">
             <div className="flex items-center justify-between">
               <span className="eyebrow !text-[9.5px]">Every dev item by confidence</span>
@@ -78,17 +89,8 @@ export function GateView() {
               <Dot kind="ring" /> confident error (wrong, in AUTO)
             </div>
           </section>
-          <section className="grid grid-cols-2 gap-3 self-start">
-            <Kpi label="Coverage" sub={`${g.nAuto} of ${scored.length} in AUTO`} value={g.coverage * 100} fmt={(x) => `${x.toFixed(1)}%`} testId="kpi-coverage" />
-            <Kpi
-              label="AUTO accuracy"
-              sub={g.nAuto ? `[${pct(g.auto.lo)} – ${pct(g.auto.hi)}] Wilson 95%` : "no items in AUTO"}
-              value={g.nAuto ? g.auto.p * 100 : NaN}
-              fmt={(x) => `${x.toFixed(1)}%`}
-            />
-            <Kpi label="Confident errors" sub="wrong picks that would run unreviewed" value={g.confidentErrors} fmt={(x) => String(Math.round(x))} tone={g.confidentErrors ? "bad" : undefined} testId="kpi-confident" />
-            <Kpi label="Risk-weighted" sub={`DELETE picks cost ×${w}`} value={g.riskConfidentErrors} fmt={(x) => String(Math.round(x))} tone={g.riskConfidentErrors ? "bad" : undefined} />
-            <div className="card col-span-2 p-3.5">
+          <section className="grid gap-4">
+            <div className="card p-3.5">
               <div className="flex items-center justify-between">
                 <span className="eyebrow !text-[9.5px]">Selective accuracy vs coverage</span>
                 <span className="mono text-[10.5px] text-muted">
@@ -97,7 +99,7 @@ export function GateView() {
               </div>
               <CoverageCurve curve={sel.curve} coverage={g.coverage} autoAcc={g.auto.p} />
             </div>
-            <div className="card col-span-2 p-3.5">
+            <div className="card p-3.5">
               <div className="flex items-center justify-between">
                 <span className="eyebrow !text-[9.5px]">Reliability · 10 bins</span>
                 <span className="mono text-[10.5px] text-muted">
@@ -163,7 +165,7 @@ function Strip({ scored, tau }: { scored: Scored[]; tau: number }) {
     setW(el.clientWidth);
     return () => ro.disconnect();
   }, []);
-  const H = 300;
+  const H = 290;
   const m = 18;
   const r = W < 500 ? 3 : 4.2;
   const x = (c: number) => m + c * (W - 2 * m);
@@ -249,8 +251,8 @@ function Strip({ scored, tau }: { scored: Scored[]; tau: number }) {
 
 function CoverageCurve({ curve, coverage, autoAcc }: { curve: { coverage: number; accuracy: number }[]; coverage: number; autoAcc: number }) {
   const W = 480;
-  const H = 150;
-  const m = { l: 32, r: 10, t: 10, b: 22 };
+  const H = 132;
+  const m = { l: 40, r: 10, t: 10, b: 22 };
   const x = (c: number) => m.l + c * (W - m.l - m.r);
   const y = (a: number) => m.t + (1 - a) * (H - m.t - m.b);
   const d = curve.map((p, i) => `${i ? "L" : "M"}${x(p.coverage).toFixed(1)},${y(p.accuracy).toFixed(1)}`).join("");
@@ -282,8 +284,8 @@ function CoverageCurve({ curve, coverage, autoAcc }: { curve: { coverage: number
 
 function Reliability({ bins }: { bins: { lo: number; hi: number; n: number; confidence: number; accuracy: number }[] }) {
   const W = 480;
-  const H = 150;
-  const m = { l: 32, r: 10, t: 10, b: 22 };
+  const H = 132;
+  const m = { l: 40, r: 10, t: 10, b: 22 };
   const x = (c: number) => m.l + c * (W - m.l - m.r);
   const y = (a: number) => m.t + (1 - a) * (H - m.t - m.b);
   const maxN = Math.max(1, ...bins.map((b) => b.n));

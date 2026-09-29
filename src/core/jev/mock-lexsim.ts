@@ -15,6 +15,8 @@
  * 7. Chosen: argmax; ties go to the first option in request order.
  * 8. Confidence: (K·p_max − 1)/(K − 1), reported as "derived".
  * 9. Usage: inputTokens = ceil(request characters / 4), cost "estimated".
+ * exp and log come from detmath.ts (basic IEEE operations only), so Node, the browser and the worker
+ * produce the same output bits.
  *
  * λ, β and T were tuned on the dev split only (scripts/tune-mock.ts), for a readable map, not for calibration.
  */
@@ -22,6 +24,7 @@ import { UnsupportedInMock } from "./errors.ts";
 import { requestCanonical } from "./request-hash.ts";
 import { sha256Hex } from "./canonical.ts";
 import { tokenize, splitName } from "./text.ts";
+import { detExp, detLog } from "./detmath.ts";
 import {
   type Criterion,
   type DecideRequest,
@@ -134,7 +137,7 @@ export function buildIndex(criteria: Record<string, Criterion>, p: MockParams = 
   for (const d of docs) for (const t of d.tf.keys()) df.set(t, (df.get(t) ?? 0) + 1);
   const n = docs.length;
   const idf = new Map<string, number>();
-  for (const [t, c] of df) idf.set(t, Math.log(1 + (n - c + 0.5) / (c + 0.5)));
+  for (const [t, c] of df) idf.set(t, detLog(1 + (n - c + 0.5) / (c + 0.5)));
   const avgLen = docs.reduce((a, d) => a + d.len, 0) / Math.max(1, n);
   return { options, docs, idf, avgLen, noneIndex: options.indexOf(NONE_OPTION) };
 }
@@ -147,7 +150,7 @@ function bm25(qTerms: string[], tf: TermFreq, len: number, ix: LexIndex, p: Mock
     const f = tf.get(t);
     if (!f) continue;
     // Terms that appear in no option document (only in a not_for text) get the maximum IDF.
-    const idf = ix.idf.get(t) ?? Math.log(1 + (ix.docs.length + 0.5) / 0.5);
+    const idf = ix.idf.get(t) ?? detLog(1 + (ix.docs.length + 0.5) / 0.5);
     s += (idf * f * (p.k1 + 1)) / (f + norm);
   }
   return s;
@@ -167,7 +170,7 @@ export function scoreQuery(query: string, ix: LexIndex, p: MockParams = DEFAULT_
     return s;
   });
   const max = Math.max(...scores);
-  const exps = scores.map((s) => Math.exp((s - max) / p.temperature));
+  const exps = scores.map((s) => detExp((s - max) / p.temperature));
   const z = exps.reduce((a, b) => a + b, 0);
   return { scores, probs: exps.map((e) => e / z) };
 }

@@ -141,10 +141,10 @@ export function SealButton({ compact = false }: { compact?: boolean }) {
           {seal.status === "done" ? "TEST OPENED" : "TEST SEALED"} <span className="text-faint">{TEST_SHA_SHORT}…</span>
         </span>
       )}
-      <span className="mono whitespace-nowrap rounded bg-panel-3 px-1.5 py-0.5 text-[10px] text-text">
+      <span className="mono whitespace-nowrap rounded bg-panel-3 px-1.5 py-0.5 text-[10px] text-text" data-testid="peeks" data-count={peeks}>
         peeks{" "}
         <AnimatePresence mode="popLayout" initial={false}>
-          <motion.span key={peeks} className="num inline-block" initial={{ y: -8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 8, opacity: 0 }} data-testid="peeks">
+          <motion.span key={peeks} className="num inline-block" initial={{ y: -8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 8, opacity: 0 }}>
             {peeks}
           </motion.span>
         </AnimatePresence>

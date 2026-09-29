@@ -45,11 +45,11 @@ export function ItemsView() {
           </span>
         </div>
         <div className="scroll-thin min-h-0 flex-1 overflow-auto">
-          <table className="w-full min-w-[860px] border-separate border-spacing-0 text-[12px]">
+          <table className="w-full min-w-[820px] border-separate border-spacing-0 text-[12px]">
             <thead className="sticky top-0 z-10 bg-panel">
               <tr className="text-left">
                 {["id", "query", "gold", "prediction", "p(gold)", "margin", "conf.", "flip"].map((h) => (
-                  <th key={h} className="eyebrow border-b border-line px-3 py-2 !text-[9.5px] font-normal">
+                  <th key={h} className="eyebrow whitespace-nowrap border-b border-line px-3 py-2 !text-[9.5px] font-normal">
                     {h}
                   </th>
                 ))}
@@ -65,10 +65,10 @@ export function ItemsView() {
                     onClick={() => useStore.setState({ itemId: s.id })}
                     data-testid="item-row"
                   >
-                    <td className="mono border-b border-line px-3 py-2 text-faint">{s.id}</td>
-                    <td className="max-w-[360px] truncate border-b border-line px-3 py-2 text-text">{s.query}</td>
-                    <td className="mono max-w-[200px] truncate border-b border-line px-3 py-2 text-muted">{s.gold === NONE ? "NO MATCH" : s.gold}</td>
-                    <td className={`mono max-w-[200px] truncate border-b border-line px-3 py-2 ${s.error ? "text-err" : s.correct ? "text-fixed" : "text-err"}`}>
+                    <td className="mono whitespace-nowrap border-b border-line px-3 py-2 text-faint">{s.id}</td>
+                    <td className="max-w-[300px] truncate border-b border-line px-3 py-2 text-text" title={s.query}>{s.query}</td>
+                    <td className="mono max-w-[170px] truncate border-b border-line px-3 py-2 text-muted">{s.gold === NONE ? "NO MATCH" : s.gold}</td>
+                    <td className={`mono max-w-[170px] truncate border-b border-line px-3 py-2 ${s.error ? "text-err" : s.correct ? "text-fixed" : "text-err"}`}>
                       {s.error ? "error" : s.chosen === NONE ? "NO MATCH" : s.chosen}
                     </td>
                     <td className="border-b border-line px-3 py-2">
@@ -138,7 +138,7 @@ function Inspector({ id, before }: { id: string; before: ReturnType<typeof useAn
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 40, opacity: 0 }}
       transition={{ type: "spring", stiffness: 340, damping: 32 }}
-      className="scroll-thin absolute inset-y-0 right-0 z-20 w-full max-w-[440px] overflow-y-auto border-l border-line-2 bg-panel shadow-[-30px_0_80px_-20px_rgb(0_0_0/0.8)] md:relative md:shrink-0"
+      className="scroll-thin absolute inset-y-0 right-0 z-20 w-full max-w-[400px] overflow-y-auto border-l border-line-2 bg-panel shadow-[-30px_0_80px_-20px_rgb(0_0_0/0.8)] md:relative md:shrink-0"
       data-testid="inspector"
     >
       <div className="flex items-center justify-between border-b border-line px-4 py-3">

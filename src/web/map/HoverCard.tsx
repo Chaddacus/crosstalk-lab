@@ -23,7 +23,11 @@ export function HoverCard({ pair, run, x, y, w, h }: Props) {
       ?.map((p, i) => ({ o: run.options[i]!, p }))
       .sort((a, b) => b.p - a.p)
       .slice(0, 3) ?? [];
-  const margin = top3.length > 1 ? top3[0]!.p - top3[1]!.p : NaN;
+  if (item && res?.probs && !top3.some((t) => t.o === item.gold)) {
+    const gi = run.options.indexOf(item.gold);
+    if (gi >= 0) top3.push({ o: item.gold, p: res.probs[gi]! });
+  }
+  const margin = top3.length > 1 ? top3[0]!.p - [...top3].sort((a, b) => b.p - a.p)[1]!.p : NaN;
   const wrongDelete = !!(res?.chosen && item && res.chosen !== item.gold && deleteOps.has(res.chosen));
   const cardW = 320;
   const left = Math.min(Math.max(8, x + 18), w - cardW - 8);

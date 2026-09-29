@@ -92,3 +92,21 @@ describe("lexical mock", () => {
     ).rejects.toBeInstanceOf(UnsupportedInMock);
   });
 });
+
+import { detExp, detLog } from "../../src/core/jev/detmath.ts";
+
+describe("deterministic exp and log", () => {
+  it("match Math.exp and Math.log to 1e-14 relative error on the mock's ranges", () => {
+    for (let x = -60; x <= 0; x += 0.0137) expect(Math.abs(detExp(x) - Math.exp(x)) / Math.exp(x)).toBeLessThan(1e-14);
+    for (let x = 1; x < 800; x *= 1.0071) expect(Math.abs(detLog(x) - Math.log(x))).toBeLessThan(1e-14 * Math.max(1, Math.log(x)));
+    expect(detExp(0)).toBe(1);
+    expect(detLog(1)).toBe(0);
+    expect(detExp(-800)).toBe(0);
+  });
+
+  it("pin known bits (so any engine that computes differently fails here)", () => {
+    // bits of this implementation (they equal Python math.exp/math.log for these inputs); they must not change across engines
+    expect(detExp(-1.25).toString()).toBe("0.2865047968601901");
+    expect(detLog(397.5).toString()).toBe("5.985194934094387");
+  });
+});

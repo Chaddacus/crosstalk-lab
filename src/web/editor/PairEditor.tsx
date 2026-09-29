@@ -7,7 +7,6 @@ import {
   clearSelection,
   currentVersion,
   dirtyOptions,
-  effectiveText,
   revertDrafts,
   saveAndRerun,
   setDraft,
@@ -115,13 +114,13 @@ export function PairEditor({ a, b }: { a: string; b: string }) {
             data-testid="save-rerun"
           >
             {active ? "Running…" : "Save & rerun dev"}
-            <span className="kbd !border-black/20 !bg-black/10 !text-[#031312]/70">Ctrl S</span>
+            <span className="kbd !hidden !border-black/20 !bg-black/10 !text-[#031312]/70 md:!inline">Ctrl S</span>
           </button>
           <button className="btn" disabled={!dirty.length || !!active} onClick={() => revertDrafts()} data-testid="revert">
             Revert
           </button>
         </div>
-        <div className="mono mt-2 flex items-center gap-2 text-[10.5px] text-faint">
+        <div className="mono mt-2 hidden items-center gap-2 text-[10.5px] text-faint md:flex">
           <kbd className="kbd">[</kbd>
           <kbd className="kbd">]</kbd> previous / next pair
           <span className="mx-1">·</span>
@@ -133,12 +132,11 @@ export function PairEditor({ a, b }: { a: string; b: string }) {
 }
 
 function OptionCard({ id }: { id: string }) {
-  const s = useStore();
+  const draft = useStore((s) => s.drafts[id]);
+  const saved = useStore((s) => currentVersion(s)?.texts[id]);
   const op = opsById.get(id);
-  const cur = currentVersion(s);
-  const t = effectiveText(id, s);
-  const saved = cur?.texts[id];
-  const dirty = !!s.drafts[id] && !textsEqual(s.drafts[id], saved);
+  const t = draft ?? saved ?? {};
+  const dirty = !!draft && !textsEqual(draft, saved);
   const isNone = id === NONE;
   const update = (patch: Partial<OptionText>) => setDraft(id, patch);
   const examples = t.examples ?? [];

@@ -69,10 +69,11 @@ export function MapView({ compact = false }: { compact?: boolean }) {
 
   const selectedKey = pair ? (pair[0] < pair[1] ? `${pair[0]}|${pair[1]}` : `${pair[1]}|${pair[0]}`) : null;
   const drawn = useMemo(() => {
-    if (!focusOp) return visible;
-    const extra = all.filter((p) => (p.a === focusOp || p.b === focusOp) && !visible.includes(p)).slice(0, 30);
-    return [...visible, ...extra];
-  }, [visible, all, focusOp]);
+    const extra = all.filter(
+      (p) => !visible.includes(p) && ((focusOp && (p.a === focusOp || p.b === focusOp)) || p.key === selectedKey),
+    );
+    return extra.length ? [...visible, ...extra.slice(0, 30)] : visible;
+  }, [visible, all, focusOp, selectedKey]);
 
   const bgPairs = useMemo(() => {
     const vis = new Set(drawn.map((p) => p.key));
@@ -110,6 +111,7 @@ export function MapView({ compact = false }: { compact?: boolean }) {
 
   const hovered: PairLeak | undefined = hoverPair ? drawn.find((p) => p.key === hoverPair) : undefined;
   const dimOthers = !!(selectedKey || focusOp);
+  const softDim = !dimOthers && !!hoverPair;
 
   // keyboard: arrows move an operation cursor around the ring; Enter focuses it
   function onKeyDown(e: React.KeyboardEvent) {
@@ -187,7 +189,8 @@ export function MapView({ compact = false }: { compact?: boolean }) {
                     hubR={hubR}
                     maxMass={maxMass}
                     rank={visible.indexOf(p)}
-                    dim={dimOthers && p.key !== selectedKey && !(focusOp && (p.a === focusOp || p.b === focusOp))}
+                    dim={dimOthers && p.key !== selectedKey && p.key !== hoverPair && !(focusOp && (p.a === focusOp || p.b === focusOp))}
+                    soft={softDim && p.key !== hoverPair}
                     hot={p.key === hoverPair || p.key === selectedKey}
                   />
                 ))}
@@ -346,12 +349,14 @@ function Hub({ R, leakIn }: { R: number; leakIn: number }) {
     >
       <circle r={R + 6} fill="none" stroke="var(--line)" strokeDasharray="2 4" />
       <circle r={R} fill="url(#ct-hub)" stroke="var(--line-2)" />
-      <text textAnchor="middle" y={-2} className="mono" fontSize={Math.max(7.5, R * 0.2)} letterSpacing="0.12em" fill="var(--muted)">
+      <text textAnchor="middle" y={R < 30 ? 0 : -1} dy={R < 30 ? "0.34em" : 0} className="mono" fontSize={R < 30 ? 7.5 : Math.min(11, R * 0.2)} letterSpacing="0.1em" fill="var(--muted)">
         NO MATCH
       </text>
-      <text textAnchor="middle" y={Math.max(9, R * 0.38)} className="mono" fontSize={Math.max(7, R * 0.18)} fill="var(--faint)">
-        Σ {leakIn.toFixed(1)}
-      </text>
+      {R >= 30 && (
+        <text textAnchor="middle" y={Math.max(11, R * 0.36)} className="mono" fontSize={Math.min(10.5, R * 0.18)} fill="var(--faint)">
+          leak {leakIn.toFixed(1)}
+        </text>
+      )}
     </motion.g>
   );
 }
@@ -363,10 +368,11 @@ interface ChordProps {
   maxMass: number;
   rank: number;
   dim: boolean;
+  soft?: boolean;
   hot: boolean;
 }
 
-const Chord = memo(function Chord({ p, R, hubR, maxMass, rank, dim, hot }: ChordProps) {
+const Chord = memo(function Chord({ p, R, hubR, maxMass, rank, dim, soft = false, hot }: ChordProps) {
   const reduce = useReducedMotion();
   const d = useMemo(() => {
     if (p.hub) return spokePath(layout, p.a === NONE ? p.b : p.a, R, hubR);
@@ -375,7 +381,7 @@ const Chord = memo(function Chord({ p, R, hubR, maxMass, rank, dim, hot }: Chord
   const width = chordWidth(p.mass, maxMass, R, p.hub);
   const color = p.state === "error" ? "var(--err)" : p.state === "near" ? "var(--near)" : "var(--bgchord)";
   const baseOpacity = p.state === "error" ? (p.hub ? 0.7 : 0.88) : p.state === "near" ? 0.7 : 0.42;
-  const opacity = dim ? 0.2 * baseOpacity : hot ? 1 : baseOpacity;
+  const opacity = dim ? 0.2 * baseOpacity : hot ? 1 : soft ? 0.4 * baseOpacity : baseOpacity;
   // flash a green ring once when a chord loses all its errors
   const prevState = useRef(p.state);
   const [flash, setFlash] = useState(0);
@@ -409,7 +415,7 @@ const Chord = memo(function Chord({ p, R, hubR, maxMass, rank, dim, hot }: Chord
           stroke="var(--err)"
           filter="url(#ct-glow)"
           initial={false}
-          animate={{ strokeWidth: width + 4, opacity: dim ? 0.04 : hot ? 0.65 : 0.32 }}
+          animate={{ strokeWidth: width + (hot ? 7 : 4), opacity: dim ? 0.04 : hot ? 0.75 : soft ? 0.1 : 0.32 }}
           transition={spring}
           pointerEvents="none"
         />

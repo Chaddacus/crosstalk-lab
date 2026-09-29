@@ -13,3 +13,4 @@ blob-report/
 coverage/
 *.log
 .DS_Store
+exports/
