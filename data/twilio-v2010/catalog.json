@@ -1,0 +1,2071 @@
+{
+  "source": {
+    "repo": "twilio/twilio-oai",
+    "file": "spec/json/twilio_api_v2010.json",
+    "commit": "218b7821602a93ae63e83e20ab5e8637e870250f",
+    "sha256": "78e76cc93c355a259e241866c241663eddb6ce0ed528f066c6cf0958648f5637"
+  },
+  "apiTitle": "Twilio - Api",
+  "operations": [
+    {
+      "id": "CreateAccount",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts.json",
+      "shortPath": "/Accounts",
+      "family": "Accounts",
+      "tag": "Api20100401Account",
+      "description": "Create a new Twilio Subaccount from the account making the request",
+      "empty": false
+    },
+    {
+      "id": "ListAccount",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts.json",
+      "shortPath": "/Accounts",
+      "family": "Accounts",
+      "tag": "Api20100401Account",
+      "description": "Retrieves a collection of Accounts belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "FetchAccount",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{Sid}.json",
+      "shortPath": "/Accounts/{Sid}",
+      "family": "Accounts",
+      "tag": "Api20100401Account",
+      "description": "Fetch the account specified by the provided Account Sid",
+      "empty": false
+    },
+    {
+      "id": "UpdateAccount",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{Sid}.json",
+      "shortPath": "/Accounts/{Sid}",
+      "family": "Accounts",
+      "tag": "Api20100401Account",
+      "description": "Modify the properties of a given Account",
+      "empty": false
+    },
+    {
+      "id": "CreateAddress",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses.json",
+      "shortPath": "/Addresses",
+      "family": "Addresses",
+      "tag": "Api20100401Address",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAddress",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses.json",
+      "shortPath": "/Addresses",
+      "family": "Addresses",
+      "tag": "Api20100401Address",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "DeleteAddress",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses/{Sid}.json",
+      "shortPath": "/Addresses/{Sid}",
+      "family": "Addresses",
+      "tag": "Api20100401Address",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchAddress",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses/{Sid}.json",
+      "shortPath": "/Addresses/{Sid}",
+      "family": "Addresses",
+      "tag": "Api20100401Address",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "UpdateAddress",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses/{Sid}.json",
+      "shortPath": "/Addresses/{Sid}",
+      "family": "Addresses",
+      "tag": "Api20100401Address",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListDependentPhoneNumber",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Addresses/{AddressSid}/DependentPhoneNumbers.json",
+      "shortPath": "/Addresses/{AddressSid}/DependentPhoneNumbers",
+      "family": "Addresses",
+      "tag": "Api20100401DependentPhoneNumber",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateApplication",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Applications.json",
+      "shortPath": "/Applications",
+      "family": "Applications",
+      "tag": "Api20100401Application",
+      "description": "Create a new application within your account",
+      "empty": false
+    },
+    {
+      "id": "ListApplication",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Applications.json",
+      "shortPath": "/Applications",
+      "family": "Applications",
+      "tag": "Api20100401Application",
+      "description": "Retrieve a list of applications representing an application within the requesting account",
+      "empty": false
+    },
+    {
+      "id": "DeleteApplication",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Applications/{Sid}.json",
+      "shortPath": "/Applications/{Sid}",
+      "family": "Applications",
+      "tag": "Api20100401Application",
+      "description": "Delete the application by the specified application sid",
+      "empty": false
+    },
+    {
+      "id": "FetchApplication",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Applications/{Sid}.json",
+      "shortPath": "/Applications/{Sid}",
+      "family": "Applications",
+      "tag": "Api20100401Application",
+      "description": "Fetch the application specified by the provided sid",
+      "empty": false
+    },
+    {
+      "id": "UpdateApplication",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Applications/{Sid}.json",
+      "shortPath": "/Applications/{Sid}",
+      "family": "Applications",
+      "tag": "Api20100401Application",
+      "description": "Updates the application's properties",
+      "empty": false
+    },
+    {
+      "id": "FetchAuthorizedConnectApp",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AuthorizedConnectApps/{ConnectAppSid}.json",
+      "shortPath": "/AuthorizedConnectApps/{ConnectAppSid}",
+      "family": "AuthorizedConnectApps",
+      "tag": "Api20100401AuthorizedConnectApp",
+      "description": "Fetch an instance of an authorized-connect-app",
+      "empty": false
+    },
+    {
+      "id": "ListAuthorizedConnectApp",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AuthorizedConnectApps.json",
+      "shortPath": "/AuthorizedConnectApps",
+      "family": "AuthorizedConnectApps",
+      "tag": "Api20100401AuthorizedConnectApp",
+      "description": "Retrieve a list of authorized-connect-apps belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListAvailablePhoneNumberCountry",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers.json",
+      "shortPath": "/AvailablePhoneNumbers",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401AvailablePhoneNumberCountry",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchAvailablePhoneNumberCountry",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401AvailablePhoneNumberCountry",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberLocal",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/Local.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/Local",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401Local",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberMachineToMachine",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/MachineToMachine.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/MachineToMachine",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401MachineToMachine",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberMobile",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/Mobile.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/Mobile",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401Mobile",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberNational",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/National.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/National",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401National",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberSharedCost",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/SharedCost.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/SharedCost",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401SharedCost",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberTollFree",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/TollFree.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/TollFree",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401TollFree",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListAvailablePhoneNumberVoip",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/AvailablePhoneNumbers/{CountryCode}/Voip.json",
+      "shortPath": "/AvailablePhoneNumbers/{CountryCode}/Voip",
+      "family": "AvailablePhoneNumbers",
+      "tag": "Api20100401Voip",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchBalance",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Balance.json",
+      "shortPath": "/Balance",
+      "family": "Balance",
+      "tag": "Api20100401Balance",
+      "description": "Fetch the balance for an Account based on Account Sid. Balance changes may not be reflected immediately. Child accounts do not contain balance information",
+      "empty": false
+    },
+    {
+      "id": "CreateCall",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls.json",
+      "shortPath": "/Calls",
+      "family": "Calls",
+      "tag": "Api20100401Call",
+      "description": "Create a new outgoing call to phones, SIP-enabled endpoints or Twilio Client connections",
+      "empty": false
+    },
+    {
+      "id": "ListCall",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls.json",
+      "shortPath": "/Calls",
+      "family": "Calls",
+      "tag": "Api20100401Call",
+      "description": "Retrieves a collection of calls made to and from your account",
+      "empty": false
+    },
+    {
+      "id": "DeleteCall",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{Sid}.json",
+      "shortPath": "/Calls/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Call",
+      "description": "Delete a Call record from your account. Once the record is deleted, it will no longer appear in the API and Account Portal logs.",
+      "empty": false
+    },
+    {
+      "id": "FetchCall",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{Sid}.json",
+      "shortPath": "/Calls/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Call",
+      "description": "Fetch the call specified by the provided Call SID",
+      "empty": false
+    },
+    {
+      "id": "UpdateCall",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{Sid}.json",
+      "shortPath": "/Calls/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Call",
+      "description": "Initiates a call redirect or terminates a call",
+      "empty": false
+    },
+    {
+      "id": "ListCallEvent",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Events.json",
+      "shortPath": "/Calls/{CallSid}/Events",
+      "family": "Calls",
+      "tag": "Api20100401Event",
+      "description": "Retrieve a list of all events for a call.",
+      "empty": false
+    },
+    {
+      "id": "FetchCallNotification",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Notifications/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Notifications/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401CallNotification",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListCallNotification",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Notifications.json",
+      "shortPath": "/Calls/{CallSid}/Notifications",
+      "family": "Calls",
+      "tag": "Api20100401CallNotification",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateCallRecording",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Recordings.json",
+      "shortPath": "/Calls/{CallSid}/Recordings",
+      "family": "Calls",
+      "tag": "Api20100401CallRecording",
+      "description": "Create a recording for the call",
+      "empty": false
+    },
+    {
+      "id": "ListCallRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Recordings.json",
+      "shortPath": "/Calls/{CallSid}/Recordings",
+      "family": "Calls",
+      "tag": "Api20100401CallRecording",
+      "description": "Retrieve a list of recordings belonging to the call used to make the request",
+      "empty": false
+    },
+    {
+      "id": "UpdateCallRecording",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Recordings/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Recordings/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401CallRecording",
+      "description": "Changes the status of the recording to paused, stopped, or in-progress. Note: Pass `Twilio.CURRENT` instead of recording sid to reference current active recording.",
+      "empty": false
+    },
+    {
+      "id": "FetchCallRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Recordings/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Recordings/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401CallRecording",
+      "description": "Fetch an instance of a recording for a call",
+      "empty": false
+    },
+    {
+      "id": "DeleteCallRecording",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Recordings/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Recordings/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401CallRecording",
+      "description": "Delete a recording from your account",
+      "empty": false
+    },
+    {
+      "id": "CreatePayments",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Payments.json",
+      "shortPath": "/Calls/{CallSid}/Payments",
+      "family": "Calls",
+      "tag": "Api20100401Payment",
+      "description": "create an instance of payments. This will start a new payments session",
+      "empty": false
+    },
+    {
+      "id": "UpdatePayments",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Payments/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Payments/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Payment",
+      "description": "update an instance of payments with different phases of payment flows.",
+      "empty": false
+    },
+    {
+      "id": "CreateRealtimeTranscription",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Transcriptions.json",
+      "shortPath": "/Calls/{CallSid}/Transcriptions",
+      "family": "Calls",
+      "tag": "Api20100401CallTranscription",
+      "description": "Create a Transcription",
+      "empty": false
+    },
+    {
+      "id": "UpdateRealtimeTranscription",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Transcriptions/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Transcriptions/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401CallTranscription",
+      "description": "Stop a Transcription using either the SID of the Transcription resource or the `name` used when creating the resource",
+      "empty": false
+    },
+    {
+      "id": "CreateSiprec",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Siprec.json",
+      "shortPath": "/Calls/{CallSid}/Siprec",
+      "family": "Calls",
+      "tag": "Api20100401Siprec",
+      "description": "Create a Siprec",
+      "empty": false
+    },
+    {
+      "id": "UpdateSiprec",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Siprec/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Siprec/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Siprec",
+      "description": "Stop a Siprec using either the SID of the Siprec resource or the `name` used when creating the resource",
+      "empty": false
+    },
+    {
+      "id": "CreateStream",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Streams.json",
+      "shortPath": "/Calls/{CallSid}/Streams",
+      "family": "Calls",
+      "tag": "Api20100401Stream",
+      "description": "Create a Stream",
+      "empty": false
+    },
+    {
+      "id": "UpdateStream",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/Streams/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/Streams/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401Stream",
+      "description": "Stop a Stream using either the SID of the Stream resource or the `name` used when creating the resource",
+      "empty": false
+    },
+    {
+      "id": "CreateUserDefinedMessage",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/UserDefinedMessages.json",
+      "shortPath": "/Calls/{CallSid}/UserDefinedMessages",
+      "family": "Calls",
+      "tag": "Api20100401UserDefinedMessage",
+      "description": "Create a new User Defined Message for the given Call SID.",
+      "empty": false
+    },
+    {
+      "id": "CreateUserDefinedMessageSubscription",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/UserDefinedMessageSubscriptions.json",
+      "shortPath": "/Calls/{CallSid}/UserDefinedMessageSubscriptions",
+      "family": "Calls",
+      "tag": "Api20100401UserDefinedMessageSubscription",
+      "description": "Subscribe to User Defined Messages for a given Call SID.",
+      "empty": false
+    },
+    {
+      "id": "DeleteUserDefinedMessageSubscription",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Calls/{CallSid}/UserDefinedMessageSubscriptions/{Sid}.json",
+      "shortPath": "/Calls/{CallSid}/UserDefinedMessageSubscriptions/{Sid}",
+      "family": "Calls",
+      "tag": "Api20100401UserDefinedMessageSubscription",
+      "description": "Delete a specific User Defined Message Subscription.",
+      "empty": false
+    },
+    {
+      "id": "FetchConference",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{Sid}.json",
+      "shortPath": "/Conferences/{Sid}",
+      "family": "Conferences",
+      "tag": "Api20100401Conference",
+      "description": "Fetch an instance of a conference",
+      "empty": false
+    },
+    {
+      "id": "UpdateConference",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{Sid}.json",
+      "shortPath": "/Conferences/{Sid}",
+      "family": "Conferences",
+      "tag": "Api20100401Conference",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListConference",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences.json",
+      "shortPath": "/Conferences",
+      "family": "Conferences",
+      "tag": "Api20100401Conference",
+      "description": "Retrieve a list of conferences belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListConferenceRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Recordings.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Recordings",
+      "family": "Conferences",
+      "tag": "Api20100401ConferenceRecording",
+      "description": "Retrieve a list of recordings belonging to the call used to make the request",
+      "empty": false
+    },
+    {
+      "id": "UpdateConferenceRecording",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Recordings/{Sid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+      "family": "Conferences",
+      "tag": "Api20100401ConferenceRecording",
+      "description": "Changes the status of the recording to paused, stopped, or in-progress. Note: To use `Twilio.CURRENT`, pass it as recording sid.",
+      "empty": false
+    },
+    {
+      "id": "FetchConferenceRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Recordings/{Sid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+      "family": "Conferences",
+      "tag": "Api20100401ConferenceRecording",
+      "description": "Fetch an instance of a recording for a call",
+      "empty": false
+    },
+    {
+      "id": "DeleteConferenceRecording",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Recordings/{Sid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+      "family": "Conferences",
+      "tag": "Api20100401ConferenceRecording",
+      "description": "Delete a recording from your account",
+      "empty": false
+    },
+    {
+      "id": "FetchParticipant",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{CallSid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+      "family": "Conferences",
+      "tag": "Api20100401Participant",
+      "description": "Fetch an instance of a participant",
+      "empty": false
+    },
+    {
+      "id": "UpdateParticipant",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{CallSid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+      "family": "Conferences",
+      "tag": "Api20100401Participant",
+      "description": "Update the properties of the participant",
+      "empty": false
+    },
+    {
+      "id": "DeleteParticipant",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants/{CallSid}.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+      "family": "Conferences",
+      "tag": "Api20100401Participant",
+      "description": "Kick a participant from a given conference",
+      "empty": false
+    },
+    {
+      "id": "CreateParticipant",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Participants",
+      "family": "Conferences",
+      "tag": "Api20100401Participant",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListParticipant",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Conferences/{ConferenceSid}/Participants.json",
+      "shortPath": "/Conferences/{ConferenceSid}/Participants",
+      "family": "Conferences",
+      "tag": "Api20100401Participant",
+      "description": "Retrieve a list of participants belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "FetchConnectApp",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/ConnectApps/{Sid}.json",
+      "shortPath": "/ConnectApps/{Sid}",
+      "family": "ConnectApps",
+      "tag": "Api20100401ConnectApp",
+      "description": "Fetch an instance of a connect-app",
+      "empty": false
+    },
+    {
+      "id": "UpdateConnectApp",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/ConnectApps/{Sid}.json",
+      "shortPath": "/ConnectApps/{Sid}",
+      "family": "ConnectApps",
+      "tag": "Api20100401ConnectApp",
+      "description": "Update a connect-app with the specified parameters",
+      "empty": false
+    },
+    {
+      "id": "DeleteConnectApp",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/ConnectApps/{Sid}.json",
+      "shortPath": "/ConnectApps/{Sid}",
+      "family": "ConnectApps",
+      "tag": "Api20100401ConnectApp",
+      "description": "Delete an instance of a connect-app",
+      "empty": false
+    },
+    {
+      "id": "ListConnectApp",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/ConnectApps.json",
+      "shortPath": "/ConnectApps",
+      "family": "ConnectApps",
+      "tag": "Api20100401ConnectApp",
+      "description": "Retrieve a list of connect-apps belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "UpdateIncomingPhoneNumber",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumber",
+      "description": "Update an incoming-phone-number instance.",
+      "empty": false
+    },
+    {
+      "id": "FetchIncomingPhoneNumber",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumber",
+      "description": "Fetch an incoming-phone-number belonging to the account used to make the request.",
+      "empty": false
+    },
+    {
+      "id": "DeleteIncomingPhoneNumber",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumber",
+      "description": "Delete a phone-numbers belonging to the account used to make the request.",
+      "empty": false
+    },
+    {
+      "id": "ListIncomingPhoneNumber",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers.json",
+      "shortPath": "/IncomingPhoneNumbers",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumber",
+      "description": "Retrieve a list of incoming-phone-numbers belonging to the account used to make the request.",
+      "empty": false
+    },
+    {
+      "id": "CreateIncomingPhoneNumber",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers.json",
+      "shortPath": "/IncomingPhoneNumbers",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumber",
+      "description": "Purchase a phone-number for the account.",
+      "empty": false
+    },
+    {
+      "id": "FetchIncomingPhoneNumberAssignedAddOn",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOn",
+      "description": "Fetch an instance of an Add-on installation currently assigned to this Number.",
+      "empty": false
+    },
+    {
+      "id": "DeleteIncomingPhoneNumberAssignedAddOn",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOn",
+      "description": "Remove the assignment of an Add-on installation from the Number specified.",
+      "empty": false
+    },
+    {
+      "id": "ListIncomingPhoneNumberAssignedAddOn",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOn",
+      "description": "Retrieve a list of Add-on installations currently assigned to this Number.",
+      "empty": false
+    },
+    {
+      "id": "CreateIncomingPhoneNumberAssignedAddOn",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOn",
+      "description": "Assign an Add-on installation to the Number specified.",
+      "empty": false
+    },
+    {
+      "id": "FetchIncomingPhoneNumberAssignedAddOnExtension",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions/{Sid}.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions/{Sid}",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOnExtension",
+      "description": "Fetch an instance of an Extension for the Assigned Add-on.",
+      "empty": false
+    },
+    {
+      "id": "ListIncomingPhoneNumberAssignedAddOnExtension",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions.json",
+      "shortPath": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401AssignedAddOnExtension",
+      "description": "Retrieve a list of Extensions for the Assigned Add-on.",
+      "empty": false
+    },
+    {
+      "id": "ListIncomingPhoneNumberLocal",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/Local.json",
+      "shortPath": "/IncomingPhoneNumbers/Local",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberLocal",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateIncomingPhoneNumberLocal",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/Local.json",
+      "shortPath": "/IncomingPhoneNumbers/Local",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberLocal",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListIncomingPhoneNumberMobile",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/Mobile.json",
+      "shortPath": "/IncomingPhoneNumbers/Mobile",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberMobile",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateIncomingPhoneNumberMobile",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/Mobile.json",
+      "shortPath": "/IncomingPhoneNumbers/Mobile",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberMobile",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListIncomingPhoneNumberTollFree",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/TollFree.json",
+      "shortPath": "/IncomingPhoneNumbers/TollFree",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberTollFree",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateIncomingPhoneNumberTollFree",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/IncomingPhoneNumbers/TollFree.json",
+      "shortPath": "/IncomingPhoneNumbers/TollFree",
+      "family": "IncomingPhoneNumbers",
+      "tag": "Api20100401IncomingPhoneNumberTollFree",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchKey",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Keys/{Sid}.json",
+      "shortPath": "/Keys/{Sid}",
+      "family": "Keys",
+      "tag": "Api20100401Key",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "UpdateKey",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Keys/{Sid}.json",
+      "shortPath": "/Keys/{Sid}",
+      "family": "Keys",
+      "tag": "Api20100401Key",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "DeleteKey",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Keys/{Sid}.json",
+      "shortPath": "/Keys/{Sid}",
+      "family": "Keys",
+      "tag": "Api20100401Key",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListKey",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Keys.json",
+      "shortPath": "/Keys",
+      "family": "Keys",
+      "tag": "Api20100401Key",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateNewKey",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Keys.json",
+      "shortPath": "/Keys",
+      "family": "Keys",
+      "tag": "Api20100401NewKey",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "DeleteMedia",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{MessageSid}/Media/{Sid}.json",
+      "shortPath": "/Messages/{MessageSid}/Media/{Sid}",
+      "family": "Messages",
+      "tag": "Api20100401MediaInstance",
+      "description": "Delete the Media resource.",
+      "empty": false
+    },
+    {
+      "id": "FetchMedia",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{MessageSid}/Media/{Sid}.json",
+      "shortPath": "/Messages/{MessageSid}/Media/{Sid}",
+      "family": "Messages",
+      "tag": "Api20100401MediaInstance",
+      "description": "Fetch a single Media resource associated with a specific Message resource",
+      "empty": false
+    },
+    {
+      "id": "ListMedia",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{MessageSid}/Media.json",
+      "shortPath": "/Messages/{MessageSid}/Media",
+      "family": "Messages",
+      "tag": "Api20100401Media",
+      "description": "Read a list of Media resources associated with a specific Message resource",
+      "empty": false
+    },
+    {
+      "id": "CreateMessage",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "shortPath": "/Messages",
+      "family": "Messages",
+      "tag": "Api20100401Message",
+      "description": "Send a message",
+      "empty": false
+    },
+    {
+      "id": "ListMessage",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json",
+      "shortPath": "/Messages",
+      "family": "Messages",
+      "tag": "Api20100401Message",
+      "description": "Retrieve a list of Message resources associated with a Twilio Account",
+      "empty": false
+    },
+    {
+      "id": "DeleteMessage",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{Sid}.json",
+      "shortPath": "/Messages/{Sid}",
+      "family": "Messages",
+      "tag": "Api20100401Message",
+      "description": "Deletes a Message resource from your account",
+      "empty": false
+    },
+    {
+      "id": "FetchMessage",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{Sid}.json",
+      "shortPath": "/Messages/{Sid}",
+      "family": "Messages",
+      "tag": "Api20100401Message",
+      "description": "Fetch a specific Message",
+      "empty": false
+    },
+    {
+      "id": "UpdateMessage",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{Sid}.json",
+      "shortPath": "/Messages/{Sid}",
+      "family": "Messages",
+      "tag": "Api20100401Message",
+      "description": "Update a Message resource (used to redact Message `body` text and to cancel not-yet-sent messages)",
+      "empty": false
+    },
+    {
+      "id": "CreateMessageFeedback",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Messages/{MessageSid}/Feedback.json",
+      "shortPath": "/Messages/{MessageSid}/Feedback",
+      "family": "Messages",
+      "tag": "Api20100401Feedback",
+      "description": "Create Message Feedback to confirm a tracked user action was performed by the recipient of the associated Message",
+      "empty": false
+    },
+    {
+      "id": "FetchMember",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{QueueSid}/Members/{CallSid}.json",
+      "shortPath": "/Queues/{QueueSid}/Members/{CallSid}",
+      "family": "Queues",
+      "tag": "Api20100401Member",
+      "description": "Fetch a specific member from the queue",
+      "empty": false
+    },
+    {
+      "id": "UpdateMember",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{QueueSid}/Members/{CallSid}.json",
+      "shortPath": "/Queues/{QueueSid}/Members/{CallSid}",
+      "family": "Queues",
+      "tag": "Api20100401Member",
+      "description": "Dequeue a member from a queue and have the member's call begin executing the TwiML document at that URL",
+      "empty": false
+    },
+    {
+      "id": "ListMember",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{QueueSid}/Members.json",
+      "shortPath": "/Queues/{QueueSid}/Members",
+      "family": "Queues",
+      "tag": "Api20100401Member",
+      "description": "Retrieve the members of the queue",
+      "empty": false
+    },
+    {
+      "id": "FetchQueue",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{Sid}.json",
+      "shortPath": "/Queues/{Sid}",
+      "family": "Queues",
+      "tag": "Api20100401Queue",
+      "description": "Fetch an instance of a queue identified by the QueueSid",
+      "empty": false
+    },
+    {
+      "id": "UpdateQueue",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{Sid}.json",
+      "shortPath": "/Queues/{Sid}",
+      "family": "Queues",
+      "tag": "Api20100401Queue",
+      "description": "Update the queue with the new parameters",
+      "empty": false
+    },
+    {
+      "id": "DeleteQueue",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues/{Sid}.json",
+      "shortPath": "/Queues/{Sid}",
+      "family": "Queues",
+      "tag": "Api20100401Queue",
+      "description": "Remove an empty queue",
+      "empty": false
+    },
+    {
+      "id": "ListQueue",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues.json",
+      "shortPath": "/Queues",
+      "family": "Queues",
+      "tag": "Api20100401Queue",
+      "description": "Retrieve a list of queues belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "CreateQueue",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Queues.json",
+      "shortPath": "/Queues",
+      "family": "Queues",
+      "tag": "Api20100401Queue",
+      "description": "Create a queue",
+      "empty": false
+    },
+    {
+      "id": "CreateNewSigningKey",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SigningKeys.json",
+      "shortPath": "/SigningKeys",
+      "family": "SigningKeys",
+      "tag": "Api20100401NewSigningKey",
+      "description": "Create a new Signing Key for the account making the request.",
+      "empty": false
+    },
+    {
+      "id": "ListSigningKey",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SigningKeys.json",
+      "shortPath": "/SigningKeys",
+      "family": "SigningKeys",
+      "tag": "Api20100401SigningKey",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchSigningKey",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SigningKeys/{Sid}.json",
+      "shortPath": "/SigningKeys/{Sid}",
+      "family": "SigningKeys",
+      "tag": "Api20100401SigningKey",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "UpdateSigningKey",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SigningKeys/{Sid}.json",
+      "shortPath": "/SigningKeys/{Sid}",
+      "family": "SigningKeys",
+      "tag": "Api20100401SigningKey",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "DeleteSigningKey",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SigningKeys/{Sid}.json",
+      "shortPath": "/SigningKeys/{Sid}",
+      "family": "SigningKeys",
+      "tag": "Api20100401SigningKey",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchNotification",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Notifications/{Sid}.json",
+      "shortPath": "/Notifications/{Sid}",
+      "family": "Notifications",
+      "tag": "Api20100401Notification",
+      "description": "Fetch a notification belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListNotification",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Notifications.json",
+      "shortPath": "/Notifications",
+      "family": "Notifications",
+      "tag": "Api20100401Notification",
+      "description": "Retrieve a list of notifications belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "FetchOutgoingCallerId",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/OutgoingCallerIds/{Sid}.json",
+      "shortPath": "/OutgoingCallerIds/{Sid}",
+      "family": "OutgoingCallerIds",
+      "tag": "Api20100401OutgoingCallerId",
+      "description": "Fetch an outgoing-caller-id belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "UpdateOutgoingCallerId",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/OutgoingCallerIds/{Sid}.json",
+      "shortPath": "/OutgoingCallerIds/{Sid}",
+      "family": "OutgoingCallerIds",
+      "tag": "Api20100401OutgoingCallerId",
+      "description": "Updates the caller-id",
+      "empty": false
+    },
+    {
+      "id": "DeleteOutgoingCallerId",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/OutgoingCallerIds/{Sid}.json",
+      "shortPath": "/OutgoingCallerIds/{Sid}",
+      "family": "OutgoingCallerIds",
+      "tag": "Api20100401OutgoingCallerId",
+      "description": "Delete the caller-id specified from the account",
+      "empty": false
+    },
+    {
+      "id": "ListOutgoingCallerId",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/OutgoingCallerIds.json",
+      "shortPath": "/OutgoingCallerIds",
+      "family": "OutgoingCallerIds",
+      "tag": "Api20100401OutgoingCallerId",
+      "description": "Retrieve a list of outgoing-caller-ids belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "CreateValidationRequest",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/OutgoingCallerIds.json",
+      "shortPath": "/OutgoingCallerIds",
+      "family": "OutgoingCallerIds",
+      "tag": "Api20100401ValidationRequest",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{Sid}.json",
+      "shortPath": "/Recordings/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401Recording",
+      "description": "Fetch an instance of a recording",
+      "empty": false
+    },
+    {
+      "id": "DeleteRecording",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{Sid}.json",
+      "shortPath": "/Recordings/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401Recording",
+      "description": "Delete a recording from your account",
+      "empty": false
+    },
+    {
+      "id": "ListRecording",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings.json",
+      "shortPath": "/Recordings",
+      "family": "Recordings",
+      "tag": "Api20100401Recording",
+      "description": "Retrieve a list of recordings belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "FetchRecordingAddOnResult",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{Sid}.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401AddOnResult",
+      "description": "Fetch an instance of an AddOnResult",
+      "empty": false
+    },
+    {
+      "id": "DeleteRecordingAddOnResult",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{Sid}.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401AddOnResult",
+      "description": "Delete a result and purge all associated Payloads",
+      "empty": false
+    },
+    {
+      "id": "ListRecordingAddOnResult",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults",
+      "family": "Recordings",
+      "tag": "Api20100401AddOnResult",
+      "description": "Retrieve a list of results belonging to the recording",
+      "empty": false
+    },
+    {
+      "id": "FetchRecordingAddOnResultPayload",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401Payload",
+      "description": "Fetch an instance of a result payload",
+      "empty": false
+    },
+    {
+      "id": "DeleteRecordingAddOnResultPayload",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401Payload",
+      "description": "Delete a payload from the result along with all associated Data",
+      "empty": false
+    },
+    {
+      "id": "ListRecordingAddOnResultPayload",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads",
+      "family": "Recordings",
+      "tag": "Api20100401Payload",
+      "description": "Retrieve a list of payloads belonging to the AddOnResult",
+      "empty": false
+    },
+    {
+      "id": "FetchRecordingAddOnResultPayloadData",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{PayloadSid}/Data.json",
+      "shortPath": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{PayloadSid}/Data",
+      "family": "Recordings",
+      "tag": "Api20100401Data",
+      "description": "Fetch an instance of a result payload",
+      "empty": false
+    },
+    {
+      "id": "FetchRecordingTranscription",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{RecordingSid}/Transcriptions/{Sid}.json",
+      "shortPath": "/Recordings/{RecordingSid}/Transcriptions/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401RecordingTranscription",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "DeleteRecordingTranscription",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{RecordingSid}/Transcriptions/{Sid}.json",
+      "shortPath": "/Recordings/{RecordingSid}/Transcriptions/{Sid}",
+      "family": "Recordings",
+      "tag": "Api20100401RecordingTranscription",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListRecordingTranscription",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Recordings/{RecordingSid}/Transcriptions.json",
+      "shortPath": "/Recordings/{RecordingSid}/Transcriptions",
+      "family": "Recordings",
+      "tag": "Api20100401RecordingTranscription",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchShortCode",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SMS/ShortCodes/{Sid}.json",
+      "shortPath": "/SMS/ShortCodes/{Sid}",
+      "family": "SMS",
+      "tag": "Api20100401ShortCode",
+      "description": "Fetch an instance of a short code",
+      "empty": false
+    },
+    {
+      "id": "UpdateShortCode",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SMS/ShortCodes/{Sid}.json",
+      "shortPath": "/SMS/ShortCodes/{Sid}",
+      "family": "SMS",
+      "tag": "Api20100401ShortCode",
+      "description": "Update a short code with the following parameters",
+      "empty": false
+    },
+    {
+      "id": "ListShortCode",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SMS/ShortCodes.json",
+      "shortPath": "/SMS/ShortCodes",
+      "family": "SMS",
+      "tag": "Api20100401ShortCode",
+      "description": "Retrieve a list of short-codes belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "CreateSipAuthCallsCredentialListMapping",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsCredentialListMapping",
+      "description": "Create a new credential list mapping resource",
+      "empty": false
+    },
+    {
+      "id": "ListSipAuthCallsCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsCredentialListMapping",
+      "description": "Retrieve a list of credential list mappings belonging to the domain used in the request",
+      "empty": false
+    },
+    {
+      "id": "FetchSipAuthCallsCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsCredentialListMapping",
+      "description": "Fetch a specific instance of a credential list mapping",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipAuthCallsCredentialListMapping",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsCredentialListMapping",
+      "description": "Delete a credential list mapping from the requested domain",
+      "empty": false
+    },
+    {
+      "id": "CreateSipAuthCallsIpAccessControlListMapping",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsIpAccessControlListMapping",
+      "description": "Create a new IP Access Control List mapping",
+      "empty": false
+    },
+    {
+      "id": "ListSipAuthCallsIpAccessControlListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsIpAccessControlListMapping",
+      "description": "Retrieve a list of IP Access Control List mappings belonging to the domain used in the request",
+      "empty": false
+    },
+    {
+      "id": "FetchSipAuthCallsIpAccessControlListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsIpAccessControlListMapping",
+      "description": "Fetch a specific instance of an IP Access Control List mapping",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipAuthCallsIpAccessControlListMapping",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthCallsIpAccessControlListMapping",
+      "description": "Delete an IP Access Control List mapping from the requested domain",
+      "empty": false
+    },
+    {
+      "id": "CreateSipAuthRegistrationsCredentialListMapping",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthRegistrationsCredentialListMapping",
+      "description": "Create a new credential list mapping resource",
+      "empty": false
+    },
+    {
+      "id": "ListSipAuthRegistrationsCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401AuthRegistrationsCredentialListMapping",
+      "description": "Retrieve a list of credential list mappings belonging to the domain used in the request",
+      "empty": false
+    },
+    {
+      "id": "FetchSipAuthRegistrationsCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthRegistrationsCredentialListMapping",
+      "description": "Fetch a specific instance of a credential list mapping",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipAuthRegistrationsCredentialListMapping",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401AuthRegistrationsCredentialListMapping",
+      "description": "Delete a credential list mapping from the requested domain",
+      "empty": false
+    },
+    {
+      "id": "ListSipCredential",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{CredentialListSid}/Credentials.json",
+      "shortPath": "/SIP/CredentialLists/{CredentialListSid}/Credentials",
+      "family": "SIP",
+      "tag": "Api20100401Credential",
+      "description": "Retrieve a list of credentials.",
+      "empty": false
+    },
+    {
+      "id": "CreateSipCredential",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{CredentialListSid}/Credentials.json",
+      "shortPath": "/SIP/CredentialLists/{CredentialListSid}/Credentials",
+      "family": "SIP",
+      "tag": "Api20100401Credential",
+      "description": "Create a new credential resource.",
+      "empty": false
+    },
+    {
+      "id": "FetchSipCredential",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Credential",
+      "description": "Fetch a single credential.",
+      "empty": false
+    },
+    {
+      "id": "UpdateSipCredential",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Credential",
+      "description": "Update a credential resource.",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipCredential",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Credential",
+      "description": "Delete a credential resource.",
+      "empty": false
+    },
+    {
+      "id": "ListSipCredentialList",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists.json",
+      "shortPath": "/SIP/CredentialLists",
+      "family": "SIP",
+      "tag": "Api20100401CredentialList",
+      "description": "Get All Credential Lists",
+      "empty": false
+    },
+    {
+      "id": "CreateSipCredentialList",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists.json",
+      "shortPath": "/SIP/CredentialLists",
+      "family": "SIP",
+      "tag": "Api20100401CredentialList",
+      "description": "Create a Credential List",
+      "empty": false
+    },
+    {
+      "id": "FetchSipCredentialList",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401CredentialList",
+      "description": "Get a Credential List",
+      "empty": false
+    },
+    {
+      "id": "UpdateSipCredentialList",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401CredentialList",
+      "description": "Update a Credential List",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipCredentialList",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/CredentialLists/{Sid}.json",
+      "shortPath": "/SIP/CredentialLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401CredentialList",
+      "description": "Delete a Credential List",
+      "empty": false
+    },
+    {
+      "id": "CreateSipCredentialListMapping",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401CredentialListMapping",
+      "description": "Create a CredentialListMapping resource for an account.",
+      "empty": false
+    },
+    {
+      "id": "ListSipCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/CredentialListMappings",
+      "family": "SIP",
+      "tag": "Api20100401CredentialListMapping",
+      "description": "Read multiple CredentialListMapping resources from an account.",
+      "empty": false
+    },
+    {
+      "id": "FetchSipCredentialListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401CredentialListMapping",
+      "description": "Fetch a single CredentialListMapping resource from an account.",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipCredentialListMapping",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401CredentialListMapping",
+      "description": "Delete a CredentialListMapping resource from an account.",
+      "empty": false
+    },
+    {
+      "id": "ListSipDomain",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains.json",
+      "shortPath": "/SIP/Domains",
+      "family": "SIP",
+      "tag": "Api20100401Domain",
+      "description": "Retrieve a list of domains belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "CreateSipDomain",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains.json",
+      "shortPath": "/SIP/Domains",
+      "family": "SIP",
+      "tag": "Api20100401Domain",
+      "description": "Create a new Domain",
+      "empty": false
+    },
+    {
+      "id": "FetchSipDomain",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{Sid}.json",
+      "shortPath": "/SIP/Domains/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Domain",
+      "description": "Fetch an instance of a Domain",
+      "empty": false
+    },
+    {
+      "id": "UpdateSipDomain",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{Sid}.json",
+      "shortPath": "/SIP/Domains/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Domain",
+      "description": "Update the attributes of a domain",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipDomain",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{Sid}.json",
+      "shortPath": "/SIP/Domains/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401Domain",
+      "description": "Delete an instance of a Domain",
+      "empty": false
+    },
+    {
+      "id": "ListSipIpAccessControlList",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists.json",
+      "shortPath": "/SIP/IpAccessControlLists",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlList",
+      "description": "Retrieve a list of IpAccessControlLists that belong to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "CreateSipIpAccessControlList",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists.json",
+      "shortPath": "/SIP/IpAccessControlLists",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlList",
+      "description": "Create a new IpAccessControlList resource",
+      "empty": false
+    },
+    {
+      "id": "FetchSipIpAccessControlList",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlList",
+      "description": "Fetch a specific instance of an IpAccessControlList",
+      "empty": false
+    },
+    {
+      "id": "UpdateSipIpAccessControlList",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlList",
+      "description": "Rename an IpAccessControlList",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipIpAccessControlList",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlList",
+      "description": "Delete an IpAccessControlList from the requested account",
+      "empty": false
+    },
+    {
+      "id": "FetchSipIpAccessControlListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlListMapping",
+      "description": "Fetch an IpAccessControlListMapping resource.",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipIpAccessControlListMapping",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlListMapping",
+      "description": "Delete an IpAccessControlListMapping resource.",
+      "empty": false
+    },
+    {
+      "id": "CreateSipIpAccessControlListMapping",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlListMapping",
+      "description": "Create a new IpAccessControlListMapping resource.",
+      "empty": false
+    },
+    {
+      "id": "ListSipIpAccessControlListMapping",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/Domains/{DomainSid}/IpAccessControlListMappings.json",
+      "shortPath": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings",
+      "family": "SIP",
+      "tag": "Api20100401IpAccessControlListMapping",
+      "description": "Retrieve a list of IpAccessControlListMapping resources.",
+      "empty": false
+    },
+    {
+      "id": "ListSipIpAddress",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses.json",
+      "shortPath": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses",
+      "family": "SIP",
+      "tag": "Api20100401SipIpAddress",
+      "description": "Read multiple IpAddress resources.",
+      "empty": false
+    },
+    {
+      "id": "CreateSipIpAddress",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses.json",
+      "shortPath": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses",
+      "family": "SIP",
+      "tag": "Api20100401SipIpAddress",
+      "description": "Create a new IpAddress resource.",
+      "empty": false
+    },
+    {
+      "id": "FetchSipIpAddress",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401SipIpAddress",
+      "description": "Read one IpAddress resource.",
+      "empty": false
+    },
+    {
+      "id": "UpdateSipIpAddress",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401SipIpAddress",
+      "description": "Update an IpAddress resource.",
+      "empty": false
+    },
+    {
+      "id": "DeleteSipIpAddress",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}.json",
+      "shortPath": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+      "family": "SIP",
+      "tag": "Api20100401SipIpAddress",
+      "description": "Delete an IpAddress resource.",
+      "empty": false
+    },
+    {
+      "id": "CreateToken",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Tokens.json",
+      "shortPath": "/Tokens",
+      "family": "Tokens",
+      "tag": "Api20100401Token",
+      "description": "Create a new token for ICE servers",
+      "empty": false
+    },
+    {
+      "id": "FetchTranscription",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Transcriptions/{Sid}.json",
+      "shortPath": "/Transcriptions/{Sid}",
+      "family": "Transcriptions",
+      "tag": "Api20100401Transcription",
+      "description": "Fetch an instance of a Transcription",
+      "empty": false
+    },
+    {
+      "id": "DeleteTranscription",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Transcriptions/{Sid}.json",
+      "shortPath": "/Transcriptions/{Sid}",
+      "family": "Transcriptions",
+      "tag": "Api20100401Transcription",
+      "description": "Delete a transcription from the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListTranscription",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Transcriptions.json",
+      "shortPath": "/Transcriptions",
+      "family": "Transcriptions",
+      "tag": "Api20100401Transcription",
+      "description": "Retrieve a list of transcriptions belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListUsageRecord",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records.json",
+      "shortPath": "/Usage/Records",
+      "family": "Usage",
+      "tag": "Api20100401Record",
+      "description": "Retrieve a list of usage-records belonging to the account used to make the request",
+      "empty": false
+    },
+    {
+      "id": "ListUsageRecordAllTime",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/AllTime.json",
+      "shortPath": "/Usage/Records/AllTime",
+      "family": "Usage",
+      "tag": "Api20100401AllTime",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordDaily",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/Daily.json",
+      "shortPath": "/Usage/Records/Daily",
+      "family": "Usage",
+      "tag": "Api20100401Daily",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordLastMonth",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/LastMonth.json",
+      "shortPath": "/Usage/Records/LastMonth",
+      "family": "Usage",
+      "tag": "Api20100401LastMonth",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordMonthly",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/Monthly.json",
+      "shortPath": "/Usage/Records/Monthly",
+      "family": "Usage",
+      "tag": "Api20100401Monthly",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordThisMonth",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/ThisMonth.json",
+      "shortPath": "/Usage/Records/ThisMonth",
+      "family": "Usage",
+      "tag": "Api20100401ThisMonth",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordToday",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/Today.json",
+      "shortPath": "/Usage/Records/Today",
+      "family": "Usage",
+      "tag": "Api20100401Today",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordYearly",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/Yearly.json",
+      "shortPath": "/Usage/Records/Yearly",
+      "family": "Usage",
+      "tag": "Api20100401Yearly",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "ListUsageRecordYesterday",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Records/Yesterday.json",
+      "shortPath": "/Usage/Records/Yesterday",
+      "family": "Usage",
+      "tag": "Api20100401Yesterday",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "FetchUsageTrigger",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Triggers/{Sid}.json",
+      "shortPath": "/Usage/Triggers/{Sid}",
+      "family": "Usage",
+      "tag": "Api20100401Trigger",
+      "description": "Fetch and instance of a usage-trigger",
+      "empty": false
+    },
+    {
+      "id": "UpdateUsageTrigger",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Triggers/{Sid}.json",
+      "shortPath": "/Usage/Triggers/{Sid}",
+      "family": "Usage",
+      "tag": "Api20100401Trigger",
+      "description": "Update an instance of a usage trigger",
+      "empty": false
+    },
+    {
+      "id": "DeleteUsageTrigger",
+      "method": "DELETE",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Triggers/{Sid}.json",
+      "shortPath": "/Usage/Triggers/{Sid}",
+      "family": "Usage",
+      "tag": "Api20100401Trigger",
+      "description": "",
+      "empty": true
+    },
+    {
+      "id": "CreateUsageTrigger",
+      "method": "POST",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Triggers.json",
+      "shortPath": "/Usage/Triggers",
+      "family": "Usage",
+      "tag": "Api20100401Trigger",
+      "description": "Create a new UsageTrigger",
+      "empty": false
+    },
+    {
+      "id": "ListUsageTrigger",
+      "method": "GET",
+      "path": "/2010-04-01/Accounts/{AccountSid}/Usage/Triggers.json",
+      "shortPath": "/Usage/Triggers",
+      "family": "Usage",
+      "tag": "Api20100401Trigger",
+      "description": "Retrieve a list of usage-triggers belonging to the account used to make the request",
+      "empty": false
+    }
+  ],
+  "families": [
+    {
+      "name": "Accounts",
+      "count": 4
+    },
+    {
+      "name": "Addresses",
+      "count": 6
+    },
+    {
+      "name": "Applications",
+      "count": 5
+    },
+    {
+      "name": "AuthorizedConnectApps",
+      "count": 2
+    },
+    {
+      "name": "AvailablePhoneNumbers",
+      "count": 9
+    },
+    {
+      "name": "Balance",
+      "count": 1
+    },
+    {
+      "name": "Calls",
+      "count": 24
+    },
+    {
+      "name": "Conferences",
+      "count": 12
+    },
+    {
+      "name": "ConnectApps",
+      "count": 4
+    },
+    {
+      "name": "IncomingPhoneNumbers",
+      "count": 17
+    },
+    {
+      "name": "Keys",
+      "count": 5
+    },
+    {
+      "name": "Messages",
+      "count": 9
+    },
+    {
+      "name": "Queues",
+      "count": 8
+    },
+    {
+      "name": "SigningKeys",
+      "count": 5
+    },
+    {
+      "name": "Notifications",
+      "count": 2
+    },
+    {
+      "name": "OutgoingCallerIds",
+      "count": 5
+    },
+    {
+      "name": "Recordings",
+      "count": 13
+    },
+    {
+      "name": "SMS",
+      "count": 3
+    },
+    {
+      "name": "SIP",
+      "count": 45
+    },
+    {
+      "name": "Tokens",
+      "count": 1
+    },
+    {
+      "name": "Transcriptions",
+      "count": 3
+    },
+    {
+      "name": "Usage",
+      "count": 14
+    }
+  ]
+}

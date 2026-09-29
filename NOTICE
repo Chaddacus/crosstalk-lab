@@ -1,0 +1,25 @@
+Crosstalk (crosstalk-lab)
+Copyright (c) 2026 Chad Simon. Licensed under the MIT License (see LICENSE).
+
+This project includes data derived from the Twilio OpenAPI specification:
+
+  twilio/twilio-oai, spec/json/twilio_api_v2010.json
+  commit 218b7821602a93ae63e83e20ab5e8637e870250f
+  https://github.com/twilio/twilio-oai
+
+The twilio-oai repository is licensed under the MIT License:
+
+  MIT License
+  Copyright (c) Twilio, Inc.
+  (full text: https://github.com/twilio/twilio-oai/blob/main/LICENSE)
+
+The specification file's own info.license field names the Apache License 2.0:
+
+  https://www.apache.org/licenses/LICENSE-2.0.html
+
+Derived file: data/twilio-v2010/catalog.json (operation ids, methods, paths,
+tags and descriptions). Operation descriptions are reproduced from the
+specification without change.
+
+Crosstalk is not affiliated with, endorsed by, or sponsored by Twilio Inc. or
+TypeSafe. "Twilio" is a trademark of Twilio Inc. No logos are used.
