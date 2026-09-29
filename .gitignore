@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.cache/
+.env
+.env.*
+!.env.example
+runs/*
+!runs/.gitkeep
+!runs/example-*.json
+test-results/
+playwright-report/
+blob-report/
+coverage/
+*.log
+.DS_Store
