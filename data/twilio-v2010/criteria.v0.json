@@ -1,0 +1,941 @@
+{
+  "CreateAccount": {
+    "method": "POST",
+    "path": "/Accounts",
+    "what": "Create a new Twilio Subaccount from the account making the request"
+  },
+  "ListAccount": {
+    "method": "GET",
+    "path": "/Accounts",
+    "what": "Retrieves a collection of Accounts belonging to the account used to make the request"
+  },
+  "FetchAccount": {
+    "method": "GET",
+    "path": "/Accounts/{Sid}",
+    "what": "Fetch the account specified by the provided Account Sid"
+  },
+  "UpdateAccount": {
+    "method": "POST",
+    "path": "/Accounts/{Sid}",
+    "what": "Modify the properties of a given Account"
+  },
+  "CreateAddress": {
+    "method": "POST",
+    "path": "/Addresses"
+  },
+  "ListAddress": {
+    "method": "GET",
+    "path": "/Addresses"
+  },
+  "DeleteAddress": {
+    "method": "DELETE",
+    "path": "/Addresses/{Sid}"
+  },
+  "FetchAddress": {
+    "method": "GET",
+    "path": "/Addresses/{Sid}"
+  },
+  "UpdateAddress": {
+    "method": "POST",
+    "path": "/Addresses/{Sid}"
+  },
+  "ListDependentPhoneNumber": {
+    "method": "GET",
+    "path": "/Addresses/{AddressSid}/DependentPhoneNumbers"
+  },
+  "CreateApplication": {
+    "method": "POST",
+    "path": "/Applications",
+    "what": "Create a new application within your account"
+  },
+  "ListApplication": {
+    "method": "GET",
+    "path": "/Applications",
+    "what": "Retrieve a list of applications representing an application within the requesting account"
+  },
+  "DeleteApplication": {
+    "method": "DELETE",
+    "path": "/Applications/{Sid}",
+    "what": "Delete the application by the specified application sid"
+  },
+  "FetchApplication": {
+    "method": "GET",
+    "path": "/Applications/{Sid}",
+    "what": "Fetch the application specified by the provided sid"
+  },
+  "UpdateApplication": {
+    "method": "POST",
+    "path": "/Applications/{Sid}",
+    "what": "Updates the application's properties"
+  },
+  "FetchAuthorizedConnectApp": {
+    "method": "GET",
+    "path": "/AuthorizedConnectApps/{ConnectAppSid}",
+    "what": "Fetch an instance of an authorized-connect-app"
+  },
+  "ListAuthorizedConnectApp": {
+    "method": "GET",
+    "path": "/AuthorizedConnectApps",
+    "what": "Retrieve a list of authorized-connect-apps belonging to the account used to make the request"
+  },
+  "ListAvailablePhoneNumberCountry": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers"
+  },
+  "FetchAvailablePhoneNumberCountry": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}"
+  },
+  "ListAvailablePhoneNumberLocal": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/Local"
+  },
+  "ListAvailablePhoneNumberMachineToMachine": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/MachineToMachine"
+  },
+  "ListAvailablePhoneNumberMobile": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/Mobile"
+  },
+  "ListAvailablePhoneNumberNational": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/National"
+  },
+  "ListAvailablePhoneNumberSharedCost": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/SharedCost"
+  },
+  "ListAvailablePhoneNumberTollFree": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/TollFree"
+  },
+  "ListAvailablePhoneNumberVoip": {
+    "method": "GET",
+    "path": "/AvailablePhoneNumbers/{CountryCode}/Voip"
+  },
+  "FetchBalance": {
+    "method": "GET",
+    "path": "/Balance",
+    "what": "Fetch the balance for an Account based on Account Sid. Balance changes may not be reflected immediately. Child accounts do not contain balance information"
+  },
+  "CreateCall": {
+    "method": "POST",
+    "path": "/Calls",
+    "what": "Create a new outgoing call to phones, SIP-enabled endpoints or Twilio Client connections"
+  },
+  "ListCall": {
+    "method": "GET",
+    "path": "/Calls",
+    "what": "Retrieves a collection of calls made to and from your account"
+  },
+  "DeleteCall": {
+    "method": "DELETE",
+    "path": "/Calls/{Sid}",
+    "what": "Delete a Call record from your account. Once the record is deleted, it will no longer appear in the API and Account Portal logs."
+  },
+  "FetchCall": {
+    "method": "GET",
+    "path": "/Calls/{Sid}",
+    "what": "Fetch the call specified by the provided Call SID"
+  },
+  "UpdateCall": {
+    "method": "POST",
+    "path": "/Calls/{Sid}",
+    "what": "Initiates a call redirect or terminates a call"
+  },
+  "ListCallEvent": {
+    "method": "GET",
+    "path": "/Calls/{CallSid}/Events",
+    "what": "Retrieve a list of all events for a call."
+  },
+  "FetchCallNotification": {
+    "method": "GET",
+    "path": "/Calls/{CallSid}/Notifications/{Sid}"
+  },
+  "ListCallNotification": {
+    "method": "GET",
+    "path": "/Calls/{CallSid}/Notifications"
+  },
+  "CreateCallRecording": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Recordings",
+    "what": "Create a recording for the call"
+  },
+  "ListCallRecording": {
+    "method": "GET",
+    "path": "/Calls/{CallSid}/Recordings",
+    "what": "Retrieve a list of recordings belonging to the call used to make the request"
+  },
+  "UpdateCallRecording": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Recordings/{Sid}",
+    "what": "Changes the status of the recording to paused, stopped, or in-progress. Note: Pass `Twilio.CURRENT` instead of recording sid to reference current active recording."
+  },
+  "FetchCallRecording": {
+    "method": "GET",
+    "path": "/Calls/{CallSid}/Recordings/{Sid}",
+    "what": "Fetch an instance of a recording for a call"
+  },
+  "DeleteCallRecording": {
+    "method": "DELETE",
+    "path": "/Calls/{CallSid}/Recordings/{Sid}",
+    "what": "Delete a recording from your account"
+  },
+  "CreatePayments": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Payments",
+    "what": "create an instance of payments. This will start a new payments session"
+  },
+  "UpdatePayments": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Payments/{Sid}",
+    "what": "update an instance of payments with different phases of payment flows."
+  },
+  "CreateRealtimeTranscription": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Transcriptions",
+    "what": "Create a Transcription"
+  },
+  "UpdateRealtimeTranscription": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Transcriptions/{Sid}",
+    "what": "Stop a Transcription using either the SID of the Transcription resource or the `name` used when creating the resource"
+  },
+  "CreateSiprec": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Siprec",
+    "what": "Create a Siprec"
+  },
+  "UpdateSiprec": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Siprec/{Sid}",
+    "what": "Stop a Siprec using either the SID of the Siprec resource or the `name` used when creating the resource"
+  },
+  "CreateStream": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Streams",
+    "what": "Create a Stream"
+  },
+  "UpdateStream": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/Streams/{Sid}",
+    "what": "Stop a Stream using either the SID of the Stream resource or the `name` used when creating the resource"
+  },
+  "CreateUserDefinedMessage": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/UserDefinedMessages",
+    "what": "Create a new User Defined Message for the given Call SID."
+  },
+  "CreateUserDefinedMessageSubscription": {
+    "method": "POST",
+    "path": "/Calls/{CallSid}/UserDefinedMessageSubscriptions",
+    "what": "Subscribe to User Defined Messages for a given Call SID."
+  },
+  "DeleteUserDefinedMessageSubscription": {
+    "method": "DELETE",
+    "path": "/Calls/{CallSid}/UserDefinedMessageSubscriptions/{Sid}",
+    "what": "Delete a specific User Defined Message Subscription."
+  },
+  "FetchConference": {
+    "method": "GET",
+    "path": "/Conferences/{Sid}",
+    "what": "Fetch an instance of a conference"
+  },
+  "UpdateConference": {
+    "method": "POST",
+    "path": "/Conferences/{Sid}"
+  },
+  "ListConference": {
+    "method": "GET",
+    "path": "/Conferences",
+    "what": "Retrieve a list of conferences belonging to the account used to make the request"
+  },
+  "ListConferenceRecording": {
+    "method": "GET",
+    "path": "/Conferences/{ConferenceSid}/Recordings",
+    "what": "Retrieve a list of recordings belonging to the call used to make the request"
+  },
+  "UpdateConferenceRecording": {
+    "method": "POST",
+    "path": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+    "what": "Changes the status of the recording to paused, stopped, or in-progress. Note: To use `Twilio.CURRENT`, pass it as recording sid."
+  },
+  "FetchConferenceRecording": {
+    "method": "GET",
+    "path": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+    "what": "Fetch an instance of a recording for a call"
+  },
+  "DeleteConferenceRecording": {
+    "method": "DELETE",
+    "path": "/Conferences/{ConferenceSid}/Recordings/{Sid}",
+    "what": "Delete a recording from your account"
+  },
+  "FetchParticipant": {
+    "method": "GET",
+    "path": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+    "what": "Fetch an instance of a participant"
+  },
+  "UpdateParticipant": {
+    "method": "POST",
+    "path": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+    "what": "Update the properties of the participant"
+  },
+  "DeleteParticipant": {
+    "method": "DELETE",
+    "path": "/Conferences/{ConferenceSid}/Participants/{CallSid}",
+    "what": "Kick a participant from a given conference"
+  },
+  "CreateParticipant": {
+    "method": "POST",
+    "path": "/Conferences/{ConferenceSid}/Participants"
+  },
+  "ListParticipant": {
+    "method": "GET",
+    "path": "/Conferences/{ConferenceSid}/Participants",
+    "what": "Retrieve a list of participants belonging to the account used to make the request"
+  },
+  "FetchConnectApp": {
+    "method": "GET",
+    "path": "/ConnectApps/{Sid}",
+    "what": "Fetch an instance of a connect-app"
+  },
+  "UpdateConnectApp": {
+    "method": "POST",
+    "path": "/ConnectApps/{Sid}",
+    "what": "Update a connect-app with the specified parameters"
+  },
+  "DeleteConnectApp": {
+    "method": "DELETE",
+    "path": "/ConnectApps/{Sid}",
+    "what": "Delete an instance of a connect-app"
+  },
+  "ListConnectApp": {
+    "method": "GET",
+    "path": "/ConnectApps",
+    "what": "Retrieve a list of connect-apps belonging to the account used to make the request"
+  },
+  "UpdateIncomingPhoneNumber": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers/{Sid}",
+    "what": "Update an incoming-phone-number instance."
+  },
+  "FetchIncomingPhoneNumber": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/{Sid}",
+    "what": "Fetch an incoming-phone-number belonging to the account used to make the request."
+  },
+  "DeleteIncomingPhoneNumber": {
+    "method": "DELETE",
+    "path": "/IncomingPhoneNumbers/{Sid}",
+    "what": "Delete a phone-numbers belonging to the account used to make the request."
+  },
+  "ListIncomingPhoneNumber": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers",
+    "what": "Retrieve a list of incoming-phone-numbers belonging to the account used to make the request."
+  },
+  "CreateIncomingPhoneNumber": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers",
+    "what": "Purchase a phone-number for the account."
+  },
+  "FetchIncomingPhoneNumberAssignedAddOn": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}",
+    "what": "Fetch an instance of an Add-on installation currently assigned to this Number."
+  },
+  "DeleteIncomingPhoneNumberAssignedAddOn": {
+    "method": "DELETE",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{Sid}",
+    "what": "Remove the assignment of an Add-on installation from the Number specified."
+  },
+  "ListIncomingPhoneNumberAssignedAddOn": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns",
+    "what": "Retrieve a list of Add-on installations currently assigned to this Number."
+  },
+  "CreateIncomingPhoneNumberAssignedAddOn": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns",
+    "what": "Assign an Add-on installation to the Number specified."
+  },
+  "FetchIncomingPhoneNumberAssignedAddOnExtension": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions/{Sid}",
+    "what": "Fetch an instance of an Extension for the Assigned Add-on."
+  },
+  "ListIncomingPhoneNumberAssignedAddOnExtension": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/{ResourceSid}/AssignedAddOns/{AssignedAddOnSid}/Extensions",
+    "what": "Retrieve a list of Extensions for the Assigned Add-on."
+  },
+  "ListIncomingPhoneNumberLocal": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/Local"
+  },
+  "CreateIncomingPhoneNumberLocal": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers/Local"
+  },
+  "ListIncomingPhoneNumberMobile": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/Mobile"
+  },
+  "CreateIncomingPhoneNumberMobile": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers/Mobile"
+  },
+  "ListIncomingPhoneNumberTollFree": {
+    "method": "GET",
+    "path": "/IncomingPhoneNumbers/TollFree"
+  },
+  "CreateIncomingPhoneNumberTollFree": {
+    "method": "POST",
+    "path": "/IncomingPhoneNumbers/TollFree"
+  },
+  "FetchKey": {
+    "method": "GET",
+    "path": "/Keys/{Sid}"
+  },
+  "UpdateKey": {
+    "method": "POST",
+    "path": "/Keys/{Sid}"
+  },
+  "DeleteKey": {
+    "method": "DELETE",
+    "path": "/Keys/{Sid}"
+  },
+  "ListKey": {
+    "method": "GET",
+    "path": "/Keys"
+  },
+  "CreateNewKey": {
+    "method": "POST",
+    "path": "/Keys"
+  },
+  "DeleteMedia": {
+    "method": "DELETE",
+    "path": "/Messages/{MessageSid}/Media/{Sid}",
+    "what": "Delete the Media resource."
+  },
+  "FetchMedia": {
+    "method": "GET",
+    "path": "/Messages/{MessageSid}/Media/{Sid}",
+    "what": "Fetch a single Media resource associated with a specific Message resource"
+  },
+  "ListMedia": {
+    "method": "GET",
+    "path": "/Messages/{MessageSid}/Media",
+    "what": "Read a list of Media resources associated with a specific Message resource"
+  },
+  "CreateMessage": {
+    "method": "POST",
+    "path": "/Messages",
+    "what": "Send a message"
+  },
+  "ListMessage": {
+    "method": "GET",
+    "path": "/Messages",
+    "what": "Retrieve a list of Message resources associated with a Twilio Account"
+  },
+  "DeleteMessage": {
+    "method": "DELETE",
+    "path": "/Messages/{Sid}",
+    "what": "Deletes a Message resource from your account"
+  },
+  "FetchMessage": {
+    "method": "GET",
+    "path": "/Messages/{Sid}",
+    "what": "Fetch a specific Message"
+  },
+  "UpdateMessage": {
+    "method": "POST",
+    "path": "/Messages/{Sid}",
+    "what": "Update a Message resource (used to redact Message `body` text and to cancel not-yet-sent messages)"
+  },
+  "CreateMessageFeedback": {
+    "method": "POST",
+    "path": "/Messages/{MessageSid}/Feedback",
+    "what": "Create Message Feedback to confirm a tracked user action was performed by the recipient of the associated Message"
+  },
+  "FetchMember": {
+    "method": "GET",
+    "path": "/Queues/{QueueSid}/Members/{CallSid}",
+    "what": "Fetch a specific member from the queue"
+  },
+  "UpdateMember": {
+    "method": "POST",
+    "path": "/Queues/{QueueSid}/Members/{CallSid}",
+    "what": "Dequeue a member from a queue and have the member's call begin executing the TwiML document at that URL"
+  },
+  "ListMember": {
+    "method": "GET",
+    "path": "/Queues/{QueueSid}/Members",
+    "what": "Retrieve the members of the queue"
+  },
+  "FetchQueue": {
+    "method": "GET",
+    "path": "/Queues/{Sid}",
+    "what": "Fetch an instance of a queue identified by the QueueSid"
+  },
+  "UpdateQueue": {
+    "method": "POST",
+    "path": "/Queues/{Sid}",
+    "what": "Update the queue with the new parameters"
+  },
+  "DeleteQueue": {
+    "method": "DELETE",
+    "path": "/Queues/{Sid}",
+    "what": "Remove an empty queue"
+  },
+  "ListQueue": {
+    "method": "GET",
+    "path": "/Queues",
+    "what": "Retrieve a list of queues belonging to the account used to make the request"
+  },
+  "CreateQueue": {
+    "method": "POST",
+    "path": "/Queues",
+    "what": "Create a queue"
+  },
+  "CreateNewSigningKey": {
+    "method": "POST",
+    "path": "/SigningKeys",
+    "what": "Create a new Signing Key for the account making the request."
+  },
+  "ListSigningKey": {
+    "method": "GET",
+    "path": "/SigningKeys"
+  },
+  "FetchSigningKey": {
+    "method": "GET",
+    "path": "/SigningKeys/{Sid}"
+  },
+  "UpdateSigningKey": {
+    "method": "POST",
+    "path": "/SigningKeys/{Sid}"
+  },
+  "DeleteSigningKey": {
+    "method": "DELETE",
+    "path": "/SigningKeys/{Sid}"
+  },
+  "FetchNotification": {
+    "method": "GET",
+    "path": "/Notifications/{Sid}",
+    "what": "Fetch a notification belonging to the account used to make the request"
+  },
+  "ListNotification": {
+    "method": "GET",
+    "path": "/Notifications",
+    "what": "Retrieve a list of notifications belonging to the account used to make the request"
+  },
+  "FetchOutgoingCallerId": {
+    "method": "GET",
+    "path": "/OutgoingCallerIds/{Sid}",
+    "what": "Fetch an outgoing-caller-id belonging to the account used to make the request"
+  },
+  "UpdateOutgoingCallerId": {
+    "method": "POST",
+    "path": "/OutgoingCallerIds/{Sid}",
+    "what": "Updates the caller-id"
+  },
+  "DeleteOutgoingCallerId": {
+    "method": "DELETE",
+    "path": "/OutgoingCallerIds/{Sid}",
+    "what": "Delete the caller-id specified from the account"
+  },
+  "ListOutgoingCallerId": {
+    "method": "GET",
+    "path": "/OutgoingCallerIds",
+    "what": "Retrieve a list of outgoing-caller-ids belonging to the account used to make the request"
+  },
+  "CreateValidationRequest": {
+    "method": "POST",
+    "path": "/OutgoingCallerIds"
+  },
+  "FetchRecording": {
+    "method": "GET",
+    "path": "/Recordings/{Sid}",
+    "what": "Fetch an instance of a recording"
+  },
+  "DeleteRecording": {
+    "method": "DELETE",
+    "path": "/Recordings/{Sid}",
+    "what": "Delete a recording from your account"
+  },
+  "ListRecording": {
+    "method": "GET",
+    "path": "/Recordings",
+    "what": "Retrieve a list of recordings belonging to the account used to make the request"
+  },
+  "FetchRecordingAddOnResult": {
+    "method": "GET",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{Sid}",
+    "what": "Fetch an instance of an AddOnResult"
+  },
+  "DeleteRecordingAddOnResult": {
+    "method": "DELETE",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{Sid}",
+    "what": "Delete a result and purge all associated Payloads"
+  },
+  "ListRecordingAddOnResult": {
+    "method": "GET",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults",
+    "what": "Retrieve a list of results belonging to the recording"
+  },
+  "FetchRecordingAddOnResultPayload": {
+    "method": "GET",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}",
+    "what": "Fetch an instance of a result payload"
+  },
+  "DeleteRecordingAddOnResultPayload": {
+    "method": "DELETE",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{Sid}",
+    "what": "Delete a payload from the result along with all associated Data"
+  },
+  "ListRecordingAddOnResultPayload": {
+    "method": "GET",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads",
+    "what": "Retrieve a list of payloads belonging to the AddOnResult"
+  },
+  "FetchRecordingAddOnResultPayloadData": {
+    "method": "GET",
+    "path": "/Recordings/{ReferenceSid}/AddOnResults/{AddOnResultSid}/Payloads/{PayloadSid}/Data",
+    "what": "Fetch an instance of a result payload"
+  },
+  "FetchRecordingTranscription": {
+    "method": "GET",
+    "path": "/Recordings/{RecordingSid}/Transcriptions/{Sid}"
+  },
+  "DeleteRecordingTranscription": {
+    "method": "DELETE",
+    "path": "/Recordings/{RecordingSid}/Transcriptions/{Sid}"
+  },
+  "ListRecordingTranscription": {
+    "method": "GET",
+    "path": "/Recordings/{RecordingSid}/Transcriptions"
+  },
+  "FetchShortCode": {
+    "method": "GET",
+    "path": "/SMS/ShortCodes/{Sid}",
+    "what": "Fetch an instance of a short code"
+  },
+  "UpdateShortCode": {
+    "method": "POST",
+    "path": "/SMS/ShortCodes/{Sid}",
+    "what": "Update a short code with the following parameters"
+  },
+  "ListShortCode": {
+    "method": "GET",
+    "path": "/SMS/ShortCodes",
+    "what": "Retrieve a list of short-codes belonging to the account used to make the request"
+  },
+  "CreateSipAuthCallsCredentialListMapping": {
+    "method": "POST",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings",
+    "what": "Create a new credential list mapping resource"
+  },
+  "ListSipAuthCallsCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings",
+    "what": "Retrieve a list of credential list mappings belonging to the domain used in the request"
+  },
+  "FetchSipAuthCallsCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}",
+    "what": "Fetch a specific instance of a credential list mapping"
+  },
+  "DeleteSipAuthCallsCredentialListMapping": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/CredentialListMappings/{Sid}",
+    "what": "Delete a credential list mapping from the requested domain"
+  },
+  "CreateSipAuthCallsIpAccessControlListMapping": {
+    "method": "POST",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings",
+    "what": "Create a new IP Access Control List mapping"
+  },
+  "ListSipAuthCallsIpAccessControlListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings",
+    "what": "Retrieve a list of IP Access Control List mappings belonging to the domain used in the request"
+  },
+  "FetchSipAuthCallsIpAccessControlListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}",
+    "what": "Fetch a specific instance of an IP Access Control List mapping"
+  },
+  "DeleteSipAuthCallsIpAccessControlListMapping": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Calls/IpAccessControlListMappings/{Sid}",
+    "what": "Delete an IP Access Control List mapping from the requested domain"
+  },
+  "CreateSipAuthRegistrationsCredentialListMapping": {
+    "method": "POST",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings",
+    "what": "Create a new credential list mapping resource"
+  },
+  "ListSipAuthRegistrationsCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings",
+    "what": "Retrieve a list of credential list mappings belonging to the domain used in the request"
+  },
+  "FetchSipAuthRegistrationsCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}",
+    "what": "Fetch a specific instance of a credential list mapping"
+  },
+  "DeleteSipAuthRegistrationsCredentialListMapping": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{DomainSid}/Auth/Registrations/CredentialListMappings/{Sid}",
+    "what": "Delete a credential list mapping from the requested domain"
+  },
+  "ListSipCredential": {
+    "method": "GET",
+    "path": "/SIP/CredentialLists/{CredentialListSid}/Credentials",
+    "what": "Retrieve a list of credentials."
+  },
+  "CreateSipCredential": {
+    "method": "POST",
+    "path": "/SIP/CredentialLists/{CredentialListSid}/Credentials",
+    "what": "Create a new credential resource."
+  },
+  "FetchSipCredential": {
+    "method": "GET",
+    "path": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+    "what": "Fetch a single credential."
+  },
+  "UpdateSipCredential": {
+    "method": "POST",
+    "path": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+    "what": "Update a credential resource."
+  },
+  "DeleteSipCredential": {
+    "method": "DELETE",
+    "path": "/SIP/CredentialLists/{CredentialListSid}/Credentials/{Sid}",
+    "what": "Delete a credential resource."
+  },
+  "ListSipCredentialList": {
+    "method": "GET",
+    "path": "/SIP/CredentialLists",
+    "what": "Get All Credential Lists"
+  },
+  "CreateSipCredentialList": {
+    "method": "POST",
+    "path": "/SIP/CredentialLists",
+    "what": "Create a Credential List"
+  },
+  "FetchSipCredentialList": {
+    "method": "GET",
+    "path": "/SIP/CredentialLists/{Sid}",
+    "what": "Get a Credential List"
+  },
+  "UpdateSipCredentialList": {
+    "method": "POST",
+    "path": "/SIP/CredentialLists/{Sid}",
+    "what": "Update a Credential List"
+  },
+  "DeleteSipCredentialList": {
+    "method": "DELETE",
+    "path": "/SIP/CredentialLists/{Sid}",
+    "what": "Delete a Credential List"
+  },
+  "CreateSipCredentialListMapping": {
+    "method": "POST",
+    "path": "/SIP/Domains/{DomainSid}/CredentialListMappings",
+    "what": "Create a CredentialListMapping resource for an account."
+  },
+  "ListSipCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/CredentialListMappings",
+    "what": "Read multiple CredentialListMapping resources from an account."
+  },
+  "FetchSipCredentialListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}",
+    "what": "Fetch a single CredentialListMapping resource from an account."
+  },
+  "DeleteSipCredentialListMapping": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{DomainSid}/CredentialListMappings/{Sid}",
+    "what": "Delete a CredentialListMapping resource from an account."
+  },
+  "ListSipDomain": {
+    "method": "GET",
+    "path": "/SIP/Domains",
+    "what": "Retrieve a list of domains belonging to the account used to make the request"
+  },
+  "CreateSipDomain": {
+    "method": "POST",
+    "path": "/SIP/Domains",
+    "what": "Create a new Domain"
+  },
+  "FetchSipDomain": {
+    "method": "GET",
+    "path": "/SIP/Domains/{Sid}",
+    "what": "Fetch an instance of a Domain"
+  },
+  "UpdateSipDomain": {
+    "method": "POST",
+    "path": "/SIP/Domains/{Sid}",
+    "what": "Update the attributes of a domain"
+  },
+  "DeleteSipDomain": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{Sid}",
+    "what": "Delete an instance of a Domain"
+  },
+  "ListSipIpAccessControlList": {
+    "method": "GET",
+    "path": "/SIP/IpAccessControlLists",
+    "what": "Retrieve a list of IpAccessControlLists that belong to the account used to make the request"
+  },
+  "CreateSipIpAccessControlList": {
+    "method": "POST",
+    "path": "/SIP/IpAccessControlLists",
+    "what": "Create a new IpAccessControlList resource"
+  },
+  "FetchSipIpAccessControlList": {
+    "method": "GET",
+    "path": "/SIP/IpAccessControlLists/{Sid}",
+    "what": "Fetch a specific instance of an IpAccessControlList"
+  },
+  "UpdateSipIpAccessControlList": {
+    "method": "POST",
+    "path": "/SIP/IpAccessControlLists/{Sid}",
+    "what": "Rename an IpAccessControlList"
+  },
+  "DeleteSipIpAccessControlList": {
+    "method": "DELETE",
+    "path": "/SIP/IpAccessControlLists/{Sid}",
+    "what": "Delete an IpAccessControlList from the requested account"
+  },
+  "FetchSipIpAccessControlListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}",
+    "what": "Fetch an IpAccessControlListMapping resource."
+  },
+  "DeleteSipIpAccessControlListMapping": {
+    "method": "DELETE",
+    "path": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings/{Sid}",
+    "what": "Delete an IpAccessControlListMapping resource."
+  },
+  "CreateSipIpAccessControlListMapping": {
+    "method": "POST",
+    "path": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings",
+    "what": "Create a new IpAccessControlListMapping resource."
+  },
+  "ListSipIpAccessControlListMapping": {
+    "method": "GET",
+    "path": "/SIP/Domains/{DomainSid}/IpAccessControlListMappings",
+    "what": "Retrieve a list of IpAccessControlListMapping resources."
+  },
+  "ListSipIpAddress": {
+    "method": "GET",
+    "path": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses",
+    "what": "Read multiple IpAddress resources."
+  },
+  "CreateSipIpAddress": {
+    "method": "POST",
+    "path": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses",
+    "what": "Create a new IpAddress resource."
+  },
+  "FetchSipIpAddress": {
+    "method": "GET",
+    "path": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+    "what": "Read one IpAddress resource."
+  },
+  "UpdateSipIpAddress": {
+    "method": "POST",
+    "path": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+    "what": "Update an IpAddress resource."
+  },
+  "DeleteSipIpAddress": {
+    "method": "DELETE",
+    "path": "/SIP/IpAccessControlLists/{IpAccessControlListSid}/IpAddresses/{Sid}",
+    "what": "Delete an IpAddress resource."
+  },
+  "CreateToken": {
+    "method": "POST",
+    "path": "/Tokens",
+    "what": "Create a new token for ICE servers"
+  },
+  "FetchTranscription": {
+    "method": "GET",
+    "path": "/Transcriptions/{Sid}",
+    "what": "Fetch an instance of a Transcription"
+  },
+  "DeleteTranscription": {
+    "method": "DELETE",
+    "path": "/Transcriptions/{Sid}",
+    "what": "Delete a transcription from the account used to make the request"
+  },
+  "ListTranscription": {
+    "method": "GET",
+    "path": "/Transcriptions",
+    "what": "Retrieve a list of transcriptions belonging to the account used to make the request"
+  },
+  "ListUsageRecord": {
+    "method": "GET",
+    "path": "/Usage/Records",
+    "what": "Retrieve a list of usage-records belonging to the account used to make the request"
+  },
+  "ListUsageRecordAllTime": {
+    "method": "GET",
+    "path": "/Usage/Records/AllTime"
+  },
+  "ListUsageRecordDaily": {
+    "method": "GET",
+    "path": "/Usage/Records/Daily"
+  },
+  "ListUsageRecordLastMonth": {
+    "method": "GET",
+    "path": "/Usage/Records/LastMonth"
+  },
+  "ListUsageRecordMonthly": {
+    "method": "GET",
+    "path": "/Usage/Records/Monthly"
+  },
+  "ListUsageRecordThisMonth": {
+    "method": "GET",
+    "path": "/Usage/Records/ThisMonth"
+  },
+  "ListUsageRecordToday": {
+    "method": "GET",
+    "path": "/Usage/Records/Today"
+  },
+  "ListUsageRecordYearly": {
+    "method": "GET",
+    "path": "/Usage/Records/Yearly"
+  },
+  "ListUsageRecordYesterday": {
+    "method": "GET",
+    "path": "/Usage/Records/Yesterday"
+  },
+  "FetchUsageTrigger": {
+    "method": "GET",
+    "path": "/Usage/Triggers/{Sid}",
+    "what": "Fetch and instance of a usage-trigger"
+  },
+  "UpdateUsageTrigger": {
+    "method": "POST",
+    "path": "/Usage/Triggers/{Sid}",
+    "what": "Update an instance of a usage trigger"
+  },
+  "DeleteUsageTrigger": {
+    "method": "DELETE",
+    "path": "/Usage/Triggers/{Sid}"
+  },
+  "CreateUsageTrigger": {
+    "method": "POST",
+    "path": "/Usage/Triggers",
+    "what": "Create a new UsageTrigger"
+  },
+  "ListUsageTrigger": {
+    "method": "GET",
+    "path": "/Usage/Triggers",
+    "what": "Retrieve a list of usage-triggers belonging to the account used to make the request"
+  },
+  "none_of_these": "Not a request for any operation in this API: how-to questions, other products, other vendors, small talk."
+}

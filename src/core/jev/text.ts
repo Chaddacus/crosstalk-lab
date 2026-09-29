@@ -2,7 +2,7 @@
  * Tokenizer shared by the lexical mock and the data lint. Pure TypeScript.
  *  - CamelCase operation names are split first (`UpdateCall` -> `Update Call`)
  *  - lowercase, split on non-alphanumerics
- *  - a short stopword list is dropped
+ *  - a short stopword list and one-character tokens are dropped
  *  - simple suffixes are stripped: -ing, -ed, -s (not -ss/-us/-is), then a trailing -e,
  *    so update/updated/updating/updates all become `updat`
  */
@@ -31,7 +31,7 @@ export function stem(t: string): string {
 export function tokenize(text: string): string[] {
   const out: string[] = [];
   for (const raw of splitName(text).toLowerCase().split(/[^a-z0-9]+/)) {
-    if (!raw || STOP.has(raw)) continue;
+    if (raw.length < 2 || STOP.has(raw)) continue;
     out.push(stem(raw));
   }
   return out;

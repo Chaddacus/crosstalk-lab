@@ -20,7 +20,7 @@ export interface LintReport {
 }
 
 /** Digit runs that look like phone numbers. Allowed: numbers whose last seven digits are 555-01xx. */
-const PHONE = /\+?\d[\d\s().-]{6,}\d/g;
+const PHONE = /(?<![A-Za-z0-9])\+?\d[\d\s().-]{6,}\d(?![A-Za-z0-9])/g;
 const EMAIL = /[A-Z0-9._%+-]+@([A-Z0-9.-]+\.[A-Z]{2,})/gi;
 /** Real-looking Twilio SIDs: two capital letters and 32 hex characters. */
 const REAL_SID = /\b[A-Z]{2}[0-9a-f]{32}\b/;
