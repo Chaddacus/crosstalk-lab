@@ -81,6 +81,11 @@ export function HistoryStrip({ compact = false }: { compact?: boolean }) {
             );
           })}
         </div>
+        {points.length === 1 && !compact && (
+          <p className="hidden max-w-[420px] text-[11.5px] leading-[1.45] text-faint xl:block">
+            v0 is the spec text alone. Each save adds a version with its own dev run; restoring one that already ran costs nothing.
+          </p>
+        )}
         {viewing && (
           <div className="flex shrink-0 items-center gap-2">
             <span className="mono text-[10.5px] text-muted">viewing {viewId}</span>

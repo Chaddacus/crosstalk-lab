@@ -11,6 +11,7 @@ export function PairsList() {
   const { acc } = useAnalysis();
   const hoverPair = useStore((s) => s.hoverPair);
   const top = visible.slice(0, 10);
+  const max = top[0]?.mass ?? 1;
   return (
     <div className="flex min-h-0 flex-1 flex-col" data-testid="pairs-list">
       <div className="px-4 pb-2 pt-3.5">
@@ -44,7 +45,19 @@ export function PairsList() {
                   <span className="block truncate">{a}</span>
                   <span className="block truncate text-muted">⇄ {b === NONE ? "NO MATCH" : b}</span>
                 </span>
-                <span className="num text-[12px] text-text">{p.mass.toFixed(2)}</span>
+                <span className="flex flex-col items-end gap-1">
+                  <span className="num text-[12px] text-text">{p.mass.toFixed(2)}</span>
+                  <span className="block h-[3px] w-12 overflow-hidden rounded-full bg-line" aria-hidden>
+                    <span
+                      className="block h-full rounded-full"
+                      style={{
+                        width: `${Math.max(4, (p.mass / max) * 100)}%`,
+                        background: p.state === "error" ? "var(--err)" : p.state === "near" ? "var(--near)" : "var(--bgchord)",
+                        opacity: 0.75,
+                      }}
+                    />
+                  </span>
+                </span>
               </button>
             </li>
           );

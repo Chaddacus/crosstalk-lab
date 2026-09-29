@@ -242,7 +242,8 @@ export async function saveAndRerun() {
   }
   const texts = { ...cur.texts, ...s.drafts };
   const v = await makeVersion(texts, cur);
-  const baseKey = displayKeyFor(s);
+  // compare against the run of the version the edit started from (not a version merely being viewed)
+  const baseKey = runKey(cur.hash, s.backend, "dev", s.backend === "live" ? modelFor("live", s) : "");
   set((st) => ({ versions: [...st.versions, v], currentId: v.id, viewId: v.id, drafts: {} }));
   await startRun(v, { baseKey, edited: dirty });
 }

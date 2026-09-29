@@ -67,7 +67,8 @@ export function PairEditor({ a, b }: { a: string; b: string }) {
         <div className="flex items-center justify-between">
           <span className="eyebrow">Pair editor</span>
           <button className="btn btn-ghost h-6 px-1.5 text-[11px]" onClick={() => clearSelection()} aria-label="Close the pair editor">
-            <kbd className="kbd">Esc</kbd>
+            <kbd className="kbd hidden md:inline">Esc</kbd>
+            <span className="md:hidden">Close</span>
           </button>
         </div>
         <div className="mono mt-2 text-[13px] leading-5 text-text" data-testid="pair-title">
