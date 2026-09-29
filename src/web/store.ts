@@ -363,6 +363,10 @@ function finalize(record: RunRecord) {
   } else {
     set({ active: null, runs: { ...s.runs, [key]: record } });
   }
+  if (record.errors > 0) {
+    const first = record.results.find((r) => r.error)?.error;
+    toast(`${record.errors} of ${record.results.length} items failed and are not counted${first ? `: ${first.message}` : ""}`, "error");
+  }
   const done = pendingDone.get(a.runId);
   pendingDone.delete(a.runId);
   done?.(record);

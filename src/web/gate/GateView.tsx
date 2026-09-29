@@ -76,7 +76,7 @@ export function GateView() {
           <Kpi label="Risk-weighted" sub={`confident errors, DELETE picks ×${w}`} value={g.riskConfidentErrors} fmt={(x) => String(Math.round(x))} tone={g.riskConfidentErrors ? "bad" : undefined} />
         </div>
         <div className="mt-4 grid items-start gap-4 lg:grid-cols-[3fr_2fr]">
-          <section className="card p-4">
+          <section className="card min-w-0 p-4">
             <div className="flex items-center justify-between">
               <span className="eyebrow !text-[9.5px]">Every dev item by confidence</span>
               <span className="mono text-[10.5px] text-faint">confidence: {src}{src === "derived" ? " · (K·p_max − 1)/(K − 1)" : ""}</span>
@@ -89,7 +89,7 @@ export function GateView() {
               <Dot kind="ring" /> confident error (wrong, in AUTO)
             </div>
           </section>
-          <section className="grid gap-4">
+          <section className="grid min-w-0 gap-4">
             <div className="card p-3.5">
               <div className="flex items-center justify-between">
                 <span className="eyebrow !text-[9.5px]">Selective accuracy vs coverage</span>
@@ -156,7 +156,7 @@ function dodge(xs: { x: number; key: string }[], r: number): Map<string, number>
 
 function Strip({ scored, tau }: { scored: Scored[]; tau: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [W, setW] = useState(700);
+  const [W, setW] = useState(0);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -181,7 +181,8 @@ function Strip({ scored, tau }: { scored: Scored[]; tau: number }) {
   const tx = x(tau);
   const mid = H / 2 + 6;
   return (
-    <div ref={ref} className="mt-2">
+    <div ref={ref} className="mt-2 w-full min-w-0 overflow-hidden">
+      {W > 0 && (
       <svg
         ref={svgRef}
         width={W}
@@ -245,6 +246,7 @@ function Strip({ scored, tau }: { scored: Scored[]; tau: number }) {
           </text>
         </motion.g>
       </svg>
+      )}
     </div>
   );
 }
