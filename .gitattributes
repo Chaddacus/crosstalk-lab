@@ -1,0 +1,4 @@
+# Hashed data files must keep their exact bytes (LF endings) on every platform.
+*.jsonl -text
+data/twilio-v2010/MANIFEST.json -text
+data/twilio-v2010/LABEL_POLICY.md -text

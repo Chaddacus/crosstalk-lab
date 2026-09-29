@@ -1,0 +1,21 @@
+{
+  "dataset": "twilio-v2010",
+  "spec": {
+    "sha256": "78e76cc93c355a259e241866c241663eddb6ce0ed528f066c6cf0958648f5637",
+    "commit": "218b7821602a93ae63e83e20ab5e8637e870250f"
+  },
+  "labelPolicy": {
+    "file": "LABEL_POLICY.md",
+    "sha256": "571aa18c41abe42f87f01fbf42b664b7b8c4cfb2ffd389b94738b8fc0c174b80"
+  },
+  "splits": {
+    "test": {
+      "file": "test.jsonl",
+      "sha256": "3fdde2569cdf9888beae2a0e9ab313624f0a8f57c62fe354c8d70ee7b40cf500",
+      "count": 183,
+      "match": 128,
+      "noMatch": 55,
+      "frozenAt": "2026-09-29T08:26:39.132Z"
+    }
+  }
+}
