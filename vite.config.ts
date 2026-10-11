@@ -1,10 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import { resolveBase } from "./vite.base";
 
 const livePort = Number(process.env.CROSSTALK_PORT ?? 8787);
 
 export default defineConfig({
+  base: resolveBase(process.env),
   plugins: [react(), tailwindcss()],
   server: {
     host: "127.0.0.1",
