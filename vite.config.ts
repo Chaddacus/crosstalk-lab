@@ -4,7 +4,11 @@ import tailwindcss from "@tailwindcss/vite";
 
 const livePort = Number(process.env.CROSSTALK_PORT ?? 8787);
 
+// PR previews are served from a sub-path of GitHub Pages, so CI sets VITE_BASE (for example /crosstalk-lab/pr-preview/pr-4/).
+export const base = process.env.VITE_BASE || "/";
+
 export default defineConfig({
+  base,
   plugins: [react(), tailwindcss()],
   server: {
     host: "127.0.0.1",
