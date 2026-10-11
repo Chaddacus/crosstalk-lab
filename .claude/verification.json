@@ -1,0 +1,9 @@
+{
+  "fast": [
+    { "name": "typecheck", "command": "npm run typecheck" },
+    { "name": "unit tests", "command": "npm test" }
+  ],
+  "full": [
+    { "name": "check", "command": "python dev.py check" }
+  ]
+}
