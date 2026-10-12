@@ -1,4 +1,4 @@
-# Merge gate: typecheck, unit tests, data lint and production build.
+# Merge gate through the shared rapid-dev workflow (Chaddacus/dev-standards).
 # Playwright e2e (npm run test:e2e) stays a local check.
 name: checks
 
@@ -7,29 +7,10 @@ on:
     branches: [main]
   pull_request:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
-
-permissions:
-  contents: read
-
 jobs:
   checks:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "24"
-          cache: npm
-      - run: npm ci
-      - name: Typecheck
-        run: npm run typecheck
-      - name: Unit tests
-        run: npm test
-      - name: Data lint
-        run: npm run lint:data
-      - name: Build
-        run: npm run build
+    uses: Chaddacus/dev-standards/.github/workflows/check.yml@v1
+    with:
+      node-version: "24"
+      setup-command: npm ci
+      check-command: npm run typecheck && npm test && npm run lint:data && npm run build
